@@ -1,0 +1,54 @@
+ut2004
+button maps:
+1=a
+2=b
+3=black
+4=x
+5=y
+6=white
+7=start
+8=left thumb click
+9=right thumb click
+10=back
+11=
+12=
+13=forward dpad
+14=back dpad
+15=leftdpad
+16=right dpad
+JoyX=left stick l/r
+JoyY=left stick u/d
+JoyZ=left pull trigger
+JoyR=right stick l/r
+JoyU=right stick u/d
+JoyV=right pull trigger
+JoySlider1=
+JoySlider2=
+
+
+
+configs
+
+Joy1=Jump
+Joy2=AltFire
+Joy3=
+Joy4=
+Joy5=NextWeapon
+Joy6=Fire
+Joy7=ShowMenu
+Joy8=
+Joy9=
+Joy10=
+Joy11=
+Joy12=
+Joy13=MoveForward
+Joy14=MoveBackward
+Joy15=StrafeLeft
+Joy16=StrafeRight
+JoyX=Axis aStrafe SpeedBase=+300.0 DeadZone=0.4
+JoyY=Axis aBaseY SpeedBase=300.0 DeadZone=0.4 Invert=-1
+JoyZ=
+JoyR=Axis aBaseX SpeedBase=60.0 DeadZone=0.4 Invert=1
+JoyU=Axis aLookUp SpeedBase=+40.0 DeadZone=0.4 Invert=-1
+JoyV=
+

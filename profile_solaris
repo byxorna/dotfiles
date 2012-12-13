@@ -1,0 +1,8 @@
+umask 022
+export TERM=vt100
+export EDITOR=vi
+export VISUAL=vi
+export PS1='\u@\H:\w \$ '
+export PATH='/bin:/usr/bin:/opt/csw/bin:/usr/sfw/bin:/usr/local/bin:/usr/ucb/bin:/usr/ccs/bin:/usr/openwin/bin:/sbin:/usr/sbin:/opt/csw/sbin:/usr/local/sbin'
+export MANPATH=/usr/dt/man:/usr/man:/usr/openwin/share/man:/opt/csw/man:/usr/local/man:/usr/sfw/man
+

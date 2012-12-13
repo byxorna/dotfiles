@@ -1,0 +1,8 @@
+# fakexinerama config for my 4 head setup (now defunct)
+# 2x19" widescreen 1440x900 on the far left and right
+# 2x19" 4:3 1280x1024 in the center
+4
+0 62 1440 900
+1440 0 1280 1024
+2720 0 1280 1024
+4000 62 1440 900
