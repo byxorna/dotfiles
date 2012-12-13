@@ -1,19 +1,24 @@
+" file setup
 :syntax on
 :set ignorecase
 :set number
 :set mouse=
 :set hlsearch
-:set autoindent
 :set background=dark
 :set incsearch
 :set encoding=utf-8
 :set fileencoding=utf-8
 :set fileformat=unix
+
+" tab stuff
+:set autoindent
 :set expandtab
 :set smarttab
 :set tabstop=2
 :set softtabstop=2
 :set shiftwidth=2
+
+" title setting
 autocmd BufEnter * let &titlestring = hostname() . "[vim(" . expand("%:t") . ")]"
 
 let &titlestring = hostname() . "[vim(" . expand("%:t") . ")]"
