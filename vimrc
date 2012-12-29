@@ -21,6 +21,10 @@
 " title setting
 autocmd BufEnter * let &titlestring = hostname() . "[vim(" . expand("%:t") . ")]"
 
+" highlight trailing whitespace
+highlight ExtraWhitespace ctermbg=red guibg=red
+:autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
+
 let &titlestring = hostname() . "[vim(" . expand("%:t") . ")]"
 if &term == "screen"
   set t_ts=k
