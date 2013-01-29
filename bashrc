@@ -50,7 +50,8 @@ alias mmrepq='sudo mmrepquota --block-size=auto -j'
 alias psa='ps aux | grep '
 alias ss="sudo su"
 
-export PATH=$PATH:~/bin:~/local/bin:~/lang/bin
+export PATH=$PATH:~/bin:~/local/bin:~/lang/bin:~/lang/usr/local/scala/bin
+export MANPATH=$MANPATH:~/lang/share/man:~/lang/usr/local/scala/man
 export VISUAL='vim'
 export EDITOR='vim'
 export PAGER='less'
