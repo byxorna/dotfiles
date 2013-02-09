@@ -21,6 +21,9 @@
 " title setting
 autocmd BufEnter * let &titlestring = hostname() . "[vim(" . expand("%:t") . ")]"
 
+" assorted automatic syntax loading
+au BufRead *.md set syntax=markdown
+
 " highlight trailing whitespace
 highlight ExtraWhitespace ctermbg=red guibg=red
 :autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
