@@ -18,6 +18,13 @@
 :set softtabstop=2
 :set shiftwidth=2
 
+" navigation (from http://statico.github.com/vim.html)
+" go up and down one row, not one line (useful for wrapped lines)
+:nmap j gj
+:nmap k gk
+" jump between last opened buffer with Ctrl+E (:b# and :e# do same thing)
+:nmap <C-e> :e#<CR>
+
 " title setting
 autocmd BufEnter * let &titlestring = hostname() . "[vim(" . expand("%:t") . ")]"
 
