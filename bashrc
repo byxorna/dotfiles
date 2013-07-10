@@ -187,6 +187,6 @@ rails (){
 }
 
 # addon to take care of OS X being stupid
-if [ -f ~/.bashrc-osx ] ; then
+if [ -f ~/.bashrc-osx ] ; then
   . ~/.bashrc-osx
 fi
