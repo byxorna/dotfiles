@@ -18,14 +18,6 @@ bind '"\e[B"':history-search-forward
 
 set -o vi
 
-#BLUE=`tput setf 1`
-#GREEN=`tput setf 2`
-#CYAN=`tput setf 3`
-#RED=`tput setf 4`
-#MAGENTA=`tput setf 5`
-#YELLOW=`tput setf 6`
-#WHITE=`tput setf 7`
-
 alias vi=vim
 alias ls='ls --color=auto'
 alias lös=ls
@@ -61,6 +53,17 @@ export EDITOR='vim'
 export PAGER='less'
 export GREP_COLOR='1;33'
 export P4CONFIG=~/.p4rc
+
+is_git_repo(){
+  git rev-parse --is-inside-git-dir &>/dev/null
+}
+git_branch(){
+  git rev-parse --symbolic-full-name --abbrev-ref HEAD
+}
+is_git_dirty(){
+  [ -n "$(git status --short)" ]
+}
+
 
 #colors for solarized scheme
 tput sgr0 # reset colors
@@ -106,7 +109,7 @@ RESET=$(tput sgr0)
 # disabled 05-13-2013 gconradi - improperly escaped non-printing chars, caused messed up readline
 # export PS1='\e[1;30m[\e[1;94m\t\e[1;30m] [\e[1;36m\]\u\e[1;30m@\e[1;36m\h\e[1;30m] ($(for r in ${PIPESTATUS[*]} ; do [ $r -eq 0 ] && echo -n "\e[1;30m $r" || echo -n " \e[0;31m$r\e[0m" ; done)\e[1;30m ) \e[0;91m\]\w\n\e[1;30m-> \$ \e[0m' #\e[0;97m'
 # dont forget, when echoing colors, wrap non-printing chars in \[\] so bash doesnt count them to the line length
-export PS1='\[${RESET}${BASE02}\][\[${BLUE}\]\t\[${BASE02}\]] [\[${CYAN}\]\u\[${BASE01}\]@\[${MAGENTA}\]\h\[${BASE02}\]] \[${BASE00}\]($(for r in ${PIPESTATUS[*]} ; do [ $r -eq 0 ] && echo -n "\[$BASE01\] $r" || echo -n " \[${RED}\]${r}\[${RESET}\]" ; done)\[${BASE00}\] ) \[${ORANGE}\]\w\n\[${BASE00}\]-> \$ \[$RESET\]'
+export PS1='\[${RESET}${BASE02}\][\[${BLUE}\]\t\[${BASE02}\]] [\[${CYAN}\]\u\[${BASE01}\]@\[${MAGENTA}\]\h\[${BASE02}\]] \[${BASE00}\]($(for r in ${PIPESTATUS[*]} ; do [ $r -eq 0 ] && echo -n "\[$BASE01\] $r" || echo -n " \[${RED}\]${r}\[${RESET}\]" ; done)\[${BASE00}\] ) \[${ORANGE}\]\w$(is_git_repo && echo -n " \[${GREEN}\]$(git_branch)\[${RESET}\]" && is_git_dirty && echo -n "\[${RED}\]*\[${RESET}\]")\n\[${BASE00}\]-> \$ \[$RESET\]'
 #export PS1='\[\e[1;30m\][\[\e[1;94m\]\t\[\e[1;30m\]] [\[\e[1;36m\]\u\[\e[1;30m\]@\[\e[1;36m\]\h\[\e[1;30m\]] ($(for r in ${PIPESTATUS[*]} ; do [ $r -eq 0 ] && echo -n "\[\e[1;30m\] $r" || echo -n " \[\e[0;31m\]$r\[\e[0m\]" ; done)\[\e[1;30m\] ) \[\e[0;91m\]\w\n\[\e[1;30m\]-> \$ \[\e[0m\]'
 
 # eval `dircolors -b`
