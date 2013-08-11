@@ -10,6 +10,8 @@
 :set fileencoding=utf-8
 :set fileformat=unix
 
+colorscheme solarized
+
 " tab stuff
 :set autoindent
 :set expandtab
