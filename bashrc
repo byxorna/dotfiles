@@ -45,6 +45,11 @@ alias mmlsq='sudo mmlsquota --block-size=auto -j'
 alias mmrepq='sudo mmrepquota --block-size=auto -j'
 alias psa='ps aux | grep '
 alias ss="sudo su"
+alias gitc="git checkout"
+alias gits="git status"
+alias gitb="git branch"
+alias gitf="git fetch"
+alias gitp="git pull"
 
 export PATH=$PATH:~/bin:~/local/bin:~/lang/bin:~/lang/usr/local/scala/bin:/usr/sbin:/sbin:/usr/local/sbin:/usr/local/bin:~/.rvm/bin
 export MANPATH=$MANPATH:~/lang/share/man:~/lang/usr/local/scala/man
