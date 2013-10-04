@@ -244,7 +244,8 @@ haste(){
   [ $? != 0 ] && return 1
   r="$(curl -s -d "$d" "$url/documents")"
   # if all cool, generate a link from the json response
-  [ $? = 0 ] && echo "$r"|awk -F'\\W+' "{print \"$url/\"\$3}"
+  #[ $? = 0 ] && echo "$r"|awk -F'\\W+' "{print \"$url/\"\$3}"  # apparently awk on OSX is too crufty to support regex in -F
+  [ $? = 0 ] && echo "$r"|perl -ne "/\W+\w+\W+(\w+)\W+/ and print \"$url/\$1\n\";"
 }
 
 # addon to take care of OS X being stupid
