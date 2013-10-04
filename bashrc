@@ -237,6 +237,16 @@ rails (){
   fi
 }
 
+# throw things onto hastebin
+haste(){
+  url="http://hastebin.com"
+  d="$(cat $1)" # read from file if given, else stdin
+  [ $? != 0 ] && return 1
+  r="$(curl -s -d "$d" "$url/documents")"
+  # if all cool, generate a link from the json response
+  [ $? = 0 ] && echo "$r"|awk -F'\\W+' "{print \"$url/\"\$3}"
+}
+
 # addon to take care of OS X being stupid
 if [ -f ~/.bashrc-osx ] ; then
   . ~/.bashrc-osx
