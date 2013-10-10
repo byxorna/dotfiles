@@ -23,7 +23,7 @@ c[:host] = "https://collins.#{c[:environment]}.tumblr.net"
 collins = Collins::Client.new c
 
 assets = collins.find(:hostname => @hostname, :details => true)
-abort "More than 1 node found like #{@hostname} (found #{assets.length}). Please be more specific..." if assets.length != 1
+abort "More than 1 node found like #{@hostname} (found #{assets.length}). Please be more specific...\n#{assets.map {|a| a.hostname}.join "\n"}\n" if assets.length != 1
 
 node = assets.first
 #puts node.inspect
