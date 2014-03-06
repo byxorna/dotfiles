@@ -30,8 +30,10 @@ colorscheme solarized
 " title setting
 autocmd BufEnter * let &titlestring = hostname() . "[vim(" . expand("%:t") . ")]"
 
-" assorted automatic syntax loading
-au BufRead *.md set syntax=markdown
+" assorted automatic syntax loading. filetype -> syntax
+au BufRead *.md set filetype=markdown
+au BufRead *.scala set filetype=scala
+au BufRead *.pp set filetype=puppet
 
 " highlight trailing whitespace
 highlight ExtraWhitespace ctermbg=red guibg=red
