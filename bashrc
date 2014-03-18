@@ -1,5 +1,6 @@
 # Check for an interactive session
 [ -z "$PS1" ] && return
+umask 0022
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
