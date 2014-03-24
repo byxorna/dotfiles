@@ -46,3 +46,6 @@ if &term == "screen" || &term == "xterm" || &term == "xterm-color" || &term == "
   set title
 endif
 
+" try and set up ctrlp. make sure you git submodule init
+set runtimepath^=~/.vim/bundle/ctrlp.vim
+
