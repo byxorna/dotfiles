@@ -24,6 +24,9 @@ colorscheme solarized
 " go up and down one row, not one line (useful for wrapped lines)
 :nmap j gj
 :nmap k gk
+" tab next/prev with shift h and shift l
+nnoremap <S-h> gT
+nnoremap <S-l> gt
 " jump between last opened buffer with Ctrl+E (:b# and :e# do same thing)
 :nmap <C-e> :e#<CR>
 
