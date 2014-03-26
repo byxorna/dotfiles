@@ -53,4 +53,6 @@ endif
 
 " try and set up ctrlp. make sure you git submodule init
 set runtimepath^=~/.vim/bundle/ctrlp.vim
+" turn on syntastic for awesome syntax checking
+set runtimepath^=~/.vim/bundle/syntastic.vim
 
