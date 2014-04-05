@@ -55,4 +55,6 @@ endif
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 " turn on syntastic for awesome syntax checking
 set runtimepath^=~/.vim/bundle/syntastic.vim
+" turn on vim-gitgutter
+set runtimepath^=~/.vim/bundle/vim-gitgutter
 
