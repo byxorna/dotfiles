@@ -1,5 +1,6 @@
 # Check for an interactive session
 [ -z "$PS1" ] && return
+umask 0022
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
@@ -50,6 +51,7 @@ alias gits="git status"
 alias gitb="git branch"
 alias gitf="git fetch"
 alias gitp="git pull"
+alias gg="git grep"
 
 export PATH=$PATH:~/bin:~/local/bin:~/lang/bin:~/lang/usr/local/scala/bin:/usr/sbin:/sbin:/usr/local/sbin:/usr/local/bin:~/.rvm/bin
 export MANPATH=$MANPATH:~/lang/share/man:~/lang/usr/local/scala/man

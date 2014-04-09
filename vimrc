@@ -24,14 +24,19 @@ colorscheme solarized
 " go up and down one row, not one line (useful for wrapped lines)
 :nmap j gj
 :nmap k gk
+" tab next/prev with shift h and shift l
+nnoremap <S-h> gT
+nnoremap <S-l> gt
 " jump between last opened buffer with Ctrl+E (:b# and :e# do same thing)
 :nmap <C-e> :e#<CR>
 
 " title setting
 autocmd BufEnter * let &titlestring = hostname() . "[vim(" . expand("%:t") . ")]"
 
-" assorted automatic syntax loading
-au BufRead *.md set syntax=markdown
+" assorted automatic syntax loading. filetype -> syntax
+au BufRead *.md set filetype=markdown
+au BufRead *.scala set filetype=scala
+au BufRead *.pp set filetype=puppet
 
 " highlight trailing whitespace
 highlight ExtraWhitespace ctermbg=red guibg=red
@@ -45,4 +50,11 @@ endif
 if &term == "screen" || &term == "xterm" || &term == "xterm-color" || &term == "xterm-256color"
   set title
 endif
+
+" try and set up ctrlp. make sure you git submodule init
+set runtimepath^=~/.vim/bundle/ctrlp.vim
+" turn on syntastic for awesome syntax checking
+set runtimepath^=~/.vim/bundle/syntastic.vim
+" turn on vim-gitgutter
+set runtimepath^=~/.vim/bundle/vim-gitgutter
 
