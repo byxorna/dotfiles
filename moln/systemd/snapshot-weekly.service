@@ -1,0 +1,11 @@
+[Unit]
+Description=Weekly Snapshots
+Wants=timer-weekly.timer
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/zfs-snapshot.rb -s data/music -k 4 -p weekly "%s"
+
+[Install]
+WantedBy=timer-weekly.target

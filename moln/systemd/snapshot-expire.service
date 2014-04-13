@@ -1,0 +1,11 @@
+[Unit]
+Description=Expire ZFS snapshots
+Wants=timer-hourly.timer
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/zfs-snapshot.rb -x data
+
+[Install]
+WantedBy=timer-hourly.target
