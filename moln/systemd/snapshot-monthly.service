@@ -5,7 +5,7 @@ Wants=timer-monthly.timer
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=/usr/bin/zfs-snapshot.rb -s data/music -k 31 -p monthly -S "-%Y-%m-%d"
+ExecStart=/usr/bin/zfs-snapshot.rb -s data/music -k 31 -p monthly -S "-%%Y-%%m-%%d"
 
 [Install]
 WantedBy=timer-monthly.target
