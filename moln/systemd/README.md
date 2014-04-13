@@ -20,4 +20,6 @@ For some reason, systemd wont handle templated mount units (export@.mount), and 
     [Install]
     WantedBy=local-fs.target
 
+## BTsync
 
+Overrides to unit files are parsed from ```/etc/systemd/system/UNIT.d/*.conf```. You can see overrides with ```systemd-delta``` or ```systemctl cat myservice.service```.
