@@ -1,0 +1,19 @@
+[Unit]
+Description=Bind mount music
+DefaultDependencies=no
+Conflicts=umount.target shutdown.target
+Before=local-fs.target umount.target
+Requires=zfs.service
+After=zfs.service
+ConditionPathIsMountPoint=/data/music
+
+[Mount]
+What=/data/music
+Where=/export/music
+Type=none
+Options=bind
+
+[Install]
+WantedBy=local-fs.target
+
+

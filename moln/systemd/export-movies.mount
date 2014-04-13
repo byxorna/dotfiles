@@ -1,0 +1,19 @@
+[Unit]
+Description=Bind mount movies
+DefaultDependencies=no
+Conflicts=umount.target shutdown.target
+Before=local-fs.target umount.target
+Requires=zfs.service
+After=zfs.service
+ConditionPathIsMountPoint=/data/movies
+
+[Mount]
+What=/data/movies
+Where=/export/movies
+Type=none
+Options=bind
+
+[Install]
+WantedBy=local-fs.target
+
+

@@ -1,0 +1,19 @@
+[Unit]
+Description=Bind mount photos
+DefaultDependencies=no
+Conflicts=umount.target shutdown.target
+Before=local-fs.target umount.target
+Requires=zfs.service
+After=zfs.service
+ConditionPathIsMountPoint=/data/photos
+
+[Mount]
+What=/data/photos
+Where=/export/photos
+Type=none
+Options=bind
+
+[Install]
+WantedBy=local-fs.target
+
+

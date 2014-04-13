@@ -1,0 +1,19 @@
+[Unit]
+Description=Bind mount tvshows
+DefaultDependencies=no
+Conflicts=umount.target shutdown.target
+Before=local-fs.target umount.target
+Requires=zfs.service
+After=zfs.service
+ConditionPathIsMountPoint=/data/tvshows
+
+[Mount]
+What=/data/tvshows
+Where=/export/tvshows
+Type=none
+Options=bind
+
+[Install]
+WantedBy=local-fs.target
+
+
