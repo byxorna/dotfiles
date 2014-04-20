@@ -4,7 +4,6 @@ Wants=timer-hourly.timer
 
 [Service]
 Type=oneshot
-RemainAfterExit=yes
 ExecStart=/usr/bin/zfs-snapshot.rb -x data
 
 [Install]
