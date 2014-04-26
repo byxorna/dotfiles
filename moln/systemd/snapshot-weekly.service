@@ -4,7 +4,7 @@ Wants=timer-weekly.timer
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/zfs-snapshot.rb -s data -k 4 -p weekly -S "%%s"
+ExecStart=/usr/bin/zfs-snapshot.rb -r -s data -k 4 -p weekly -S "%%s"
 
 [Install]
 WantedBy=timer-weekly.target

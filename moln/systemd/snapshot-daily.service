@@ -4,7 +4,7 @@ Wants=timer-daily.timer
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/zfs-snapshot.rb -s data -k 7 -p daily -S "-%%b%%d"
+ExecStart=/usr/bin/zfs-snapshot.rb -r -s data -k 7 -p daily -S "-%%b%%d"
 
 [Install]
 WantedBy=timer-daily.target
