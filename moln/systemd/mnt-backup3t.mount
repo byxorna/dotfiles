@@ -2,7 +2,7 @@
 Description=/mnt/backup3t
 
 [Mount]
-What=LABEL=backup
+What=/dev/disk/by-label/backup
 Where=/mnt/backup3t
 Type=ext4
 
