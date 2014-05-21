@@ -37,6 +37,7 @@ autocmd BufEnter * let &titlestring = hostname() . "[vim(" . expand("%:t") . ")]
 au BufRead *.md set filetype=markdown
 au BufRead *.scala set filetype=scala
 au BufRead *.pp set filetype=puppet
+au BufRead *.jade set filetype=jade
 
 " highlight trailing whitespace
 highlight ExtraWhitespace ctermbg=red guibg=red
