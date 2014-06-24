@@ -12,6 +12,10 @@ if [ -f /etc/bash_completion ]; then
   . /etc/bash_completion
 fi
 
+[[ $(uname) == Darwin ]] && md5sum(){ 
+  /sbin/md5 "$@"
+}
+
 # add in history searching
 # up and down search for history entry beginning with that entry
 bind '"\e[A"':history-search-backward
@@ -53,7 +57,7 @@ alias gitf="git fetch"
 alias gitp="git pull"
 alias gg="git grep"
 
-export PATH=$PATH:~/bin:~/local/bin:~/lang/bin:~/lang/usr/local/scala/bin:/usr/sbin:/sbin:/usr/local/sbin:/usr/local/bin:~/.rvm/bin
+export PATH=$PATH:~/bin:~/local/bin:~/lang/bin:~/lang/usr/local/scala/bin:/usr/sbin:/sbin:/usr/local/sbin:/usr/local/bin:~/.rvm/bin:/opt/local/bin:/opt/local/sbin
 export MANPATH=$MANPATH:~/lang/share/man:~/lang/usr/local/scala/man
 export VISUAL='vim'
 export EDITOR='vim'
@@ -69,6 +73,15 @@ git_branch(){
 }
 is_git_dirty(){
   [ -n "$(git status --short)" ]
+}
+
+random_color(){
+  # spits out a random color based on $RANDOM or your input
+  [[ -z $1 ]] && r=$RANDOM || r=$((0x$(md5sum <<< "$1") ** 2))
+  # seems to give a better distribution if 125 is repeated
+  color_codes=(125 136 166 160 125 61 33 37 64)
+  i=$(($r % ${#color_codes[@]}))
+  echo -n "$(tput setaf ${color_codes[$i]})"
 }
 
 
@@ -116,7 +129,9 @@ RESET=$(tput sgr0)
 # disabled 05-13-2013 gconradi - improperly escaped non-printing chars, caused messed up readline
 # export PS1='\e[1;30m[\e[1;94m\t\e[1;30m] [\e[1;36m\]\u\e[1;30m@\e[1;36m\h\e[1;30m] ($(for r in ${PIPESTATUS[*]} ; do [ $r -eq 0 ] && echo -n "\e[1;30m $r" || echo -n " \e[0;31m$r\e[0m" ; done)\e[1;30m ) \e[0;91m\]\w\n\e[1;30m-> \$ \e[0m' #\e[0;97m'
 # dont forget, when echoing colors, wrap non-printing chars in \[\] so bash doesnt count them to the line length
-export PS1='\[${RESET}${BASE02}\][\[${BLUE}\]\t\[${BASE02}\]] [\[${CYAN}\]\u\[${BASE01}\]@\[${MAGENTA}\]\h\[${BASE02}\]] \[${BASE00}\]($(for r in ${PIPESTATUS[*]} ; do [ $r -eq 0 ] && echo -n "\[$BASE01\] $r" || echo -n " \[${RED}\]${r}\[${RESET}\]" ; done)\[${BASE00}\] ) \[${ORANGE}\]\w$(is_git_repo && echo -n " \[${GREEN}\]$(git_branch)\[${RESET}\]" && is_git_dirty && echo -n "\[${RED}\]*\[${RESET}\]")\n\[${BASE00}\]-> \$ \[$RESET\]'
+# lets precompute the color we want this host to be
+host_color="$(random_color $HOSTNAME)"
+export PS1='\[${RESET}${BASE02}\][\[${BLUE}\]\t\[${BASE02}\]] [\[${CYAN}\]\u\[${BASE01}\]@\[${host_color}\]\h\[${BASE02}\]] \[${BASE00}\]($(for r in ${PIPESTATUS[*]} ; do [ $r -eq 0 ] && echo -n "\[$BASE01\] $r" || echo -n " \[${RED}\]${r}\[${RESET}\]" ; done)\[${BASE00}\] ) \[${ORANGE}\]\w$(is_git_repo && echo -n " \[${GREEN}\]$(git_branch)\[${RESET}\]" && is_git_dirty && echo -n "\[${RED}\]*\[${RESET}\]")\n\[${BASE00}\]-> $(random_color)\$ \[$RESET\]'
 #export PS1='\[\e[1;30m\][\[\e[1;94m\]\t\[\e[1;30m\]] [\[\e[1;36m\]\u\[\e[1;30m\]@\[\e[1;36m\]\h\[\e[1;30m\]] ($(for r in ${PIPESTATUS[*]} ; do [ $r -eq 0 ] && echo -n "\[\e[1;30m\] $r" || echo -n " \[\e[0;31m\]$r\[\e[0m\]" ; done)\[\e[1;30m\] ) \[\e[0;91m\]\w\n\[\e[1;30m\]-> \$ \[\e[0m\]'
 
 # eval `dircolors -b`
@@ -254,13 +269,4 @@ haste(){
 if [ -f ~/.bashrc-osx ] ; then
   . ~/.bashrc-osx
 fi
-
-
-##
-# Your previous /Users/gabe/.profile file was backed up as /Users/gabe/.profile.macports-saved_2014-04-08_at_11:39:47
-##
-
-# MacPorts Installer addition on 2014-04-08_at_11:39:47: adding an appropriate PATH variable for use with MacPorts.
-export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-# Finished adapting your PATH environment variable for use with MacPorts.
 
