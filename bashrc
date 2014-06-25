@@ -77,7 +77,12 @@ is_git_dirty(){
 
 random_color(){
   # spits out a random color based on $RANDOM or your input
-  [[ -z $1 ]] && r=$RANDOM || r=$((0x$(md5sum <<< "$1") ** 2))
+  if [[ -z $1 ]] ; then
+    r=$RANDOM
+  else
+    h="$(md5sum <<< "$1")"
+    r=$((0x${h%% *} ** 2))
+  fi
   # seems to give a better distribution if 125 is repeated
   color_codes=(125 136 166 160 125 61 33 37 64)
   i=$(($r % ${#color_codes[@]}))
