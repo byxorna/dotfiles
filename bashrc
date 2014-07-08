@@ -197,7 +197,7 @@ case $TERM in
  #echo -n -e "\033k`uname -n`\033\\"  # only runs on source
  tab_command='echo -n -e "\033k`uname -n`\033\\"'
  #set window title to be more verbose
- verbose_window_command='echo -ne "\033]0;${USER}@${HOSTNAME}[`basename ${PWD}`]\007"'
+ verbose_window_command='echo -ne "\033]0;${USER}@${HOSTNAME}[`basename "${PWD}"`]\007"'
  PROMPT_COMMAND="$tab_command ; $verbose_window_command"
  ;;
  screen*)
