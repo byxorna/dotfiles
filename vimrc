@@ -29,6 +29,7 @@ nnoremap <S-h> gT
 nnoremap <S-l> gt
 " jump between last opened buffer with Ctrl+E (:b# and :e# do same thing)
 :nmap <C-e> :e#<CR>
+" jump between syntastic syntax errors on location-list with :ll
 
 " title setting
 autocmd BufEnter * let &titlestring = hostname() . "[vim(" . expand("%:t") . ")]"
