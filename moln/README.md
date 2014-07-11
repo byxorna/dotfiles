@@ -4,3 +4,7 @@ Requires http://seblu.net/a/arm/2014/05/05/core/os/x86_64/linux-lts-3.10.38-1-x8
 # ZFS
 /etc/zfs/zpool.cache needs to be restored, it holds all the pools to mount
 
+#Nagios
+
+Dont forget checks in /usr/share/nagios/libexec
+
