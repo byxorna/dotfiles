@@ -57,7 +57,8 @@ alias gitf="git fetch"
 alias gitp="git pull"
 alias gg="git grep"
 
-export PATH=$PATH:~/bin:~/local/bin:~/lang/bin:~/lang/usr/local/scala/bin:/usr/sbin:/sbin:/usr/local/sbin:/usr/local/bin:~/.rvm/bin:/opt/local/bin:/opt/local/sbin
+export GOPATH=~/code/go
+export PATH=$PATH:~/bin:~/local/bin:~/lang/bin:~/lang/usr/local/scala/bin:/usr/sbin:/sbin:/usr/local/sbin:/usr/local/bin:~/.rvm/bin:/opt/local/bin:/opt/local/sbin:$GOPATH/bin
 export MANPATH=$MANPATH:~/lang/share/man:~/lang/usr/local/scala/man
 export VISUAL='vim'
 export EDITOR='vim'
