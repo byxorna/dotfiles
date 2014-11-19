@@ -65,6 +65,8 @@ export EDITOR='vim'
 export PAGER='less'
 export GREP_COLOR='1;33'
 export P4CONFIG=~/.p4rc
+# prepend history output with timestamps
+export HISTTIMEFORMAT="%F %T - "
 
 is_git_repo(){
   git rev-parse --is-inside-git-dir &>/dev/null
