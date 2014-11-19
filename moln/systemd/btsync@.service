@@ -1,0 +1,12 @@
+[Unit]
+Description=BitTorrent Sync for %i
+
+[Service]
+Type=simple
+User=%i
+ExecStart=/home/gabe/bin/btsync --nodaemon --config %h/.btsync/sync.conf
+WorkingDirectory=%h
+
+[Install]
+WantedBy=multi-user.target
+
