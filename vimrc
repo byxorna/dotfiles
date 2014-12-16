@@ -39,6 +39,7 @@ au BufRead *.md set filetype=markdown
 au BufRead *.scala set filetype=scala
 au BufRead *.pp set filetype=puppet
 au BufRead *.jade set filetype=jade
+au BufRead *.go set filetype=go
 
 " highlight trailing whitespace
 highlight ExtraWhitespace ctermbg=red guibg=red
