@@ -13,3 +13,9 @@
 [submodule "guake-colors-solarized"]
 	path = guake-colors-solarized
 	url = https://github.com/coolwanglu/guake-colors-solarized.git
+[submodule "vim-go"]
+	path = vim-go
+	url = git@github.com:fatih/vim-go.git
+[submodule "vim/bundle/vim-go"]
+	path = vim/bundle/vim-go
+	url = git@github.com:fatih/vim-go.git

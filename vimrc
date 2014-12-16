@@ -61,4 +61,6 @@ set runtimepath^=~/.vim/bundle/syntastic.vim
 set runtimepath^=~/.vim/bundle/vim-gitgutter
 " turn on vim-jade syntax
 set runtimepath^=~/.vim/bundle/vim-jade
+" turn on vim-go
+set runtimepath^=~/.vim/bundle/vim-go
 
