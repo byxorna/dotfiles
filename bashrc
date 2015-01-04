@@ -43,7 +43,7 @@ alias '....'='cd ../..'
 alias .='source'
 alias isomount='sudo mount -t iso9660 -o loop'
 #alias perlshell='perl -wn -e ' print "perl> " ; eval($_);'''
-alias ssh='ssh -q'
+alias ssh='ssh -qA'
 alias scp='scp -q'
 alias p4sync="p4 sync ~/p4_work/unix/...#head"
 alias mmlsq='sudo mmlsquota --block-size=auto -j'
