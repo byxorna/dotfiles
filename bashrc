@@ -7,13 +7,6 @@ if [ -f /etc/bashrc ]; then
   . /etc/bashrc
 fi
 
-SSHAGENT=/usr/bin/ssh-agent
-SSHAGENTARGS="-s"
-if [ -z "$SSH_AUTH_SOCK" -a -x "$SSHAGENT" ]; then
-  eval `$SSHAGENT $SSHAGENTARGS`
-  trap "kill $SSH_AGENT_PID" 0
-fi
-
 # enable bash completion in interactive shells
 if [ -f /etc/bash_completion ]; then
   . /etc/bash_completion
@@ -286,4 +279,16 @@ haste(){
 if [ -f ~/.bashrc-osx ] ; then
   . ~/.bashrc-osx
 fi
+
+SSHAGENT=/usr/bin/ssh-agent
+TARGET_SOCK="$HOME/.ssh/agent.sock"
+[[ ! -S $SSH_AUTH_SOCK ]] && unset SSH_AUTH_SOCK
+[[ -r $TARGET_SOCK && -S $TARGET_SOCK && $SSH_AUTH_SOCK != $TARGET_SOCK ]] && export SSH_AUTH_SOCK="$TARGET_SOCK"
+SSHAGENTARGS="-s -a $TARGET_SOCK"
+if [[ -z $SSH_AUTH_SOCK && ! -S $TARGET_SOCK && -x $SSHAGENT ]]; then
+  eval `$SSHAGENT $SSHAGENTARGS`
+  trap "kill $SSH_AGENT_PID" 0
+  ssh-add
+fi
+
 
