@@ -84,7 +84,9 @@ random_color(){
     r=$RANDOM
   else
     h="$(md5sum <<< "$1")"
-    r=$((0x${h%% *} ** 2))
+    # make sure we bound the size of the int we get from converting hash to int
+    subst="${h:0:6}"
+    r="$((0x${subst%% *} ** 2))"
   fi
   # seems to give a better distribution if 125 is repeated
   color_codes=(125 136 166 160 125 61 33 37 64)
