@@ -287,7 +287,7 @@ TARGET_SOCK="$HOME/.ssh/agent.sock"
 [[ ! -S $SSH_AUTH_SOCK ]] && unset SSH_AUTH_SOCK
 [[ -r $TARGET_SOCK && -S $TARGET_SOCK && ( $SSH_AUTH_SOCK != $TARGET_SOCK || -z $SSH_AUTH_SOCK ) ]] && export SSH_AUTH_SOCK="$TARGET_SOCK"
 # drop identities after 3 days
-SSHAGENTARGS="-s -t 3d -a $TARGET_SOCK"
+SSHAGENTARGS="-s -a $TARGET_SOCK"
 if [[ -z $SSH_AUTH_SOCK && ! -S $TARGET_SOCK && -x $SSHAGENT ]]; then
   eval `$SSHAGENT $SSHAGENTARGS`
   # prevent agent from dying whenever the spawning terminal is closed
