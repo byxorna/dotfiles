@@ -203,11 +203,13 @@ case $TERM in
  tab_command='echo -n -e "\033k`uname -n`\033\\"'
  #set window title to be more verbose
  verbose_window_command='echo -ne "\033]0;${USER}@${HOSTNAME}[`basename "${PWD}"`]\007"'
- PROMPT_COMMAND="$tab_command ; $verbose_window_command"
+ window_status='echo -ne "\033]0;${USER}[`basename "${PWD}"`]\007"'
+ #PROMPT_COMMAND="$tab_command ; $verbose_window_command"
+ PROMPT_COMMAND="$verbose_window_command"
  ;;
  screen*)
 # screen responds to ESC k TITLEHERE ESC \. print ESC with ctrl+v,escape. dont forget to escape \ so the shell doesnt wait for the next char
- PROMPT_COMMAND='echo -ne "\033k${HOSTNAME}\033\\"'
+ #PROMPT_COMMAND='echo -ne "\033k${HOSTNAME}\033\\"'
  #PROMPT_COMMAND='echo -ne "\033k${HOSTNAME}:[`basename ${PWD}`]\033\\"'
  ;;
  *)
