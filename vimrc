@@ -32,7 +32,8 @@ nnoremap <S-l> gt
 " jump between syntastic syntax errors on location-list with :ll
 
 " title setting
-autocmd BufEnter * let &titlestring = hostname() . "[vim(" . expand("%:t") . ")]"
+"autocmd BufEnter * let &titlestring = hostname() . "[vim(" . expand("%:t") . ")]"
+autocmd BufEnter * let &titlestring = "vim(" . expand("%:t") . ")"
 
 " assorted automatic syntax loading. filetype -> syntax
 au BufRead *.md set filetype=markdown
@@ -45,7 +46,11 @@ au BufRead *.go set filetype=go
 highlight ExtraWhitespace ctermbg=red guibg=red
 :autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
 
-let &titlestring = hostname() . "[vim(" . expand("%:t") . ")]"
+" always use 256 colors. its 2015.
+set t_Co=256
+
+"let &titlestring = hostname() . "[vim(" . expand("%:t") . ")]"
+let &titlestring = "vim(" . expand("%:t") . ")"
 if &term == "screen"
   set t_ts=k
   set t_fs=\
