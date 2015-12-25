@@ -6,7 +6,6 @@ Wants=timer-daily.timer
 Type=oneshot
 ExecStart=/usr/bin/zfs-backup.sh data/apps /mnt/backup3t/apps
 ExecStart=/usr/bin/zfs-backup.sh data/docs /mnt/backup3t/docs
-ExecStart=/usr/bin/zfs-backup.sh data/downloads /mnt/backup3t/downloads
 ExecStart=/usr/bin/zfs-backup.sh data/movies /mnt/backup3t/movies
 ExecStart=/usr/bin/zfs-backup.sh data/music /mnt/backup3t/music
 ExecStart=/usr/bin/zfs-backup.sh data/photos /mnt/backup3t/photos
