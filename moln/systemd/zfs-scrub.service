@@ -7,4 +7,4 @@ Type=oneshot
 ExecStart=/usr/bin/zpool scrub data
 
 [Install]
-WantedBy=timer-daily.target
+WantedBy=timer-weekly.target
