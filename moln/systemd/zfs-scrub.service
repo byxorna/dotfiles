@@ -1,0 +1,10 @@
+[Unit]
+Description=ZFS Scrub
+Wants=timer-weekly.timer
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/zpool scrub data
+
+[Install]
+WantedBy=timer-daily.target
