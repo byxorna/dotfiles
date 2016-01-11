@@ -195,6 +195,9 @@ extract () {
 	fi
 }
 
+# fuck it. basically all terminals are shitty and broken
+[[ $TERM == xterm ]] && export TERM=xterm-256color
+
 #title screen's tabs with hostname
 case $TERM in
  xterm*|rxvt*)
