@@ -306,3 +306,14 @@ showcolors() {
   done
 }
 
+# setup ssh tunnnel
+# i.e. tunnel gconradi@jumpbox dmzhost1 1235 80
+# wget localhost:1235
+tunnel(){
+  jump="$1"
+  remote="$2"
+  localport="${3:-1234}"
+  remoteport="${4:-22}"
+  echo "Tunneling localhost:$localport -> $jump:22 -> $remote:$remoteport"
+  ssh -L "$localport:$remote:22" "$jump" "echo 'Tunnel to $remote via $jump is running. Accessible at localhost:$localport' ; cat -"
+}
