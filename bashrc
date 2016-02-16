@@ -149,31 +149,6 @@ export PS1='\[${RESET}${BASE02}\][\[${BLUE}\]\t\[${BASE02}\]] [\[${CYAN}\]\u\[${
 # eval `dircolors -b`
 export LS_COLORS='no=00:fi=00:di=01;34:ln=00;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=41;33;01:ex=00;32:*.cmd=00;32:*.exe=01;32:*.com=01;32:*.bat=01;32:*.btm=01;32:*.dll=01;32:*.tar=00;31:*.tbz=00;31:*.tgz=00;31:*.rpm=00;31:*.deb=00;31:*.arj=00;31:*.taz=00;31:*.lzh=00;31:*.lzma=00;31:*.zip=00;31:*.zoo=00;31:*.z=00;31:*.Z=00;31:*.gz=00;31:*.bz2=00;31:*.tb2=00;31:*.tz2=00;31:*.tbz2=00;31:*.xz=00;31:*.avi=01;35:*.bmp=01;35:*.fli=01;35:*.gif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mng=01;35:*.mov=01;35:*.mpg=01;35:*.pcx=01;35:*.pbm=01;35:*.pgm=01;35:*.png=01;35:*.ppm=01;35:*.tga=01;35:*.tif=01;35:*.xbm=01;35:*.xpm=01;35:*.dl=01;35:*.gl=01;35:*.wmv=01;35:*.aiff=00;32:*.au=00;32:*.mid=00;32:*.mp3=00;32:*.ogg=00;32:*.voc=00;32:*.wav=00;32:'
 
-# set up ssh-agent
-# requires either ForwardAgent yes or -A in ssh
-#SSHAGENT=/usr/bin/ssh-agent
-#SSHAGENTARGS="-s"
-#if [ -z "$SSH_AUTH_SOCK" -a -x "$SSHAGENT" ]; then
-#  # no agent running, set up the socket
-#  eval `$SSHAGENT $SSHAGENTARGS`
-#  trap "kill $SSH_AGENT_PID" 0
-#  ssh-add
-#fi
-## rely on ssh to find the correct socket (pointed to by this file)
-## .ssh/rc runs before this is sourced
-##export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
-#
-#r(){
-#  if [[ -n $TMUX ]] ; then
-#    NEW_SSH_AUTH_SOCK=`tmux showenv|grep '^SSH_AUTH_SOCK' |cut -d = -f 2`
-#    if [[ -n $NEW_SSH_AUTH_SOCK ]] && [[ -S $NEW_SSH_AUTH_SOCK ]] ; then
-#      SSH_AUTH_SOCK=$NEW_SSH_AUTH_SOCK
-#    fi
-#  fi
-#}
-
-
-
 extract () {
 	if [ -f $1 ] ; then
 		case $1 in
@@ -288,17 +263,18 @@ if [ -f ~/.bashrc-osx ] ; then
 fi
 
 SSHAGENT=/usr/bin/ssh-agent
-TARGET_SOCK="$HOME/.ssh/agent.sock"
+# OSX/some DEs start an agent for you, so just take that
+TARGET_SOCK="${SSH_AUTH_SOCK:-$HOME/.ssh/agent.sock}"
 [[ ! -S $SSH_AUTH_SOCK ]] && unset SSH_AUTH_SOCK
 [[ -r $TARGET_SOCK && -S $TARGET_SOCK && ( $SSH_AUTH_SOCK != $TARGET_SOCK || -z $SSH_AUTH_SOCK ) ]] && export SSH_AUTH_SOCK="$TARGET_SOCK"
-# drop identities after 3 days
-SSHAGENTARGS="-s -a $TARGET_SOCK"
 if [[ -z $SSH_AUTH_SOCK && ! -S $TARGET_SOCK && -x $SSHAGENT ]]; then
-  eval `$SSHAGENT $SSHAGENTARGS`
+  eval `$SSHAGENT -s -a $TARGET_DOCK`
   # prevent agent from dying whenever the spawning terminal is closed
   #trap "kill $SSH_AGENT_PID" 0
-  ssh-add
 fi
+# add key only if it isnt already added. this assumes you are using rsa keys...
+# TODO: determine the default key that ssh-add uses programmatically
+ssh-add -l|grep -q "$(ssh-keygen -lf ~/.ssh/id_rsa|awk '{print $2}')" || ssh-add
 
 showcolors() {
   for i in {0..255} ; do
