@@ -291,6 +291,6 @@ tunnel(){
   localport="${3:-1234}"
   jumpport=22
   remoteport="${4:-22}"
-  echo "Tunneling localhost:$localport -> $jump:$jumpport -> $remote:$remoteport"
-  ssh -v -L "$localport:$remote:$remoteport" "$jump" "echo -e '$remote:$remoteport is accessible at localhost:$localport\nctrl-c to stop tunnel' ; cat -"
+  echo -e "Tunneling localhost:$localport -> $jump:$jumpport -> $remote:$remoteport\nctrl-c to stop"
+  ssh -N -L "$localport:$remote:$remoteport" "$jump"
 }
