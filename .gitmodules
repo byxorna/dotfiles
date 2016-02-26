@@ -3,19 +3,16 @@
 	url = https://github.com/kien/ctrlp.vim.git
 [submodule "vim/bundle/syntastic.vim"]
 	path = vim/bundle/syntastic.vim
-	url = git@github.com:scrooloose/syntastic.git
+	url = https://github.com/scrooloose/syntastic.git
 [submodule "vim/bundle/vim-gitgutter"]
 	path = vim/bundle/vim-gitgutter
-	url = git://github.com/airblade/vim-gitgutter.git
+	url = https://github.com/airblade/vim-gitgutter.git
 [submodule "vim/bundle/vim-jade"]
 	path = vim/bundle/vim-jade
 	url = https://github.com/digitaltoad/vim-jade.git
 [submodule "guake-colors-solarized"]
 	path = guake-colors-solarized
 	url = https://github.com/coolwanglu/guake-colors-solarized.git
-[submodule "vim-go"]
-	path = vim-go
-	url = git@github.com:fatih/vim-go.git
 [submodule "vim/bundle/vim-go"]
 	path = vim/bundle/vim-go
-	url = git@github.com:fatih/vim-go.git
+	url = https://github.com/fatih/vim-go.git
