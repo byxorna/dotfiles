@@ -194,6 +194,8 @@ case $TERM in
  ;;
 esac
 
+[[ -f ~/.rvm/scripts/rvm ]] && . ~/.rvm/scripts/rvm
+
 # Run commands on all nodes in a gpfs cluster
 # runs $2 on $1's nodes
 # doallgpfs deva 'uname -r'
