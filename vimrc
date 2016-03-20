@@ -12,6 +12,9 @@
 
 colorscheme solarized
 
+" disable .netrwhist nonsense
+:let g:netrw_dirhistmax = 0
+
 " tab stuff
 :set autoindent
 :set expandtab
