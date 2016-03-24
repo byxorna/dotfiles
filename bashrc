@@ -296,3 +296,12 @@ tunnel(){
   echo -e "Tunneling localhost:$localport -> $jump:$jumpport -> $remote:$remoteport\nctrl-c to stop"
   ssh -N -L "$localport:$remote:$remoteport" "$jump"
 }
+
+collinsdc() {
+  [[ -z $1 ]] && (echo "Provide a site as first argument" >&2 && return 2)
+  if [[ ! -f ~/.collins.yml.$1 ]] ; then
+    echo "No collins config found for $1" >&2
+    return 2
+  fi
+  ln -sfn ~/.collins.yml.$1 ~/.collins.yml && echo "Using collins config for $1"
+}
