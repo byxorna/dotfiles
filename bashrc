@@ -298,10 +298,14 @@ tunnel(){
 }
 
 collinsdc() {
-  [[ -z $1 ]] && (echo "Provide a site as first argument" >&2 && return 2)
-  if [[ ! -f ~/.collins.yml.$1 ]] ; then
-    echo "No collins config found for $1" >&2
-    return 2
+  if [[ -z $1 ]] ; then
+    l=$(basename $(readlink ~/.collins.yml))
+    echo "${l##.collins.yml.}"
+  else
+    if [[ ! -f ~/.collins.yml.$1 ]] ; then
+      echo "No collins config found for $1" >&2
+      return 2
+    fi
+    ln -sfn ~/.collins.yml.$1 ~/.collins.yml && echo "Using collins config for $1"
   fi
-  ln -sfn ~/.collins.yml.$1 ~/.collins.yml && echo "Using collins config for $1"
 }
