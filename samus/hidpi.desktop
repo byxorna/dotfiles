@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Scale display hidpi
+Comment=Scale display hidpi
+Exec=/home/gabe/code/dotfiles/samus/hidpi.sh 1.2
+OnlyShowIn=GNOME;Unity;MATE;
+X-GNOME-Autostart-Phase=Applications
+X-GNOME-AutoRestart=false
