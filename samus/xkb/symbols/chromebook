@@ -2,7 +2,8 @@
 partial
 xkb_symbols "overlay" {
     //key <LWIN> { [ Overlay1_Enable ], overlay1=<LWIN> };
-    key <LALT> { [ Overlay1_Enable ], overlay1=<LALT> };
+    //key <LALT> { [ Overlay1_Enable ], overlay1=<LALT> };
+    key <RCTL> { [ Overlay1_Enable ], overlay1=<RCTL> };
 
     //key <AB09> { overlay1=<INS> };
 
