@@ -309,3 +309,8 @@ collinsdc() {
     ln -sfn ~/.collins.yml.$1 ~/.collins.yml && echo "Using collins config for $1"
   fi
 }
+
+flac2mp3() {
+  echo "Converting ${1} to mp3" >&2
+  ffmpeg -i "$1" -qscale:a 0 "${1/%flac/mp3}"
+}
