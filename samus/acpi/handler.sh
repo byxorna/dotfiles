@@ -17,8 +17,11 @@ function _SwitchPulsePort () {
     done
 }
 
+
+logger "ACPID: $0: $1 $2 $3"
 case "$1" in
     jack/headphone)
+        logger "$0: $1 $2 $3"
         case "$3" in
            plug)
                logger "$0: headphone plugged"
