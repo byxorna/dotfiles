@@ -195,6 +195,9 @@ case $TERM in
 esac
 
 [[ -f ~/.rvm/scripts/rvm ]] && . ~/.rvm/scripts/rvm
+[[ -s ~/.gvm/scripts/gvm ]] && . ~/.gvm/scripts/gvm
+# addon to take care of OS X being stupid
+[[ -f ~/.bashrc-osx ]] && . ~/.bashrc-osx
 
 # Run commands on all nodes in a gpfs cluster
 # runs $2 on $1's nodes
@@ -259,10 +262,6 @@ haste(){
   [ $? = 0 ] && echo "$r"|perl -ne "/\W+\w+\W+(\w+)\W+/ and print \"$url/\$1\n\";"
 }
 
-# addon to take care of OS X being stupid
-if [ -f ~/.bashrc-osx ] ; then
-  . ~/.bashrc-osx
-fi
 
 SSHAGENT=/usr/bin/ssh-agent
 # OSX/some DEs start an agent for you, so just take that
@@ -314,3 +313,4 @@ flac2mp3() {
   echo "Converting ${1} to mp3" >&2
   ffmpeg -i "$1" -qscale:a 0 "${1/%flac/mp3}"
 }
+
