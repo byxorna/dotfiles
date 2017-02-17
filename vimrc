@@ -78,3 +78,7 @@ noremap <leader>} :NERDTreeToggle<CR>
 " turn on tagbar, toggle with \ + ]
 set runtimepath^=~/.vim/bundle/tagbar
 noremap <leader>] :TagbarToggle<CR>
+
+highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+match OverLength /\%81v.\+/
+
