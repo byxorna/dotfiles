@@ -58,7 +58,7 @@ alias gitp="git pull"
 alias gg="git grep"
 
 export GOPATH=~/code/go
-export PATH=$PATH:~/bin:~/local/bin:~/lang/bin:~/lang/usr/local/scala/bin:~/code/scripts:~/code/scripts/collins:/usr/sbin:/sbin:/usr/local/sbin:/usr/local/bin:~/.rvm/bin:/opt/local/bin:/opt/local/sbin:$GOPATH/bin:~/code/uber/av:~/code/uber/av/bin
+export PATH=$PATH:~/bin:~/local/bin:~/lang/bin:~/lang/usr/local/scala/bin:~/code/scripts:~/code/scripts/collins:/usr/sbin:/sbin:/usr/local/sbin:/usr/local/bin:~/.rvm/bin:/opt/local/bin:/opt/local/sbin:$GOPATH/bin:~/.cargo/bin
 export MANPATH=$MANPATH:~/lang/share/man:~/lang/usr/local/scala/man
 export VISUAL='vim'
 export EDITOR='vim'
