@@ -1,0 +1,2 @@
+# enable PCI power management features
+ACTION=="add", SUBSYSTEM=="pci", ATTR{power/control}="auto"

@@ -1,0 +1,4 @@
+# https://github.com/tmk/tmk_keyboard/wiki/FAQ-Build#linux-udev-rules
+# TMK keymap editor
+# 16c0:0478 Teensy Halfkay Bootloader - RedScarf ii+ ver. b
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="0478", MODE:="0666"

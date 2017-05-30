@@ -1,0 +1,2 @@
+# google devices
+SUBSYSTEM=="usb", ATTR{idVendor}=="18d1", MODE="0664", GROUP="wheel"
