@@ -314,3 +314,15 @@ flac2mp3() {
   ffmpeg -i "$1" -qscale:a 0 "${1/%flac/mp3}"
 }
 
+# launch tmux session if we arent already inside one, and tmux is installed
+if [[ -z $TMUX ]] ; then
+  if type -p tmux &>/dev/null ; then
+    if tmux ls &>/dev/null ; then
+      # attach to whatever first session is available to us by default
+      exec tmux a
+    else 
+      # create a new session
+      exec tmux
+    fi
+  fi
+fi
