@@ -2,7 +2,8 @@ GRUB_DEFAULT=0
 GRUB_TIMEOUT=5
 GRUB_DISTRIBUTOR="Arch"
 GRUB_CMDLINE_LINUX_DEFAULT=""
-GRUB_CMDLINE_LINUX="cryptdevice=UUID=a23dcdf7-40e3-45b1-a50b-06d1ce970b71:cryptroot"
+# audit=0 to disable linux-samus kernel being compiled with CONFIG_AUDIT 2017-07-05 
+GRUB_CMDLINE_LINUX="cryptdevice=UUID=a23dcdf7-40e3-45b1-a50b-06d1ce970b71:cryptroot audit=0"
 
 # Preload both GPT and MBR modules so that they are not missed
 GRUB_PRELOAD_MODULES="part_gpt part_msdos"
