@@ -1,0 +1,10 @@
+[Unit]
+Description=Pacman mirrorlist ranking
+
+[Service]
+Type=oneshot
+#TODO: how can we generate a tempfile for each run in a systemd-y manner without using mktemp and subshells?
+Environment="FILE=/tmp/rankmirrors.tmp"
+ExecStartPre=-/bin/rm $FILE
+ExecStart=/bin/bash -c "/usr/bin/rankmirrors /etc/pacman.d/mirrorlist > $FILE"
+ExecStart=/bin/mv $FILE /etc/pacman.d/mirrorlist
