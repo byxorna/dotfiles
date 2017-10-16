@@ -319,10 +319,19 @@ if [[ -z $TMUX ]] ; then
   if type -p tmux &>/dev/null ; then
     if tmux ls &>/dev/null ; then
       # attach to whatever first session is available to us by default
-      exec tmux a
+      # dont exec though, because we want to be able to launch a new session and tmux
+      # on a remote host
+      tmux a
     else 
       # create a new session
-      exec tmux
+      tmux
     fi
   fi
 fi
+
+[[ -s "/Users/gabe/.gvm/scripts/gvm" ]] && source "/Users/gabe/.gvm/scripts/gvm"
+
+cidr2range(){
+  [[ -z $1 ]] && echo "Specify a CIDR as the first argument" >&2 && return 1
+  ruby -ripaddr -e "puts IPAddr.new(ARGV.first).to_range.to_a.map(&:to_s).join(' ')" $1
+}

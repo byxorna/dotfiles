@@ -1,5 +1,5 @@
 # MacPorts Installer addition on 2013-07-10_at_09:39:00: adding an appropriate PATH variable for use with MacPorts.
-export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+export PATH=/opt/local/bin:/opt/local/sbin:~/Library/Python/2.7/bin:~/Library/Android/sdk//platform-tools:$PATH
 # Finished adapting your PATH environment variable for use with MacPorts.
 
 # OS X doesnt like some opts I alias to ls
