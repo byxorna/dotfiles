@@ -57,7 +57,10 @@ alias gitf="git fetch"
 alias gitp="git pull"
 alias gg="git grep"
 
-export GOPATH=~/code/go
+# make history unlimited
+export HISTSIZE=
+export HISTFILESIZE=
+
 export PATH=$PATH:~/bin:~/local/bin:~/lang/bin:~/lang/usr/local/scala/bin:~/code/scripts:~/code/scripts/collins:/usr/sbin:/sbin:/usr/local/sbin:/usr/local/bin:~/.rvm/bin:/opt/local/bin:/opt/local/sbin:$GOPATH/bin:~/.cargo/bin
 export MANPATH=$MANPATH:~/lang/share/man:~/lang/usr/local/scala/man
 export VISUAL='vim'
@@ -196,6 +199,10 @@ esac
 
 [[ -f ~/.rvm/scripts/rvm ]] && . ~/.rvm/scripts/rvm
 [[ -s ~/.gvm/scripts/gvm ]] && . ~/.gvm/scripts/gvm
+# clobber the default gopath setup by gvm
+export GOPATH=~/code/go
+
+
 # addon to take care of OS X being stupid
 [[ -f ~/.bashrc-osx ]] && . ~/.bashrc-osx
 
@@ -329,8 +336,6 @@ if [[ -z $TMUX ]] ; then
     fi
   fi
 fi
-
-[[ -s "/Users/gabe/.gvm/scripts/gvm" ]] && source "/Users/gabe/.gvm/scripts/gvm"
 
 cidr2range(){
   [[ -z $1 ]] && echo "Specify a CIDR as the first argument" >&2 && return 1
