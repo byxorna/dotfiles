@@ -44,6 +44,7 @@ au BufRead *.scala set filetype=scala
 au BufRead *.pp set filetype=puppet
 au BufRead *.jade set filetype=jade
 au BufRead *.go set filetype=go
+autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
 
 " highlight trailing whitespace
 highlight ExtraWhitespace ctermbg=red guibg=red
@@ -72,6 +73,8 @@ set runtimepath^=~/.vim/bundle/vim-gitgutter
 set runtimepath^=~/.vim/bundle/vim-jade
 " turn on vim-go
 set runtimepath^=~/.vim/bundle/vim-go
+" turn on vimproc for command exec in <vim8, needed for typescript-vim
+set runtimepath^=~/.vim/bundle/vimproc.vim
 " turn on typescript-vim
 set runtimepath^=~/.vim/bundle/typescript-vim
 " turn on nerdtree, let \ + } toggle tree
