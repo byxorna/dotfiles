@@ -72,6 +72,8 @@ set runtimepath^=~/.vim/bundle/vim-gitgutter
 set runtimepath^=~/.vim/bundle/vim-jade
 " turn on vim-go
 set runtimepath^=~/.vim/bundle/vim-go
+" turn on typescript-vim
+set runtimepath^=~/.vim/bundle/typescript-vim
 " turn on nerdtree, let \ + } toggle tree
 set runtimepath^=~/.vim/bundle/nerdtree
 noremap <leader>} :NERDTreeToggle<CR>
