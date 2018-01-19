@@ -55,6 +55,7 @@ alias gits="git status"
 alias gitb="git branch"
 alias gitf="git fetch"
 alias gitp="git pull"
+alias gitup="git checkout master && git pull origin master"
 alias gg="git grep"
 
 # make history unlimited
