@@ -1,0 +1,15 @@
+[Unit]
+Description=Byxorna Pipefail.com
+After=docker.service
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill site
+ExecStartPre=-/usr/bin/docker rm site
+ExecStartPre=/usr/bin/docker pull byxorna/site:latest
+ExecStart=/usr/bin/docker run --name site -e VIRTUAL_HOST=pipefail.com -p 3000:3000 byxorna/site:latest
+ExecStop=/usr/bin/docker stop site
+ExecReload=/usr/bin/docker restart site
+
+[Install]
+WantedBy=multi-user.target
