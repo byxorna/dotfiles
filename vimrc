@@ -37,7 +37,9 @@ nnoremap <S-l> gt
 autocmd BufEnter * let &titlestring = "vim(" . expand("%:t") . ")"
 
 " assorted automatic syntax loading. filetype -> syntax
+" see https://github.com/vim-syntastic/syntastic/wiki/%28v3.7.0%29---Syntax-Checkers for list of plugins
 au BufRead *.md set filetype=markdown
+" NOTE: install `gem install mdl` for markdown setup
 au BufRead *.scala set filetype=scala
 au BufRead *.pp set filetype=puppet
 au BufRead *.jade set filetype=jade
