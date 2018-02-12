@@ -1,0 +1,15 @@
+[Unit]
+Description=Homer Server
+After=docker.service
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill homer-server
+ExecStartPre=-/usr/bin/docker rm homer-server
+ExecStartPre=/usr/bin/docker pull byxorna/homer-server:latest
+ExecStart=/usr/bin/docker run --name homer-server -p 9000:9000 byxorna/homer-server:latest
+ExecStop=/usr/bin/docker stop homer-server
+ExecReload=/usr/bin/docker restart homer-server
+
+[Install]
+WantedBy=multi-user.target

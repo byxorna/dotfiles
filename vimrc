@@ -10,8 +10,6 @@
 :set fileencoding=utf-8
 :set fileformat=unix
 
-colorscheme solarized
-
 " disable .netrwhist nonsense
 :let g:netrw_dirhistmax = 0
 
@@ -39,11 +37,14 @@ nnoremap <S-l> gt
 autocmd BufEnter * let &titlestring = "vim(" . expand("%:t") . ")"
 
 " assorted automatic syntax loading. filetype -> syntax
+" see https://github.com/vim-syntastic/syntastic/wiki/%28v3.7.0%29---Syntax-Checkers for list of plugins
 au BufRead *.md set filetype=markdown
+" NOTE: install `gem install mdl` for markdown setup
 au BufRead *.scala set filetype=scala
 au BufRead *.pp set filetype=puppet
 au BufRead *.jade set filetype=jade
 au BufRead *.go set filetype=go
+autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
 
 " highlight trailing whitespace
 highlight ExtraWhitespace ctermbg=red guibg=red
@@ -72,6 +73,10 @@ set runtimepath^=~/.vim/bundle/vim-gitgutter
 set runtimepath^=~/.vim/bundle/vim-jade
 " turn on vim-go
 set runtimepath^=~/.vim/bundle/vim-go
+" turn on vimproc for command exec in <vim8, needed for typescript-vim
+set runtimepath^=~/.vim/bundle/vimproc.vim
+" turn on typescript-vim
+set runtimepath^=~/.vim/bundle/typescript-vim
 " turn on nerdtree, let \ + } toggle tree
 set runtimepath^=~/.vim/bundle/nerdtree
 noremap <leader>} :NERDTreeToggle<CR>
@@ -79,6 +84,8 @@ noremap <leader>} :NERDTreeToggle<CR>
 set runtimepath^=~/.vim/bundle/tagbar
 noremap <leader>] :TagbarToggle<CR>
 
+" set overlength highlights for 80char lines
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-match OverLength /\%81v.\+/
+"match OverLength /\%120v.\+/  " highlight all characters over 100char
+match OverLength '\%101v.'  " highlight only the 101st character in a column
 
