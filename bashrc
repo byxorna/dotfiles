@@ -199,7 +199,7 @@ case $TERM in
 esac
 
 [[ -f ~/.rvm/scripts/rvm ]] && . ~/.rvm/scripts/rvm
-[[ -s ~/.gvm/scripts/gvm ]] && . ~/.gvm/scripts/gvm
+#[[ -s ~/.gvm/scripts/gvm ]] && . ~/.gvm/scripts/gvm
 # clobber the default gopath setup by gvm
 export GOPATH=~/code/go
 
