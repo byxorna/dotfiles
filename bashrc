@@ -23,6 +23,7 @@ bind '"\e[B"':history-search-forward
 
 set -o vi
 
+alias map="docker run -e TERM_PROGRAM=iTerm.app registry.tumblr.net/slackbots/mapbot:master-1117679 cli.py"
 alias vi=vim
 alias ls='ls --color=auto'
 alias lös=ls
