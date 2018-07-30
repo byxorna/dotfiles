@@ -63,22 +63,51 @@ if &term == "screen" || &term == "xterm" || &term == "xterm-color" || &term == "
   set title
 endif
 
-" try and set up ctrlp. make sure you git submodule init
-set runtimepath^=~/.vim/bundle/ctrlp.vim
-" turn on syntastic for awesome syntax checking
-set runtimepath^=~/.vim/bundle/syntastic.vim
-" turn on vim-gitgutter
-set runtimepath^=~/.vim/bundle/vim-gitgutter
-" turn on vim-jade syntax
-set runtimepath^=~/.vim/bundle/vim-jade
-" turn on vim-go
-set runtimepath^=~/.vim/bundle/vim-go
+set nocompatible              " be iMproved, required
+filetype off                  " required
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+Plugin 'tpope/vim-fugitive'
+Plugin 'kien/ctrlp.vim'
+Plugin 'fatih/vim-go'
+Plugin 'git://git.wincent.com/command-t.git'
+Plugin 'scrooloose/syntastic'
+Plugin 'statianzo/vim-jade'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'leafgarland/typescript-vim'
 " turn on vimproc for command exec in <vim8, needed for typescript-vim
-set runtimepath^=~/.vim/bundle/vimproc.vim
+Plugin 'shougo/vimproc.vim'
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+
+
+"set runtimepath^=~/.vim/bundle/syntastic.vim
+" turn on vimproc for command exec in <vim8, needed for typescript-vim
+"set runtimepath^=~/.vim/bundle/vimproc.vim
 " turn on typescript-vim
-set runtimepath^=~/.vim/bundle/typescript-vim
+"set runtimepath^=~/.vim/bundle/typescript-vim
 " turn on nerdtree, let \ + } toggle tree
-set runtimepath^=~/.vim/bundle/nerdtree
+"set runtimepath^=~/.vim/bundle/nerdtree
 noremap <leader>} :NERDTreeToggle<CR>
 " turn on tagbar, toggle with \ + ]
 set runtimepath^=~/.vim/bundle/tagbar
