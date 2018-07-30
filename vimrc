@@ -87,6 +87,7 @@ Plugin 'leafgarland/typescript-vim'
 " turn on vimproc for command exec in <vim8, needed for typescript-vim
 Plugin 'shougo/vimproc.vim'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'vim-airline/vim-airline'
 call vundle#end()            " required
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
