@@ -204,9 +204,11 @@ esac
 # clobber the default gopath setup by gvm
 export GOPATH=~/code/go
 
-# addon to take care of OS X being stupid
-[[ -f ~/.bashrc-osx ]] && . ~/.bashrc-osx
-[[ -f ~/.bashrc-tumblr ]] && . ~/.bashrc-tumblr
+shopt -q nullglob
+nge="$?"
+shopt -qs nullglob
+for f in ~/.bashrc-* ; do source $f ; done
+[[ $nge == 1 ]] && shopt -qu nullglob
 
 # throw things onto hastebin
 haste(){
@@ -291,3 +293,4 @@ cidr2range(){
   [[ -z $1 ]] && echo "Specify a CIDR as the first argument" >&2 && return 1
   ruby -ripaddr -e "puts IPAddr.new(ARGV.first).to_range.to_a.map(&:to_s).join(' ')" $1
 }
+
