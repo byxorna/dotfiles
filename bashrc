@@ -206,58 +206,7 @@ export GOPATH=~/code/go
 
 # addon to take care of OS X being stupid
 [[ -f ~/.bashrc-osx ]] && . ~/.bashrc-osx
-
-# Run commands on all nodes in a gpfs cluster
-# runs $2 on $1's nodes
-# doallgpfs deva 'uname -r'
-doallgpfs(){
-  case "$1" in
-    "a")
-      host=gpfsa01
-    ;;
-    "b")
-      host=gpfsb01
-    ;;
-    "deva")
-      host=gpfsdeva01
-    ;;
-    *)
-      echo "I dont know what cluster $1 is!"
-      return 1
-    ;;
-  esac
-  
-  # fetch nodes from cluster
-  output="$(ssh $host sudo /usr/lpp/mmfs/bin/mmlsnode)"
-  if [ $? -ne 0 ] ; then
-    echo "There was an error fetching the nodelist from $host"
-    return 1
-  fi
-  nodes=($(echo -e "$output" | tail -1 | awk '{$1="";print $0;}'))
-
-  if [ -z "$2" ] ; then
-    # just list the nodes
-    echo "Nodes in cluster $1: ${nodes[@]}"
-  else
-    echo "Running '$2' on cluster $1..."
-    for n in ${nodes[@]} ; do
-      echo "$n: $(ssh $n "$2")"
-    done
-  fi
-
-
-}
-
-# if using rvm, i dont want to source it every time i run something
-rails (){
-  which --skip-functions rails >&- 2>&-
-  if [ "$?" -eq "0" ] ; then
-    command rails $@
-  else
-    source ~/.rvm/scripts/rvm
-    command rails $@
-  fi
-}
+[[ -f ~/.bashrc-tumblr ]] && . ~/.bashrc-tumblr
 
 # throw things onto hastebin
 haste(){
@@ -294,7 +243,7 @@ showcolors() {
 # setup ssh tunnnel
 # i.e. tunnel gconradi@jumpbox dmzhost1 1235 80
 # wget localhost:1235
-tunnel(){
+sshtunnel(){
   jump="$1"
   remote="$2"
   localport="${3:-1234}"
