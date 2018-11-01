@@ -88,6 +88,7 @@ Plugin 'leafgarland/typescript-vim'
 Plugin 'shougo/vimproc.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-airline/vim-airline'
+"Plugin 'alecthomas/gometalinter'
 call vundle#end()            " required
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
