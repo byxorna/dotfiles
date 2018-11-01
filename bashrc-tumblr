@@ -1,5 +1,5 @@
 export PATH=$PATH:~/code/tumblr/dev-tools/
 
-alias kubectl="proxy kubectl"
-alias collins="proxy collins"
+alias kubectl="tunnel kubectl"
+alias collins="tunnel collins"
 alias map="docker run -e TERM_PROGRAM=iTerm.app registry.tumblr.net/slackbots/mapbot:master-1117679 cli.py"
