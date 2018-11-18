@@ -274,6 +274,11 @@ flac2mp3() {
   ffmpeg -i "$1" -qscale:a 0 "${1/%flac/mp3}"
 }
 
+aiff2flacbatch() {
+  echo "Converting *.aiff to *.flac" >&2
+  for f in *.aiff ; do ffmpeg -i "$f" "${f%.aiff}.flac" ; done
+}
+
 # launch tmux session if we arent already inside one, and tmux is installed
 if [[ -z $TMUX ]] ; then
   if type -p tmux &>/dev/null ; then
