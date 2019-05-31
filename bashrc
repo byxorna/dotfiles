@@ -58,6 +58,8 @@ alias gitf="git fetch"
 alias gitp="git pull"
 alias gitup="git checkout master && git pull origin master"
 alias gg="git grep"
+alias kctl="kubectl"
+alias ktl="kubectl"
 
 # make history unlimited
 export HISTSIZE=
@@ -297,5 +299,10 @@ fi
 cidr2range(){
   [[ -z $1 ]] && echo "Specify a CIDR as the first argument" >&2 && return 1
   ruby -ripaddr -e "puts IPAddr.new(ARGV.first).to_range.to_a.map(&:to_s).join(' ')" $1
+}
+
+epoch2date(){
+  [[ -z $1 ]] && echo "Specify an epoch timestamp as first argument" >&2 && return 1
+  ruby -e 'puts "#{ARGV.first} => #{Time.at(ARGV.first.to_i).to_s}"' -- $1
 }
 
