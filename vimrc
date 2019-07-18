@@ -120,8 +120,7 @@ noremap <leader>] :TagbarToggle<CR>
 
 " Creating a mapping to turn it on and off:
 map <leader>l :RainbowLevelsToggle<cr>
-" Or automatically turning it on for certain file types:
-au FileType golang,ruby,javascript,python,php,xml,yaml :RainbowLevelsOn
+" au FileType golang,ruby,javascript,python,php,xml,yaml :RainbowLevelsOn
 
 
 " set overlength highlights for 80char lines
