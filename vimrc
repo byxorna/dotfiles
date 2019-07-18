@@ -88,6 +88,7 @@ Plugin 'leafgarland/typescript-vim'
 Plugin 'shougo/vimproc.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-airline/vim-airline'
+Plugin 'thiagoalessio/rainbow_levels.vim'
 "Plugin 'alecthomas/gometalinter'
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -115,6 +116,13 @@ noremap <leader>} :NERDTreeToggle<CR>
 " turn on tagbar, toggle with \ + ]
 set runtimepath^=~/.vim/bundle/tagbar
 noremap <leader>] :TagbarToggle<CR>
+
+
+" Creating a mapping to turn it on and off:
+map <leader>l :RainbowLevelsToggle<cr>
+" Or automatically turning it on for certain file types:
+au FileType golang,ruby,javascript,python,php,xml,yaml :RainbowLevelsOn
+
 
 " set overlength highlights for 80char lines
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
