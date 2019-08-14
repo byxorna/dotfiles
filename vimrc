@@ -4,7 +4,6 @@
 :set number
 :set mouse=
 :set hlsearch
-:set background=dark
 :set incsearch
 :set encoding=utf-8
 :set fileencoding=utf-8
@@ -50,9 +49,6 @@ autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
 highlight ExtraWhitespace ctermbg=red guibg=red
 :autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
 
-" always use 256 colors. its 2015.
-set t_Co=256
-
 "let &titlestring = hostname() . "[vim(" . expand("%:t") . ")]"
 let &titlestring = "vim(" . expand("%:t") . ")"
 if &term == "screen"
@@ -89,6 +85,7 @@ Plugin 'shougo/vimproc.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-airline/vim-airline'
 "Plugin 'alecthomas/gometalinter'
+Plugin 'exitface/synthwave.vim'
 call vundle#end()            " required
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
@@ -103,6 +100,15 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
+" https://github.com/exitface/synthwave.vim
+:set background=dark
+:color synthwave
+
+if has('termguicolors')
+  set termguicolors " 24-bit terminal
+else
+  let g:synthwave_termcolors=256 " 256 color mode
+endif
 
 "set runtimepath^=~/.vim/bundle/syntastic.vim
 " turn on vimproc for command exec in <vim8, needed for typescript-vim
