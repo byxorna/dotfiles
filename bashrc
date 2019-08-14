@@ -24,7 +24,13 @@ bind '"\e[B"':history-search-forward
 set -o vi
 
 alias map="docker run -e TERM_PROGRAM=iTerm.app registry.tumblr.net/slackbots/mapbot:master-1117679 cli.py"
-alias vi=vim
+if type -P nvim 2>/dev/null &>/dev/null ; then
+  alias vi=nvim
+  alias vim=nvim
+else
+  alias vi=vim
+  unalias vim || :
+fi
 alias ls='ls --color=auto'
 alias lös=ls
 alias exit='clear; exit'
