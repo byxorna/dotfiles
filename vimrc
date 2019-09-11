@@ -74,6 +74,8 @@ let g:ale_linters = {
 \}
 let g:ale_fixers = {
 \   'go': [ 'gofmt', 'goimports', 'remove_trailing_lines', 'trim_whitespace' ],
+\   'ruby': [ 'rubocop', 'rufo', 'remove_trailing_lines', 'trim_whitespace' ],
+\   'sh': [ 'shfmt', 'remove_trailing_lines', 'trim_whitespace' ],
 \}
 
 set nocompatible              " be iMproved, required
