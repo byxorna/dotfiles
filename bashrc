@@ -66,6 +66,7 @@ alias ktl="kubectl"
 export HISTSIZE=
 export HISTFILESIZE=
 
+export CLICOLOR=true # for ls colors
 export PATH=$PATH:~/bin:~/local/bin:~/lang/bin:~/lang/usr/local/scala/bin:~/code/scripts:~/code/scripts/collins:/usr/sbin:/sbin:/usr/local/sbin:/usr/local/bin:~/.rvm/bin:/opt/local/bin:/opt/local/sbin:$GOPATH/bin:~/.cargo/bin
 export MANPATH=$MANPATH:~/lang/share/man:~/lang/usr/local/scala/man
 export VISUAL='vim'
@@ -304,3 +305,8 @@ epoch2date(){
   ruby -e 'puts "#{ARGV.first} => #{Time.at(ARGV.first.to_i).to_s}"' -- $1
 }
 
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+[[ -s "/Users/gabe/.gvm/scripts/gvm" ]] && source "/Users/gabe/.gvm/scripts/gvm"

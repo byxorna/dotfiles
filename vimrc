@@ -59,6 +59,25 @@ if &term == "screen" || &term == "xterm" || &term == "xterm-color" || &term == "
   set title
 endif
 
+" ale lint configuration
+let g:ale_lint_on_text_changed = 1
+let g:ale_lint_on_insert_leave = 1
+let g:ale_lint_on_enter = 1
+let g:ale_lint_on_save = 1
+let g:ale_lint_on_filetype_changed = 1
+let g:ale_fix_on_save = 1
+
+let g:ale_linters = {
+\   'go': [ 'bingo', 'gobuild', 'gofmt', 'golangci-lint', 'golint', 'gopls', 'gosimple', 'gotype', 'govet', 'golangserver', 'staticcheck'],
+\   'javascript': 'all',
+\   'c': 'all',
+\}
+let g:ale_fixers = {
+\   'go': [ 'gofmt', 'goimports', 'remove_trailing_lines', 'trim_whitespace' ],
+\   'ruby': [ 'rubocop', 'rufo', 'remove_trailing_lines', 'trim_whitespace' ],
+\   'sh': [ 'shfmt', 'remove_trailing_lines', 'trim_whitespace' ],
+\}
+
 set nocompatible              " be iMproved, required
 filetype off                  " required
 " set the runtime path to include Vundle and initialize
@@ -74,9 +93,10 @@ Plugin 'VundleVim/Vundle.vim'
 " plugin on GitHub repo
 Plugin 'tpope/vim-fugitive'
 Plugin 'kien/ctrlp.vim'
-Plugin 'fatih/vim-go'
+Plugin 'dense-analysis/ale' " a ton of linters :)
+"Plugin 'fatih/vim-go'
 Plugin 'git://git.wincent.com/command-t.git'
-Plugin 'scrooloose/syntastic'
+"Plugin 'scrooloose/syntastic'
 Plugin 'statianzo/vim-jade'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'leafgarland/typescript-vim'
@@ -100,6 +120,7 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
+
 
 " https://github.com/exitface/synthwave.vim
 :set background=dark
