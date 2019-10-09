@@ -67,6 +67,7 @@ export HISTSIZE=
 export HISTFILESIZE=
 
 export CLICOLOR=true # for ls colors
+export LSCOLORS=exfxcxdxbxexexabagacad # https://softwaregravy.wordpress.com/2010/10/16/ls-colors-for-mac/ :shruggie: copypasta
 export PATH=$PATH:~/bin:~/local/bin:~/lang/bin:~/lang/usr/local/scala/bin:~/code/scripts:~/code/scripts/collins:/usr/sbin:/sbin:/usr/local/sbin:/usr/local/bin:~/.rvm/bin:/opt/local/bin:/opt/local/sbin:$GOPATH/bin:~/.cargo/bin
 export MANPATH=$MANPATH:~/lang/share/man:~/lang/usr/local/scala/man
 export VISUAL='vim'
