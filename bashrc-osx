@@ -1,0 +1,1 @@
+alias dnscacheclear="sudo killall -HUP mDNSResponder"

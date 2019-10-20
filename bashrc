@@ -2,19 +2,12 @@
 [ -z "$PS1" ] && return
 umask 0022
 
-# Source global definitions
-if [ -f /etc/bashrc ]; then
-  . /etc/bashrc
+if [[ $(uname) == Darwin ]] ; then
+  [[ -r ~/.profile-osx ]] && source ~/.profile-osx
+  md5sum(){
+    /sbin/md5 "$@"
+  }
 fi
-
-# enable bash completion in interactive shells
-if [ -f /etc/bash_completion ]; then
-  . /etc/bash_completion
-fi
-
-[[ $(uname) == Darwin ]] && md5sum(){ 
-  /sbin/md5 "$@"
-}
 
 # add in history searching
 # up and down search for history entry beginning with that entry
@@ -61,6 +54,7 @@ alias gitup="git checkout master && git pull origin master"
 alias gg="git grep"
 alias kctl="kubectl"
 alias ktl="kubectl"
+alias k="kubectl"
 
 # make history unlimited
 export HISTSIZE=
@@ -289,7 +283,7 @@ if [[ -z $TMUX ]] ; then
       # dont exec though, because we want to be able to launch a new session and tmux
       # on a remote host
       tmux a
-    else 
+    else
       # create a new session
       tmux
     fi
