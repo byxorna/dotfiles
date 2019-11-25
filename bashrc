@@ -300,6 +300,12 @@ epoch2date(){
   ruby -e 'puts "#{ARGV.first} => #{Time.at(ARGV.first.to_i).to_s}"' -- $1
 }
 
+httpdme() {
+  port="${1:-8000}"
+  echo "Launching http server on $port for root $(pwd)"
+  ruby -run -e httpd . -p $port
+}
+
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
