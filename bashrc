@@ -306,6 +306,15 @@ httpdme() {
   ruby -run -e httpd . -p $port
 }
 
+# git checkout PR
+gitcpr() {
+  [[ -z $1 ]] && echo "Need to specify a PR number" >&2 && return 1
+  branch_name="${2:-pr-$1}"
+  git fetch origin pull/$1/head:$branch_name
+  git checkout $branch_name
+  echo "Checked out PR#$1 in $branch_name"
+}
+
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
