@@ -55,6 +55,7 @@ alias gg="git grep"
 alias kctl="kubectl"
 alias ktl="kubectl"
 alias k="kubectl"
+alias c="collins"
 
 # make history unlimited
 export HISTSIZE=
