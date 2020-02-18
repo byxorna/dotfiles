@@ -140,16 +140,20 @@ fi
 BOLD=$(tput bold)
 RESET=$(tput sgr0)
 
+kctx () {
+  if type -p kubectl >/dev/null ; then
+    kubectl config current-context
+  fi
+}
+
 # show all exit statuses in the pipeline
 # disabled 05-13-2013 gconradi - improperly escaped non-printing chars, caused messed up readline
 # export PS1='\e[1;30m[\e[1;94m\t\e[1;30m] [\e[1;36m\]\u\e[1;30m@\e[1;36m\h\e[1;30m] ($(for r in ${PIPESTATUS[*]} ; do [ $r -eq 0 ] && echo -n "\e[1;30m $r" || echo -n " \e[0;31m$r\e[0m" ; done)\e[1;30m ) \e[0;91m\]\w\n\e[1;30m-> \$ \e[0m' #\e[0;97m'
 # dont forget, when echoing colors, wrap non-printing chars in \[\] so bash doesnt count them to the line length
 # lets precompute the color we want this host to be
-host_color="$(random_color $HOSTNAME)"
-export PS1='\[${RESET}${BASE02}\][\[${BLUE}\]\t\[${BASE02}\]] [\[${CYAN}\]\u\[${BASE01}\]@\[${host_color}\]\h\[${BASE02}\]] \[${BASE00}\]($(for r in ${PIPESTATUS[*]} ; do [ $r -eq 0 ] && echo -n "\[$BASE01\] $r" || echo -n " \[${RED}\]${r}\[${RESET}\]" ; done)\[${BASE00}\] ) \[${ORANGE}\]\w$(is_git_repo && echo -n " \[${GREEN}\]$(git_branch)\[${RESET}\]" && is_git_dirty && echo -n "\[${RED}\]*\[${RESET}\]")\n\[${BASE00}\]-> \[$(random_color)\]\$ \[$RESET\]'
-# random color explosion
-#export PS1='\[${RESET}$(random_color)\][\[$(random_color)\]\t\[$(random_color)\]] [\[$(random_color)\]\u\[$(random_color)\]@\[$(random_color)\]\h\[$(random_color)\]] \[$(random_color)\]($(for r in ${PIPESTATUS[*]} ; do [ $r -eq 0 ] && echo -n "\[$(random_color)\] $r" || echo -n " \[$(random_color)\]${r}\[$(random_color)\]" ; done)\[$(random_color)\] ) \[$(random_color)\]\w$(is_git_repo && echo -n " \[$(random_color)\]$(git_branch)\[$(random_color)\]" && is_git_dirty && echo -n "\[$(random_color)\]*\[$(random_color)\]")\n\[$(random_color)\]-> $(random_color)\$ \[$RESET\]'
-#export PS1='\[\e[1;30m\][\[\e[1;94m\]\t\[\e[1;30m\]] [\[\e[1;36m\]\u\[\e[1;30m\]@\[\e[1;36m\]\h\[\e[1;30m\]] ($(for r in ${PIPESTATUS[*]} ; do [ $r -eq 0 ] && echo -n "\[\e[1;30m\] $r" || echo -n " \[\e[0;31m\]$r\[\e[0m\]" ; done)\[\e[1;30m\] ) \[\e[0;91m\]\w\n\[\e[1;30m\]-> \$ \[\e[0m\]'
+#host_color="$(random_color $HOSTNAME)"
+host_color="${MAGENTA}"
+export PS1='\[${RESET}${BASE02}\]\[${BLUE}\]\t\[${BASE02}\] \[${CYAN}\]\u\[${BASE01}\]@\[${host_color}\]\h\[${BASE02}\] \[${BASE00}\]$(for r in ${PIPESTATUS[*]} ; do [ $r -eq 0 ] && echo -n "\[$BASE01\]$r" || echo -n "\[${RED}\]${r}\[${RESET}\]" ; done)\[${BASE00}\] ${BASE00}${VIOLET}$(kctx)${BASE00} \[${ORANGE}\]\w$(is_git_repo && echo -n " \[${GREEN}\]$(git_branch)\[${RESET}\]" && is_git_dirty && echo -n "\[${RED}\]*\[${RESET}\]")\n\[${BASE00}\]🐈 \[$(random_color)\]\$ \[$RESET\]'
 
 extract () {
 	if [ -f $1 ] ; then
