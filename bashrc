@@ -140,6 +140,16 @@ fi
 BOLD=$(tput bold)
 RESET=$(tput sgr0)
 
+# show the active collins dc
+cdc() {
+  if [[ -L ~/.collins.yml ]] ; then
+    echo "$(readlink ~/.collins.yml|awk -F. '{print $4}')"
+  else
+    echo "?"
+  fi
+}
+
+# show the active kubernetes context
 kctx () {
   if type -p kubectl >/dev/null ; then
     kubectl config current-context
@@ -153,7 +163,7 @@ kctx () {
 # lets precompute the color we want this host to be
 #host_color="$(random_color $HOSTNAME)"
 host_color="${MAGENTA}"
-export PS1='\[${RESET}${BASE02}\]\[${BLUE}\]\t\[${BASE02}\] \[${CYAN}\]\u\[${BASE01}\]@\[${host_color}\]\h\[${BASE02}\] \[${BASE00}\]$(for r in ${PIPESTATUS[*]} ; do [ $r -eq 0 ] && echo -n "\[$BASE01\]$r" || echo -n "\[${RED}\]${r}\[${RESET}\]" ; done)\[${BASE00}\] ${BASE00}${VIOLET}$(kctx)${BASE00} \[${ORANGE}\]\w$(is_git_repo && echo -n " \[${GREEN}\]$(git_branch)\[${RESET}\]" && is_git_dirty && echo -n "\[${RED}\]*\[${RESET}\]")\n\[${BASE00}\]🐈 \[$(random_color)\]\$ \[$RESET\]'
+export PS1='\[${RESET}${BASE02}\]\[${BLUE}\]\t\[${BASE02}\] \[${CYAN}\]\u\[${BASE01}\]@\[${host_color}\]\h\[${BASE02}\] \[${BASE00}\]$(for r in ${PIPESTATUS[*]} ; do [ $r -eq 0 ] && echo -n "\[$BASE01\]$r" || echo -n "\[${RED}\]${r}\[${RESET}\]" ; done)\[${BASE00}\] ${BASE00}${BLUE}$(kctx)${RESET}|${CYAN}$(cdc)${BASE00} \[${ORANGE}\]\w$(is_git_repo && echo -n " \[${VIOLET}\]$(git_branch)\[${RESET}\]" && is_git_dirty && echo -n "\[${RED}\]*\[${RESET}\]")\n\[${BASE00}\]🐈 \[$(random_color)\]\$ \[$RESET\]'
 
 extract () {
 	if [ -f $1 ] ; then
