@@ -55,6 +55,7 @@ alias gg="git grep"
 alias kctl="kubectl"
 alias ktl="kubectl"
 alias k="kubectl"
+alias c="collins"
 
 # make history unlimited
 export HISTSIZE=
@@ -139,16 +140,30 @@ fi
 BOLD=$(tput bold)
 RESET=$(tput sgr0)
 
+# show the active collins dc
+cdc() {
+  if [[ -L ~/.collins.yml ]] ; then
+    echo "$(readlink ~/.collins.yml|awk -F. '{print $4}')"
+  else
+    echo "?"
+  fi
+}
+
+# show the active kubernetes context
+kctx () {
+  if type -p kubectl >/dev/null ; then
+    kubectl config current-context
+  fi
+}
+
 # show all exit statuses in the pipeline
 # disabled 05-13-2013 gconradi - improperly escaped non-printing chars, caused messed up readline
 # export PS1='\e[1;30m[\e[1;94m\t\e[1;30m] [\e[1;36m\]\u\e[1;30m@\e[1;36m\h\e[1;30m] ($(for r in ${PIPESTATUS[*]} ; do [ $r -eq 0 ] && echo -n "\e[1;30m $r" || echo -n " \e[0;31m$r\e[0m" ; done)\e[1;30m ) \e[0;91m\]\w\n\e[1;30m-> \$ \e[0m' #\e[0;97m'
 # dont forget, when echoing colors, wrap non-printing chars in \[\] so bash doesnt count them to the line length
 # lets precompute the color we want this host to be
-host_color="$(random_color $HOSTNAME)"
-export PS1='\[${RESET}${BASE02}\][\[${BLUE}\]\t\[${BASE02}\]] [\[${CYAN}\]\u\[${BASE01}\]@\[${host_color}\]\h\[${BASE02}\]] \[${BASE00}\]($(for r in ${PIPESTATUS[*]} ; do [ $r -eq 0 ] && echo -n "\[$BASE01\] $r" || echo -n " \[${RED}\]${r}\[${RESET}\]" ; done)\[${BASE00}\] ) \[${ORANGE}\]\w$(is_git_repo && echo -n " \[${GREEN}\]$(git_branch)\[${RESET}\]" && is_git_dirty && echo -n "\[${RED}\]*\[${RESET}\]")\n\[${BASE00}\]-> \[$(random_color)\]\$ \[$RESET\]'
-# random color explosion
-#export PS1='\[${RESET}$(random_color)\][\[$(random_color)\]\t\[$(random_color)\]] [\[$(random_color)\]\u\[$(random_color)\]@\[$(random_color)\]\h\[$(random_color)\]] \[$(random_color)\]($(for r in ${PIPESTATUS[*]} ; do [ $r -eq 0 ] && echo -n "\[$(random_color)\] $r" || echo -n " \[$(random_color)\]${r}\[$(random_color)\]" ; done)\[$(random_color)\] ) \[$(random_color)\]\w$(is_git_repo && echo -n " \[$(random_color)\]$(git_branch)\[$(random_color)\]" && is_git_dirty && echo -n "\[$(random_color)\]*\[$(random_color)\]")\n\[$(random_color)\]-> $(random_color)\$ \[$RESET\]'
-#export PS1='\[\e[1;30m\][\[\e[1;94m\]\t\[\e[1;30m\]] [\[\e[1;36m\]\u\[\e[1;30m\]@\[\e[1;36m\]\h\[\e[1;30m\]] ($(for r in ${PIPESTATUS[*]} ; do [ $r -eq 0 ] && echo -n "\[\e[1;30m\] $r" || echo -n " \[\e[0;31m\]$r\[\e[0m\]" ; done)\[\e[1;30m\] ) \[\e[0;91m\]\w\n\[\e[1;30m\]-> \$ \[\e[0m\]'
+#host_color="$(random_color $HOSTNAME)"
+host_color="${MAGENTA}"
+export PS1='\[${RESET}${BASE02}\]\[${BLUE}\]\t\[${BASE02}\] \[${CYAN}\]\u\[${BASE01}\]@\[${host_color}\]\h\[${BASE02}\] \[${BASE00}\] \[${BASE00}${BLUE}\]$(kctx)\[${BASE00}\] \[${CYAN}\]$(cdc)\[${BASE00}\] \[${ORANGE}\]\w$(is_git_repo && echo -n " \[${VIOLET}\]$(git_branch)\[${RESET}\]" && is_git_dirty && echo -n "\[${RED}\]🧹\[${RESET}\]") $(for r in ${PIPESTATUS[*]} ; do [ $r -eq 0 ] && echo -n "\[$BASE01\]$r" || echo -n "\[${RED}\]${r}\[${RESET}\]" ; done)\n\[${BASE00}\]🚀 \[${RESET}\]'
 
 extract () {
 	if [ -f $1 ] ; then
@@ -303,6 +318,21 @@ cidr2range(){
 epoch2date(){
   [[ -z $1 ]] && echo "Specify an epoch timestamp as first argument" >&2 && return 1
   ruby -e 'puts "#{ARGV.first} => #{Time.at(ARGV.first.to_i).to_s}"' -- $1
+}
+
+httpdme() {
+  port="${1:-8000}"
+  echo "Launching http server on $port for root $(pwd)"
+  ruby -run -e httpd . -p $port
+}
+
+# git checkout PR
+gitcpr() {
+  [[ -z $1 ]] && echo "Need to specify a PR number" >&2 && return 1
+  branch_name="${2:-pr-$1}"
+  git fetch origin pull/$1/head:$branch_name
+  git checkout $branch_name
+  echo "Checked out PR#$1 in $branch_name"
 }
 
 
