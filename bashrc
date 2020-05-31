@@ -265,6 +265,11 @@ collinsdc() {
   fi
 }
 
+wav2flac() {
+  echo "Converting ${1} to flac" >&2
+  ffmpeg -i "$1" -qscale:a 0 "${1/%wav/flac}"
+}
+
 flac2mp3() {
   echo "Converting ${1} to mp3" >&2
   ffmpeg -i "$1" -qscale:a 0 "${1/%flac/mp3}"
