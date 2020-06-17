@@ -335,6 +335,17 @@ gitcpr() {
   echo "Checked out PR#$1 in $branch_name"
 }
 
+makemusic() {
+  if ! test -d /Volumes/Portable ; then
+    echo "You need to plug in the hard drive to store recordings"
+    return 1
+  fi
+  p="/Volumes/Portable/Primary/Production/Recording"
+  d="$(date +%Y.%m.%d)"
+  [[ ! -d $p/$d ]] && mkdir $p/$d
+  open $p/$d
+  open /Applications/Audacity.app
+}
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
