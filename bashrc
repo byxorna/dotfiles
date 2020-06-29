@@ -4,6 +4,7 @@ umask 0022
 
 if [[ $(uname) == Darwin ]] ; then
   [[ -r ~/.profile-osx ]] && source ~/.profile-osx
+  [[ -r ~/.bashrc-ddog ]] && source ~/.bashrc-ddog
   md5sum(){
     /sbin/md5 "$@"
   }
