@@ -17,7 +17,6 @@ bind '"\e[B"':history-search-forward
 
 set -o vi
 
-alias map="docker run -e TERM_PROGRAM=iTerm.app registry.tumblr.net/slackbots/mapbot:master-1117679 cli.py"
 if type -P nvim 2>/dev/null &>/dev/null ; then
   alias vi=nvim
   alias vim=nvim
@@ -51,7 +50,6 @@ alias gits="git status"
 alias gitb="git branch"
 alias gitf="git fetch"
 alias gitp="git pull"
-alias gitup="git checkout master && git pull origin master"
 alias gg="git grep"
 alias kctl="kubectl"
 alias ktl="kubectl"
@@ -334,6 +332,13 @@ gitcpr() {
   git fetch origin pull/$1/head:$branch_name
   git checkout $branch_name
   echo "Checked out PR#$1 in $branch_name"
+}
+
+gitup() {
+  branch="${1:-main}"
+  remote="${2:-origin}"
+  echo "Checking out $branch (\$1) and syncing with $remote (\$2)..." >&2
+  git checkout $branch && git pull $remote $branch
 }
 
 makemusic() {
