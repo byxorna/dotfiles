@@ -335,7 +335,7 @@ gitcpr() {
 }
 
 gitup() {
-  branch="${1:-main}"
+  branch="${1:-$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')}"
   remote="${2:-origin}"
   echo "Checking out $branch (\$1) and syncing with $remote (\$2)..." >&2
   git checkout $branch && git pull $remote $branch
