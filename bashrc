@@ -150,7 +150,7 @@ cdc() {
 
 # show the active kubernetes context
 kctx () {
-  if type -p kubectl >/dev/null ; then
+  if type -p kubectl >/dev/null && test -r ~/.kube/config ; then
     kubectl config current-context
   fi
 }
