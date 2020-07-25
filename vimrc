@@ -108,6 +108,9 @@ Plugin 'thiagoalessio/rainbow_levels.vim'
 "Plugin 'alecthomas/gometalinter'
 Plugin 'exitface/synthwave.vim'
 Plugin 'artanikin/vim-synthwave84'
+Plugin 'dracula/vim', {'name':'dracula'}
+Plugin 'colepeters/spacemacs-theme.vim'
+Plugin 'rainglow/vim', {'name':'rainglow'}
 call vundle#end()            " required
 filetype plugin indent on    " required
 
@@ -119,8 +122,8 @@ else
 endif
 
 " set colorscheme after termguicolors, or the background gets messed up
-:color synthwave84
 :set background=dark
+:color synthwave84
 
 "set runtimepath^=~/.vim/bundle/syntastic.vim
 " turn on vimproc for command exec in <vim8, needed for typescript-vim
