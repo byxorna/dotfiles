@@ -107,30 +107,20 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'thiagoalessio/rainbow_levels.vim'
 "Plugin 'alecthomas/gometalinter'
 Plugin 'exitface/synthwave.vim'
+Plugin 'artanikin/vim-synthwave84'
 call vundle#end()            " required
 filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
 
-
-" https://github.com/exitface/synthwave.vim
-:set background=dark
-:color synthwave
 
 if has('termguicolors')
   set termguicolors " 24-bit terminal
 else
   let g:synthwave_termcolors=256 " 256 color mode
 endif
+
+" set colorscheme after termguicolors, or the background gets messed up
+:color synthwave84
+:set background=dark
 
 "set runtimepath^=~/.vim/bundle/syntastic.vim
 " turn on vimproc for command exec in <vim8, needed for typescript-vim
