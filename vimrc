@@ -147,4 +147,3 @@ map <leader>l :RainbowLevelsToggle<cr>
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 "match OverLength /\%120v.\+/  " highlight all characters over 100char
 match OverLength '\%101v.'  " highlight only the 101st character in a column
-
