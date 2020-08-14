@@ -1,0 +1,22 @@
+k9s:
+  refreshRate: 2
+  headless: false
+  readOnly: false
+  noIcons: false
+  logger:
+    tail: 100
+    buffer: 5000
+    sinceSeconds: 300 #-1
+    fullScreenLogs: false
+    textWrap: false
+    showTime: false
+  currentContext: plain1b.us1.staging.dog
+  currentCluster: plain1b.us1.staging.dog
+  clusters: []
+  thresholds:
+    cpu:
+      critical: 90
+      warn: 70
+    memory:
+      critical: 90
+      warn: 70
