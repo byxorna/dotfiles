@@ -155,6 +155,14 @@ kctx () {
   fi
 }
 
+# login to all configured clusters in kubeconfig and do the dance for oauth
+kloginall() {
+  for ctx in $(kubectl config get-contexts -o name) ; do
+    kubectl login $ctx
+    kubectl get po -n default &>/dev/null || :
+  done
+}
+
 # show all exit statuses in the pipeline
 # disabled 05-13-2013 gconradi - improperly escaped non-printing chars, caused messed up readline
 # export PS1='\e[1;30m[\e[1;94m\t\e[1;30m] [\e[1;36m\]\u\e[1;30m@\e[1;36m\h\e[1;30m] ($(for r in ${PIPESTATUS[*]} ; do [ $r -eq 0 ] && echo -n "\e[1;30m $r" || echo -n " \e[0;31m$r\e[0m" ; done)\e[1;30m ) \e[0;91m\]\w\n\e[1;30m-> \$ \e[0m' #\e[0;97m'
