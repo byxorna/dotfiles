@@ -46,7 +46,7 @@ alias scp='scp -q'
 alias psa='ps aux | grep '
 alias ss="sudo su"
 alias gitc="git checkout"
-alias gits="git status"
+alias gits="git status -v"
 alias gitb="git branch"
 alias gitf="git fetch"
 alias gitp="git pull"
@@ -56,6 +56,7 @@ alias ktl="kubectl"
 alias k="kubectl"
 alias k9="k9s"
 alias c="collins"
+alias wya="git show"
 
 # make history unlimited
 export HISTSIZE=
