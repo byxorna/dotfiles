@@ -54,6 +54,7 @@ alias gg="git grep"
 alias kctl="kubectl"
 alias ktl="kubectl"
 alias k="kubectl"
+alias k9="k9s"
 alias c="collins"
 
 # make history unlimited
