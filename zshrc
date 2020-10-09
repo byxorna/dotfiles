@@ -1,6 +1,8 @@
-export ZSH="/Users/gabe.conradi/.oh-my-zsh"
-#ZSH_CUSTOM="$HOME/code/dotfiles/zsh"
-#ZSH_THEME="passion"
+if [[ -r .oh-my-zsh ]] ; then
+  export ZSH="$HOME/.oh-my-zsh"
+  source $ZSH/oh-my-zsh.sh
+  source $HOME/code/dotfiles/zsh/themes/passion.zsh-theme
+fi
 # Check for an interactive session
 umask 0022
 
