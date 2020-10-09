@@ -1,3 +1,6 @@
+export ZSH="/Users/gabe.conradi/.oh-my-zsh"
+#ZSH_CUSTOM="$HOME/code/dotfiles/zsh"
+#ZSH_THEME="passion"
 # Check for an interactive session
 umask 0022
 
@@ -12,20 +15,22 @@ fi
 # enable history
 HISTSIZE=10000
 SAVEHIST=10000
-HISTFILE=~/.zsh_history
+#HISTFILE=~/.zsh_history
 
 # vi bindings
 bindkey -v
 # reverse history search
 bindkey '^R' history-incremental-search-backward
 
+plugins=(
+  git
+  osx
+  ruby
+  golang
+)
 
-if type -P nvim 2>/dev/null &>/dev/null ; then
-  alias vi=nvim
-  alias vim=nvim
-else
-  alias vi=vim
-fi
+alias vi=nvim
+alias vim=nvim
 alias ls='ls -G'
 alias lös=ls
 alias exit='clear; exit'
@@ -358,5 +363,3 @@ makemusic() {
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
-
-[[ -s "/Users/gabe/.gvm/scripts/gvm" ]] && source "/Users/gabe/.gvm/scripts/gvm"
