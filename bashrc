@@ -45,18 +45,25 @@ alias ssh='ssh -A'
 alias scp='scp -q'
 alias psa='ps aux | grep '
 alias ss="sudo su"
+
+# git helpers
 alias gitc="git checkout"
-alias gits="git status -v"
+alias gits="git status"
 alias gitb="git branch"
 alias gitf="git fetch"
 alias gitp="git pull"
 alias gg="git grep"
+alias wya="git show"
+
+# kubernetes helpers
 alias kctl="kubectl"
 alias ktl="kubectl"
 alias k="kubectl"
-alias k9="k9s"
+alias kc="kubectl config use-context"
+alias kcs="kubectl config get-contexts"
+alias kui="k9s"
+
 alias c="collins"
-alias wya="git show"
 
 # make history unlimited
 export HISTSIZE=
