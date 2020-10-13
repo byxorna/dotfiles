@@ -14,7 +14,7 @@ if [[ -r .oh-my-zsh ]] ; then
   source $ZSH/oh-my-zsh.sh
   source $HOME/code/dotfiles/zsh/themes/passion.zsh-theme
 fi
-# Check for an interactive session
+
 umask 0022
 
 if [[ $(uname) == Darwin ]] ; then
@@ -296,3 +296,6 @@ makemusic() {
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
+
+PROMPT="$(real_time) $(directory) $fg_bold[magenta]$(kctx) $(git_status)$(command_status) "
+
