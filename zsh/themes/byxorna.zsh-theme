@@ -63,8 +63,8 @@ function real_time() {
 
 # directory
 function directory() {
-    #local color="%{$fg_no_bold[cyan]%}";
-    local color="%{$ORANGE%}";
+    local color="%{$fg_no_bold[cyan]%}";
+    #local color="%{$ORANGE%}";
     # REF: https://stackoverflow.com/questions/25944006/bash-current-working-directory-with-replacing-path-to-home-folder
     local directory="${PWD/#$HOME/~}";
     local color_reset="%{$reset_color%}";
@@ -73,9 +73,9 @@ function directory() {
 
 
 # git
-ZSH_THEME_GIT_PROMPT_PREFIX="%{$VIOLET%}";
+ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_no_bold[magenta]%}";
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} ";
-ZSH_THEME_GIT_PROMPT_DIRTY="%{$RED%} 🧹";
+ZSH_THEME_GIT_PROMPT_DIRTY="%{$RED%}*";
 ZSH_THEME_GIT_PROMPT_CLEAN="%{$BLUE%}";
 
 function update_git_status() {
@@ -92,12 +92,7 @@ function update_command_status() {
     local arrow="";
     local color_reset="%{$reset_color%}";
     local reset_font="%{$fg_no_bold[white]%}";
-    if $1;
-    then
-        arrow="%{$fg_bold[red]%}❱%{$fg_bold[yellow]%}❱%{$fg_bold[green]%}❱";
-    else
-        arrow="%{$fg_bold[red]%}❱❱❱";
-    fi
+    arrow="%{$fg_bold[blue]%}❱";
     COMMAND_STATUS="${arrow}${reset_font}${color_reset}";
 }
 update_command_status true;
@@ -132,7 +127,7 @@ output_command_execute_after() {
     local color_time="$BASE00";
     time="${color_time}${time}${color_reset}";
 
-    # cost
+    # compute delta cost
     local time_end="$(current_time_millis)";
     local cost=$(bc -l <<<"${time_end}-${COMMAND_TIME_BEIGIN}");
     COMMAND_TIME_BEIGIN="-20200325"
@@ -145,8 +140,8 @@ output_command_execute_after() {
     local color_cost="$BASE01";
     cost="${color_cost}${cost}${color_reset}";
 
-    echo -e "${time} ${cost} ${cmd}";
     echo -e "";
+    echo -e "${time} ${cost} ${cmd}";
 }
 
 
@@ -222,4 +217,4 @@ TRAPALRM() {
 
 
 # prompt
-PROMPT='$(real_time) $(directory) $BLUE$(kctx) $(git_status)$(command_status) ';
+PROMPT='$(real_time) $(directory) %{$BLUE%}$(kctx) $(git_status)$(command_status) ';
