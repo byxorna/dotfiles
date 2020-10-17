@@ -1,19 +1,19 @@
-# enable history
 # NOTE: make sure this is set before oh-my-zsh is loaded
+# If omitted, or empty, HISTSIZE is assumed to be 1 which makes for an unergonomic history experience
 HISTSIZE=10000
 SAVEHIST=10000
-#HISTFILE=~/.zsh_history
-
-# vi bindings
-bindkey -v
-# reverse history search
-bindkey "^R" history-incremental-search-backward
 
 if [[ -r .oh-my-zsh ]] ; then
   export ZSH="$HOME/.oh-my-zsh"
   source $ZSH/oh-my-zsh.sh
   source $HOME/code/dotfiles/zsh/themes/passion.zsh-theme
 fi
+
+# vi bindings
+bindkey -v
+set -o vi
+# reverse history search
+bindkey "^R" history-incremental-search-backward
 
 umask 0022
 
@@ -39,39 +39,23 @@ setopt share_history
 
 # up arrow for backwards history search
 # https://unix.stackexchange.com/questions/324623/how-to-make-oh-my-zsh-history-behavior-similar-to-bashs
-#bindkey "$terminfo[kcuu1]" up-history
-#bindkey "$terminfo[kcud1]" down-history
-
-autoload -U up-line-or-beginning-search
-autoload -U down-line-or-beginning-search
-zle -N up-line-or-beginning-search
-zle -N down-line-or-beginning-search
-bindkey "$terminfo[kcuu1]" up-line-or-beginning-search # Up
-bindkey "$terminfo[kcud1]" down-line-or-beginning-search # Down
+bindkey "$terminfo[kcuu1]" up-history
+bindkey "$terminfo[kcud1]" down-history
 
 alias vi=nvim
 alias vim=nvim
-alias ls='ls -G'
-alias lös=ls
-alias exit='clear; exit'
 alias ll='ls -la'
 alias la='ls -la'
 alias lr='ls -laR'
 alias less='less -R '
-alias dude=sudo
-alias suod=sudo
-alias sduo=sudo
 alias bc='bc -l'
 alias   '..'='cd ..'
 alias  '...'='cd ../..'
 alias '....'='cd ../..'
 alias .='source'
 alias isomount='sudo mount -t iso9660 -o loop'
-#alias perlshell='perl -wn -e ' print "perl> " ; eval($_);'''
 alias ssh='ssh -A'
 alias scp='scp -q'
-alias psa='ps aux | grep '
-alias ss="sudo su"
 
 # git helpers
 alias gitc="git checkout"
@@ -92,21 +76,10 @@ alias kui="k9s"
 
 alias c="collins"
 
-# make history unlimited
-export HISTSIZE=
-export HISTFILESIZE=
-
-export CLICOLOR=true # for ls colors
-export LSCOLORS=exfxcxdxbxexexabagacad # https://softwaregravy.wordpress.com/2010/10/16/ls-colors-for-mac/ :shruggie: copypasta
 export PATH=$PATH:~/bin:~/local/bin:~/lang/bin:~/lang/usr/local/scala/bin:~/code/scripts:~/code/scripts/collins:/usr/sbin:/sbin:/usr/local/sbin:/usr/local/bin:~/.rvm/bin:/opt/local/bin:/opt/local/sbin:$GOPATH/bin:~/.cargo/bin
-export MANPATH=$MANPATH:~/lang/share/man:~/lang/usr/local/scala/man
 export VISUAL='vim'
 export EDITOR='vim'
 export PAGER='less'
-export GREP_COLOR='1;33'
-export P4CONFIG=~/.p4rc
-# prepend history output with timestamps
-export HISTTIMEFORMAT="%F %T - "
 
 is_git_repo(){
   git rev-parse --is-inside-git-dir &>/dev/null
@@ -297,5 +270,5 @@ makemusic() {
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
 
-PROMPT="$(real_time) $(directory) $fg_bold[magenta]$(kctx) $(git_status)$(command_status) "
+export PROMPT="\$(real_time) \$(directory) \$fg_bold[magenta]\$(kctx) \$(git_status)\$(command_status) "
 
