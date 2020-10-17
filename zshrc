@@ -6,7 +6,7 @@ SAVEHIST=10000
 if [[ -r .oh-my-zsh ]] ; then
   export ZSH="$HOME/.oh-my-zsh"
   source $ZSH/oh-my-zsh.sh
-  source $HOME/code/dotfiles/zsh/themes/passion.zsh-theme
+  source $HOME/code/dotfiles/zsh/themes/byxorna.zsh-theme
 fi
 
 # vi bindings
@@ -269,6 +269,3 @@ makemusic() {
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
-
-export PROMPT="\$(real_time) \$(directory) \$fg_bold[magenta]\$(kctx) \$(git_status)\$(command_status) "
-
