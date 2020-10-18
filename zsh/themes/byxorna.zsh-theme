@@ -115,12 +115,13 @@ output_command_execute_after() {
     # color previous command based on success
     if $1;
     then
-        color_cmd="$fg_bold[green]";
+        color_cmd="$fg_no_bold[white]";
+        #color_cmd="$BASE02"
     else
         color_cmd="$fg_bold[red]";
     fi
     local color_reset="$reset_color";
-    cmd="${color_cmd}${cmd}${color_reset}"
+    cmd="${color_cmd}# ${cmd}${color_reset}"
 
     # time
     local time="[$(date +%H:%M:%S)]"
