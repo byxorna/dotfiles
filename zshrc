@@ -3,6 +3,16 @@
 HISTSIZE=10000
 SAVEHIST=10000
 
+# NOTE: plugins need to load before OMZ
+plugins=(
+  git
+  osx
+  ruby
+  golang
+  colored-man-pages
+  kubectl
+)
+
 if [[ -r .oh-my-zsh ]] ; then
   export ZSH="$HOME/.oh-my-zsh"
   source $ZSH/oh-my-zsh.sh
@@ -24,13 +34,6 @@ if [[ $(uname) == Darwin ]] ; then
     /sbin/md5 "$@"
   }
 fi
-
-plugins=(
-  git
-  osx
-  ruby
-  golang
-)
 
 # Appends every command to the history file once it is executed
 setopt inc_append_history
