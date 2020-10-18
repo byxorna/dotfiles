@@ -215,6 +215,13 @@ TRAPALRM() {
     fi
 }
 
+display_k8s_context() {
+  kc="$(kctx)"
+  if [[ -z $kc ]] ; then
+    return
+  fi
+  echo "%{$BLUE%}$kc "
+}
 
 # prompt
-PROMPT='$(real_time) $(directory) %{$BLUE%}$(kctx) $(git_status)$(command_status) ';
+PROMPT='$(real_time) $(directory) $(display_k8s_context)$(git_status)$(command_status) ';
