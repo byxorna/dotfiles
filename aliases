@@ -12,6 +12,7 @@ alias .='source'
 alias isomount='sudo mount -t iso9660 -o loop'
 alias ssh='ssh -A'
 alias scp='scp -q'
+alias chmox='chmod +x'
 
 # git helpers
 alias gitc="git checkout"
@@ -32,6 +33,11 @@ alias kui="k9s"
 
 alias c="collins"
 
+export PATH=$PATH:~/bin:~/local/bin:~/lang/bin:~/lang/usr/local/scala/bin:~/code/scripts:~/code/scripts/collins:/usr/sbin:/sbin:/usr/local/sbin:/usr/local/bin:~/.rvm/bin:/opt/local/bin:/opt/local/sbin:$GOPATH/bin:~/.cargo/bin
+#if which -s aws_completer ; then
+#  export PATH="$PATH:$(dirname $(which aws_completer))"
+#fi
+#/usr/local/opt/awscli@1/bin/aws_completer
 export PATH=$PATH:~/bin:~/local/bin:~/lang/bin:~/lang/usr/local/scala/bin:~/code/scripts:~/code/scripts/collins:/usr/sbin:/sbin:/usr/local/sbin:/usr/local/bin:~/.rvm/bin:/opt/local/bin:/opt/local/sbin:$GOPATH/bin:~/.cargo/bin
 export VISUAL='vim'
 export EDITOR='vim'
