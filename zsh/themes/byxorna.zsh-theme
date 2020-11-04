@@ -66,7 +66,10 @@ function directory() {
     local color="%{$fg_no_bold[cyan]%}";
     #local color="%{$ORANGE%}";
     # REF: https://stackoverflow.com/questions/25944006/bash-current-working-directory-with-replacing-path-to-home-folder
-    local directory="${PWD/#$HOME/~}";
+    #local directory="${PWD/#$HOME/~}";
+    # https://unix.stackexchange.com/questions/273529/shorten-path-in-zsh-prompt
+    local d="%(4~|%-1~/…/%2~|%3~)"
+    local directory="${d/#$HOME/~}";
     local color_reset="%{$reset_color%}";
     echo "${color}${directory}${color_reset}";
 }
