@@ -29,7 +29,7 @@ alias ktl="kubectl"
 alias k="kubectl"
 alias kc="kubectl config use-context"
 alias kcs="kubectl config get-contexts"
-alias kui="k9s"
+alias kui="k9s -c ns"
 
 alias c="collins"
 
