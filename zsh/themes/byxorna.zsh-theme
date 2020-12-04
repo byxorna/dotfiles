@@ -114,7 +114,7 @@ output_command_execute_after() {
     fi
 
     # show previous command
-    local cmd="${$(fc -l | tail -1|tr -s ' '|cut -d ' ' -f3-)#*  }";
+    local cmd="${$(fc -l | tail -1|tr -s ' '|cut -d ' ' -f2-)#*  }";
     local color_cmd="";
     # color previous command based on success
     if $1;
