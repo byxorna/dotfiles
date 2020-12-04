@@ -13,6 +13,7 @@ alias isomount='sudo mount -t iso9660 -o loop'
 alias ssh='ssh -A'
 alias scp='scp -q'
 alias chmox='chmod +x'
+alias tf="terraform"
 
 # git helpers
 alias gitc="git checkout"
