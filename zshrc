@@ -45,6 +45,15 @@ bindkey "$terminfo[kcud1]" down-history
 
 [[ -f ~/.aliases ]] && source ~/.aliases
 
+# hook up ctrl-p on the line to launch vim's ctrlp
+# make sure this runs after aliases are configured, so we use nvim if present
+# https://www.reddit.com/r/zsh/comments/2uyo2a/launch_vims_ctrlp_from_zsh/
+ctrlp() {
+  </dev/tty vim -c CtrlP
+}
+zle -N ctrlp
+bindkey "^p" ctrlp
+
 [[ -f ~/.rvm/scripts/rvm ]] && . ~/.rvm/scripts/rvm
 # clobber the default gopath setup by gvm
 export GOPATH=~/code/go
