@@ -13,7 +13,7 @@ plugins=(
   kubectl
 )
 
-if [[ -r .oh-my-zsh ]] ; then
+if [[ -r ~/.oh-my-zsh ]] ; then
   export ZSH="$HOME/.oh-my-zsh"
   source $ZSH/oh-my-zsh.sh
   source $HOME/code/dotfiles/zsh/themes/byxorna.zsh-theme
@@ -22,10 +22,11 @@ else
   echo -n "oh-my-zsh is not setup yet. do you want to install it? y/n " >&2
   read install
   if [[ $install == y ]] ; then
-    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" <&-
     # the installer is bossy and overwrites our local config, so ensure
     echo -n "linking .zshrc to ~/code/dotfiles/zshrc"
     ln -sfn ~/code/dotfiles/zshrc ~/.zshrc
+    source ~/.zshrc
   fi
 fi
 
