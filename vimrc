@@ -141,6 +141,42 @@ noremap <leader>] :TagbarToggle<CR>
 " Creating a mapping to turn it on and off:
 map <leader>l :RainbowLevelsToggle<cr>
 " au FileType golang,ruby,javascript,python,php,xml,yaml :RainbowLevelsOn
+"
+
+" these are default, but it doesnt hurt to call out improved search with
+" snapping to search term
+:set hlsearch
+:set incsearch
+
+" Ignore cases, but only when the cases are not uniform. That is, make 
+" searching case-sensitive when there are upper and lower case letters.
+:set ignorecase
+:set smartcase
+
+" set useful format options. see `:help fo-table` for more.
+:set formatoptions=jtcroqln
+
+" https://mandreyel.github.io/posts/fav-vim-settings/
+"
+fun! s:SetRelativeNumber()
+    if &number
+        set relativenumber
+    endif
+endfun
+
+fun! s:UnsetRelativeNumber()
+    if &number
+        set norelativenumber
+    endif
+endfun
+
+" automatically turn on relativenumbering when in command mode, and
+" norelativenumber when in insert
+augroup NumberToggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave * call s:SetRelativeNumber()
+  autocmd BufLeave,FocusLost,InsertEnter   * call s:UnsetRelativeNumber()
+augroup END
 
 
 " set overlength highlights for 80char lines
