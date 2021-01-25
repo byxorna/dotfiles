@@ -233,4 +233,8 @@ makemusic() {
   open /Applications/Audacity.app
 }
 
+# quick subnetting for IP addresses, cause i can never do the math reliably enough in my head
+ipcalc() {
+  ruby -r ipaddr -e 'ARGV.each {|a| n = IPAddr.new(a) ; puts "#{a}\t#{n.to_range.count}\t#{n.prefix}\t#{n.to_range.first}\t#{n.to_range.last}" }' $@
+}
 
