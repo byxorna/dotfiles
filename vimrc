@@ -102,7 +102,6 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'leafgarland/typescript-vim'
 " turn on vimproc for command exec in <vim8, needed for typescript-vim
 Plugin 'shougo/vimproc.vim'
-Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-airline/vim-airline'
 Plugin 'thiagoalessio/rainbow_levels.vim'
 "Plugin 'alecthomas/gometalinter'
@@ -111,6 +110,9 @@ Plugin 'artanikin/vim-synthwave84'
 Plugin 'dracula/vim', {'name':'dracula'}
 Plugin 'colepeters/spacemacs-theme.vim'
 Plugin 'rainglow/vim', {'name':'rainglow'}
+Plugin 'neoclide/coc.nvim', {'branch': 'release'}
+Plugin 'hashivim/vim-terraform'
+" Plugin 'Valloric/YouCompleteMe' " disabled, to test COC as a replacement
 call vundle#end()            " required
 filetype plugin indent on    " required
 
@@ -178,8 +180,35 @@ augroup NumberToggle
   autocmd BufLeave,FocusLost,InsertEnter   * call s:UnsetRelativeNumber()
 augroup END
 
+" coc tab completion stuff
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
 
 " set overlength highlights for 80char lines
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 "match OverLength /\%120v.\+/  " highlight all characters over 100char
 match OverLength '\%101v.'  " highlight only the 101st character in a column
+
+" terraform specific settings
+" https://github.com/hashivim/vim-terraform
+let g:terraform_align=1
+let g:terraform_fmt_on_save=1
+
