@@ -9,3 +9,5 @@
 	default = simple
 [url "git@github.com:DataDog"]
 	insteadOf = https://github.com/DataDog
+[pull]
+	rebase = false
