@@ -16,11 +16,12 @@ win = spoon.WindowHalfsAndThirds:bindHotkeys({
   max_toggle  = { hyper, "Up" },
 })
 
+local launcher_hyper = {"cmd", "shift"}
 -- https://www.hammerspoon.org/go/#pasteblock
-hs.hotkey.bind({"cmd", "shift"}, "V", function() hs.eventtap.keyStrokes(hs.pasteboard.getContents()) end)
+hs.hotkey.bind(launcher_hyper, "V", function() hs.eventtap.keyStrokes(hs.pasteboard.getContents()) end)
 
 -- focus finder, and if focused, open a finder window
-hs.hotkey.bind({"cmd", "shift"}, "F", function() 
+hs.hotkey.bind(launcher_hyper, "F", function() 
   finder = hs.application.find("Finder")
   wasActive = finder:isFrontmost()
   if not wasActive then
@@ -36,14 +37,25 @@ hs.hotkey.bind({"cmd", "shift"}, "F", function()
   end
 end)
 
+-- focus KeePassXC on cmd+shift+K
+hs.hotkey.bind(launcher_hyper, "K", function() 
+  kxc = hs.application.find("KeePassXC")
+  wasActive = kxc:isFrontmost()
+  if not wasActive then
+    kxc:activate(true)
+  end
+end)
+
 --[[
+-- TODO: I cannot figure out how to get any useful information from the
+-- application. Should we scrape logs in ~/.appgatesdp/log/???
 -- If AppGate is running, try to figure out which connection we are on
 function applicationWatcher(appName, eventType, appObject)
-    if (eventType == hs.application.watcher.activated) then
-        if (appName == "AppGate SDP") then
-          hs.alert.show("AppGate Focused" .. appName .. "--" )
-        end
+  if (eventType == hs.application.watcher.activated) then
+    if (appName == "AppGate SDP") then
+      hs.alert.show("AppGate Focused: " .. appName .. appObject:title())
     end
+  end
 end
 appWatcher = hs.application.watcher.new(applicationWatcher)
 appWatcher:start()
