@@ -16,7 +16,7 @@ win = spoon.WindowHalfsAndThirds:bindHotkeys({
   max_toggle  = { hyper, "Up" },
 })
 
-local launcher_hyper = {"cmd", "shift"}
+local launcher_hyper = {"cmd", "ctrl"}
 -- https://www.hammerspoon.org/go/#pasteblock
 hs.hotkey.bind(launcher_hyper, "V", function() hs.eventtap.keyStrokes(hs.pasteboard.getContents()) end)
 
