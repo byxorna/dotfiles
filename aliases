@@ -238,3 +238,6 @@ ipcalc() {
   ruby -r ipaddr -e 'ARGV.each {|a| n = IPAddr.new(a) ; puts "#{a}\t#{n.to_range.count}\t#{n.prefix}\t#{n.to_range.first}\t#{n.to_range.last}" }' $@
 }
 
+random_pokemon() {
+  curl -sSL https://randompokemon.com/dex/all.json | jq -r --arg i $(($RANDOM % 898)) '.[$i|tonumber].name'
+}
