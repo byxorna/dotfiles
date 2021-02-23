@@ -46,6 +46,15 @@ hs.hotkey.bind(launcher_hyper, "K", function()
   end
 end)
 
+-- focus iTerm2 on cmd+shift+T
+hs.hotkey.bind(launcher_hyper, "T", function()
+  kxc = hs.application.find("iTerm2")
+  wasActive = kxc:isFrontmost()
+  if not wasActive then
+    kxc:activate(true)
+  end
+end)
+
 --[[
 -- TODO: I cannot figure out how to get any useful information from the
 -- application. Should we scrape logs in ~/.appgatesdp/log/???
