@@ -29,9 +29,16 @@ alias wya="git show"
 alias kctl="kubectl"
 alias ktl="kubectl"
 alias k="kubectl"
-alias kc="kubectl config use-context"
 alias kcs="kubectl config get-contexts"
 alias kui="k9s -c ns"
+alias ktr="kubectl template render"
+function kc() {
+  if [[ $# -eq 0 ]] ; then
+    kubectl config current-context
+  else
+    kubectl config use-context $@
+  fi
+}
 function k8s-debug-pod-volume {
   local pod_name=$1
   pvc_name=$(kubectl get pod -o json "$pod_name"| jq -r '.spec.volumes[] | select(.persistentVolumeClaim != null).persistentVolumeClaim.claimName')
