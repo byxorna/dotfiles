@@ -65,6 +65,16 @@ ctrlp() {
 zle -N ctrlp
 bindkey "^p" ctrlp
 
+fzfvim() {
+  IFS=$'\n' files=($(fzf --query="$1" --multi --select-1 --exit-0))
+  [[ -n "$files" ]] && ${EDITOR:-vim} -p "${files[@]}"
+}
+zle -N fzfvim
+bindkey "^e" fzfvim
+
+# launch a fzf session to edit files with ctrl-e (kinda like ctrl-p)
+#
+
 [[ -f ~/.rvm/scripts/rvm ]] && . ~/.rvm/scripts/rvm
 # clobber the default gopath setup by gvm
 export GOPATH=~/code/go
