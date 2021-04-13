@@ -30,6 +30,9 @@ else
   fi
 fi
 
+## disabled 2021.04.13, autocomplete screws with key bindings
+#test -d $HOME/code/dotfiles/zsh/plugins/zsh-autocomplete && source $HOME/code/dotfiles/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+
 # vi bindings
 bindkey -v
 set -o vi
