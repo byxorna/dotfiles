@@ -3,6 +3,13 @@
 HISTSIZE=10000
 SAVEHIST=10000
 
+#DISABLE_FZF_AUTO_COMPLETION="false"
+#DISABLE_FZF_KEY_BINDINGS="false"
+
+# vi bindings
+bindkey -v
+set -o vi
+
 # NOTE: plugins need to load before OMZ
 plugins=(
   git
@@ -11,6 +18,7 @@ plugins=(
   golang
   colored-man-pages
   kubectl
+  fzf               # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/fzf
 )
 
 if [[ -r ~/.oh-my-zsh ]] ; then
@@ -30,14 +38,17 @@ else
   fi
 fi
 
-## disabled 2021.04.13, autocomplete screws with key bindings
-#test -d $HOME/code/dotfiles/zsh/plugins/zsh-autocomplete && source $HOME/code/dotfiles/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+## vi bindings
+#bindkey -v
+#set -o vi
+## reverse history search
+# disabled 20210414 when enabling fzf
+#bindkey "^R" history-incremental-search-backward
+# NOTE: fzf plugin enables the following controls:
+# - ctrl-r: replace reverse history search
+# - ctrl-t: find files, insert file at cursor
+# - alt-c: ??
 
-# vi bindings
-bindkey -v
-set -o vi
-# reverse history search
-bindkey "^R" history-incremental-search-backward
 
 umask 0022
 
