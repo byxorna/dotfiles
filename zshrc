@@ -79,15 +79,69 @@ ctrlp() {
 zle -N ctrlp
 bindkey "^p" ctrlp
 
-fzfvim() {
-  IFS=$'\n' files=($(fzf --query="$1" --multi --select-1 --exit-0))
-  [[ -n "$files" ]] && ${EDITOR:-vim} -p "${files[@]}"
+webkit-timestamp-ago() {
+  # https://timothycomeau.com/writing/chrome-history
+  # processes a strange chrome timestamp into a relative
+  # string that shows like 2d or 58s or 24m
+  tnow="$(date +%s)"
+  x="$(( ${1} / 1000000 - 11644473600))"
+  dur=$((tnow - x))
+  if [[ $dur -lt 60 ]] ; then
+    echo "${dur}s"
+  elif [[ $dur -lt 3600 ]] ; then
+    echo "$((dur/60))m"
+  elif [[ $dur -lt 86400 ]] ; then
+    echo "$((dur/3600)))h"
+  else
+    echo "$((dur/86400))d"
+  fi
 }
-zle -N fzfvim
-bindkey "^e" fzfvim
 
-# launch a fzf session to edit files with ctrl-e (kinda like ctrl-p)
-#
+collect-browser-history(){
+  sep='{::}'
+  cols=$(( COLUMNS / 3 ))
+  # collect all history entries from all browsers, spit em out to stdout
+  # in a sorted order, so recent is last
+  tnow="$(date +%s)"
+  find  ~/Library/Application\ Support/Google/Chrome/ -type f -name History | while read h
+  do
+    #echo "loading history from $h" >&2
+    # sqlite is annoying and gives IO errors unless we copy it for single access
+      #"select last_visit_time, substr(title, 1, $cols), url from urls"
+      #datetime(time/1e6-11644473600,'unixepoch','localtime')
+    cp $h /tmp/h
+    sqlite3 -readonly -separator {::} /tmp/h \
+      "select last_visit_time, substr(title, 1, $cols), url from urls"
+
+  done | sort -rn| awk -F $sep '
+        {
+          tnow='"$(date +%s)"'
+          # record our URL, and skip if we have seen it before
+          !urls[$3]++;
+          raw_timestamp=$1 ;
+          as_unix=(raw_timestamp / 1000000 - 11644473600) ;
+          last_access="?"
+          elapsed_seconds=tnow - as_unix
+          if (elapsed_seconds < 60)
+            last_access=int(elapsed_seconds) "s";
+          else if (elapsed_seconds < 3600)
+            last_access=int(elapsed_seconds/60) "m";
+          else if (elapsed_seconds < 86400)
+            last_access=int(elapsed_seconds/3600) "h";
+          else
+            last_access=int(elapsed_seconds/86400) "d";
+
+          if (urls[$3] == 1)
+            printf "%-'$cols's [%s]  \x1b[36m%s\x1b[m\n", $2, last_access, $3 ;
+        }'
+}
+
+# look thru browser history with fzf with ctrl-h
+browser-history(){
+  collect-browser-history | fzf --ansi --multi | sed 's#.*\(https*://\)#\1#' | xargs open
+}
+zle -N browser-history
+bindkey "^h" browser-history
 
 [[ -f ~/.rvm/scripts/rvm ]] && . ~/.rvm/scripts/rvm
 # clobber the default gopath setup by gvm
