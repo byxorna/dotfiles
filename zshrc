@@ -143,6 +143,16 @@ browser-history(){
 zle -N browser-history
 bindkey "^h" browser-history
 
+# ctrl-b will open bookmarks in fzf
+_bookmarks-fzf () {
+  echo
+  bookmarks-fzf
+  zle redisplay
+}
+
+zle -N _bookmarks-fzf
+bindkey "^b" _bookmarks-fzf
+
 [[ -f ~/.rvm/scripts/rvm ]] && . ~/.rvm/scripts/rvm
 # clobber the default gopath setup by gvm
 export GOPATH=~/code/go
