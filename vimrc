@@ -212,3 +212,13 @@ match OverLength '\%101v.'  " highlight only the 101st character in a column
 let g:terraform_align=1
 let g:terraform_fmt_on_save=1
 
+let g:coc_global_extensions = [
+  \'coc-json',
+  \'coc-git',
+  \'coc-html',
+  \'coc-css',
+  \'coc-yaml',
+  \'coc-sh',
+  \'coc-tsserver',
+  \'coc-pyright',
+  \'coc-solargraph']
