@@ -130,6 +130,9 @@ kctx () {
   fi
 }
 
+# https://github.com/homeport/dyff
+which dyff &>/dev/null && export KUBECTL_EXTERNAL_DIFF="dyff between --omit-header --ignore-order-changes --set-exit-code"
+
 # login to all configured clusters in kubeconfig and do the dance for oauth
 kloginall() {
   for ctx in $(kubectl config get-contexts -o name) ; do
