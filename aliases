@@ -1,6 +1,12 @@
-alias vi="nvim -p"
-alias vim="nvim -p"
-alias vimdiff='nvim -d'
+export EDITOR=vim
+export VISUAL=vim
+if type -p nvim >/dev/null ; then
+  alias vi="nvim -p"
+  alias vim="nvim -p"
+  alias vimdiff='nvim -d'
+  export EDITOR=nvim
+  export VISUAL=nvim
+fi
 alias ll='ls -la'
 alias la='ls -la'
 alias lr='ls -laR'
@@ -100,8 +106,6 @@ fi
 alias c="collins"
 
 export PATH=$PATH:~/bin:~/local/bin:~/lang/bin:~/lang/usr/local/scala/bin:~/code/scripts:~/code/scripts/collins:/usr/sbin:/sbin:/usr/local/sbin:/usr/local/bin:~/.rvm/bin:/opt/local/bin:/opt/local/sbin:$GOPATH/bin:~/.cargo/bin:~/code/go/bin
-export VISUAL='vim'
-export EDITOR='vim'
 export PAGER='less'
 
 is_git_repo(){
