@@ -3,8 +3,11 @@
 HISTSIZE=10000
 SAVEHIST=10000
 
-#DISABLE_FZF_AUTO_COMPLETION="false"
-#DISABLE_FZF_KEY_BINDINGS="false"
+export FZF_DEFAULT_OPTS="--reverse --height=20% --multi"
+export FZF_CTRL_T_OPTS="--preview 'cat {}'"
+if type rg &> /dev/null; then
+  export FZF_DEFAULT_COMMAND='rg --files'
+fi
 
 # vi bindings
 bindkey -v
@@ -76,8 +79,10 @@ bindkey "$terminfo[kcud1]" down-history
 ctrlp() {
   </dev/tty vim -c CtrlP
 }
-zle -N ctrlp
-bindkey "^p" ctrlp
+# Disabled because we have fzf ctrl-t+ctrl-r
+#zle -N ctrlp
+#bindkey "^p" ctrlp
+
 
 webkit-timestamp-ago() {
   # https://timothycomeau.com/writing/chrome-history
@@ -193,3 +198,6 @@ export PATH="$PATH:$HOME/.rvm/bin"
 function help(){
     bash -c "help $@"
 }
+
+if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then . ~/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+

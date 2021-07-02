@@ -92,30 +92,25 @@ Plugin 'VundleVim/Vundle.vim'
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
 Plugin 'tpope/vim-fugitive'
-Plugin 'kien/ctrlp.vim'
+"Plugin 'kien/ctrlp.vim'
 Plugin 'dense-analysis/ale' " a ton of linters :)
-"Plugin 'fatih/vim-go'
-Plugin 'git://git.wincent.com/command-t.git'
-"Plugin 'scrooloose/syntastic'
+"Plugin 'git://git.wincent.com/command-t.git'
 Plugin 'statianzo/vim-jade'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'leafgarland/typescript-vim'
 " turn on vimproc for command exec in <vim8, needed for typescript-vim
 Plugin 'shougo/vimproc.vim'
 Plugin 'vim-airline/vim-airline'
-Plugin 'thiagoalessio/rainbow_levels.vim'
 "Plugin 'alecthomas/gometalinter'
-Plugin 'exitface/synthwave.vim'
 Plugin 'artanikin/vim-synthwave84'
 Plugin 'dracula/vim', {'name':'dracula'}
-Plugin 'colepeters/spacemacs-theme.vim'
 Plugin 'rainglow/vim', {'name':'rainglow'}
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 Plugin 'hashivim/vim-terraform'
-" Plugin 'Valloric/YouCompleteMe' " disabled, to test COC as a replacement
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim', { 'do': { -> fzf#install() } }
 call vundle#end()            " required
-filetype plugin indent on    " required
-
+filetype plugin indent on    " requiredPlug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
 if has('termguicolors')
   set termguicolors " 24-bit terminal
@@ -127,12 +122,6 @@ endif
 :set background=dark
 :color synthwave84
 
-"set runtimepath^=~/.vim/bundle/syntastic.vim
-" turn on vimproc for command exec in <vim8, needed for typescript-vim
-"set runtimepath^=~/.vim/bundle/vimproc.vim
-" turn on typescript-vim
-"set runtimepath^=~/.vim/bundle/typescript-vim
-" turn on nerdtree, let \ + } toggle tree
 "set runtimepath^=~/.vim/bundle/nerdtree
 noremap <leader>} :NERDTreeToggle<CR>
 " turn on tagbar, toggle with \ + ]
@@ -140,10 +129,16 @@ set runtimepath^=~/.vim/bundle/tagbar
 noremap <leader>] :TagbarToggle<CR>
 
 
-" Creating a mapping to turn it on and off:
-map <leader>l :RainbowLevelsToggle<cr>
-" au FileType golang,ruby,javascript,python,php,xml,yaml :RainbowLevelsOn
-"
+" trigger fzf to display files with ctrlt/p
+" TODO why is this :
+nnoremap <silent> <C-t> :Files<CR>
+nnoremap <silent> <C-p> :GFiles<CR>
+nnoremap <silent> <C-l> :Lines<CR>
+" ctrl-h to lookup help for the current focused word as input
+nnoremap <silent> <C-h> :Helptags!<CR>
+let g:fzf_layout = { 'down': '40%' }
+"nmap <Leader>f :GFiles<CR>
+"nmap <Leader>F :Files<CR>
 
 " these are default, but it doesnt hurt to call out improved search with
 " snapping to search term
