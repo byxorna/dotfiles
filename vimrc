@@ -43,6 +43,7 @@ au BufRead *.scala set filetype=scala
 au BufRead *.pp set filetype=puppet
 au BufRead *.jade set filetype=jade
 au BufRead *.go set filetype=go
+au BufRead *.erb set filetype=erb
 autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
 
 " highlight trailing whitespace
@@ -93,7 +94,8 @@ Plugin 'VundleVim/Vundle.vim'
 " plugin on GitHub repo
 Plugin 'tpope/vim-fugitive'
 "Plugin 'kien/ctrlp.vim'
-Plugin 'dense-analysis/ale' " a ton of linters :)
+" 2021.07.04 disabled for possible conflict with coc
+"Plugin 'dense-analysis/ale'
 "Plugin 'git://git.wincent.com/command-t.git'
 Plugin 'statianzo/vim-jade'
 Plugin 'airblade/vim-gitgutter'
@@ -101,7 +103,6 @@ Plugin 'leafgarland/typescript-vim'
 " turn on vimproc for command exec in <vim8, needed for typescript-vim
 Plugin 'shougo/vimproc.vim'
 Plugin 'vim-airline/vim-airline'
-"Plugin 'alecthomas/gometalinter'
 Plugin 'artanikin/vim-synthwave84'
 Plugin 'dracula/vim', {'name':'dracula'}
 Plugin 'rainglow/vim', {'name':'rainglow'}
@@ -129,10 +130,8 @@ set runtimepath^=~/.vim/bundle/tagbar
 noremap <leader>] :TagbarToggle<CR>
 
 
-" trigger fzf to display files with ctrlt/p
-" TODO why is this :
-nnoremap <silent> <C-t> :Files<CR>
-nnoremap <silent> <C-p> :GFiles<CR>
+nnoremap <silent> <C-t> :GFiles<CR>
+nnoremap <silent> <C-p> :Files<CR>
 nnoremap <silent> <C-l> :Lines<CR>
 " ctrl-h to lookup help for the current focused word as input
 nnoremap <silent> <C-h> :Helptags!<CR>
@@ -196,6 +195,22 @@ if has('nvim')
 else
   inoremap <silent><expr> <c-@> coc#refresh()
 endif
+
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
