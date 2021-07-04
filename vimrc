@@ -212,6 +212,13 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
+" reminder to self - use gx to go to a URL under cursor
+" none of these work well yet
+"nmap gx "zy:!open "http://www.google.com/search?q=<c-r>\""
+"nmap gx :!open "http://www.google.com/search?q=<c-r>=substitute(@z,' ','%20','g')<cr>"
+"nmap gx :!open <c-r><c-a>
+"nmap gx :!open "http://www.google.com/search?q=<c-r>=substitute(@z,' ','%20','g')<cr>"<return>gv
+
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
@@ -250,3 +257,4 @@ let g:coc_global_extensions = [
   \'coc-tsserver',
   \'coc-pyright',
   \'coc-solargraph']
+
