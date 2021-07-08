@@ -222,7 +222,7 @@ TRAPALRM() {
 }
 
 display_k8s_context() {
-  kc="$(kctx)"
+  kc="$(kctx 2>/dev/null)"
   if [[ -z $kc ]] ; then
     return
   fi
