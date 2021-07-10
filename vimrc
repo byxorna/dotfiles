@@ -131,11 +131,11 @@ noremap <leader>] :TagbarToggle<CR>
 
 
 nnoremap <silent> <C-t> :GFiles<CR>
-nnoremap <silent> <C-p> :Files<CR>
+nnoremap <silent> <C-p> :Ag<CR>
 nnoremap <silent> <C-l> :Lines<CR>
 " ctrl-h to lookup help for the current focused word as input
 nnoremap <silent> <C-h> :Helptags!<CR>
-let g:fzf_layout = { 'down': '40%' }
+let g:fzf_layout = { 'down': '20%' }
 "nmap <Leader>f :GFiles<CR>
 "nmap <Leader>F :Files<CR>
 
