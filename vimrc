@@ -60,25 +60,6 @@ if &term == "screen" || &term == "xterm" || &term == "xterm-color" || &term == "
   set title
 endif
 
-" ale lint configuration
-let g:ale_lint_on_text_changed = 0
-let g:ale_lint_on_insert_leave = 1
-let g:ale_lint_on_enter = 1
-let g:ale_lint_on_save = 1
-let g:ale_lint_on_filetype_changed = 1
-let g:ale_fix_on_save = 1
-
-let g:ale_linters = {
-\   'go': 'all',
-\   'javascript': 'all',
-\   'c': 'all',
-\}
-let g:ale_fixers = {
-\   'go': [ 'gofmt', 'goimports', 'remove_trailing_lines', 'trim_whitespace' ],
-\   'ruby': [ 'rubocop', 'rufo', 'remove_trailing_lines', 'trim_whitespace' ],
-\   'sh': [ 'shfmt', 'remove_trailing_lines', 'trim_whitespace' ],
-\}
-
 set nocompatible              " be iMproved, required
 filetype off                  " required
 " set the runtime path to include Vundle and initialize
@@ -89,27 +70,16 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-" The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
 Plugin 'tpope/vim-fugitive'
-"Plugin 'kien/ctrlp.vim'
-" 2021.07.04 disabled for possible conflict with coc
-"Plugin 'dense-analysis/ale'
-"Plugin 'git://git.wincent.com/command-t.git'
-Plugin 'statianzo/vim-jade'
 Plugin 'airblade/vim-gitgutter'
-Plugin 'leafgarland/typescript-vim'
-" turn on vimproc for command exec in <vim8, needed for typescript-vim
-Plugin 'shougo/vimproc.vim'
 Plugin 'vim-airline/vim-airline'
 Plugin 'artanikin/vim-synthwave84'
-Plugin 'dracula/vim', {'name':'dracula'}
-Plugin 'rainglow/vim', {'name':'rainglow'}
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 Plugin 'hashivim/vim-terraform'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim', { 'do': { -> fzf#install() } }
+Plugin 'skywind3000/asyncrun.vim'
 call vundle#end()            " required
 filetype plugin indent on    " requiredPlug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
@@ -123,22 +93,59 @@ endif
 :set background=dark
 :color synthwave84
 
-"set runtimepath^=~/.vim/bundle/nerdtree
-noremap <leader>} :NERDTreeToggle<CR>
-" turn on tagbar, toggle with \ + ]
-set runtimepath^=~/.vim/bundle/tagbar
-noremap <leader>] :TagbarToggle<CR>
-
-
 nnoremap <silent> <C-t> :GFiles<CR>
 nnoremap <silent> <C-p> :Ag<CR>
 nnoremap <silent> <C-l> :Lines<CR>
 " ctrl-h to lookup help for the current focused word as input
-nnoremap <silent> <C-h> :Helptags!<CR>
-let g:fzf_layout = { 'down': '20%' }
-"nmap <Leader>f :GFiles<CR>
-"nmap <Leader>F :Files<CR>
+nnoremap <silent> <C-h> :call <SID>show_documentation()<CR>
 
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+
+
+
+let g:fzf_layout = { 'down': '20%' }
+
+" https://github.com/skywind3000/asyncrun.vim#quickfix-window
+" https://github-wiki-see.page/m/skywind3000/asyncrun.vim/wiki/Quickfix-Best-Practice
+" quickfix window will open when something adds to it
+augroup vimrc
+  " when QF is modified, reopen QF window
+  autocmd QuickFixCmdPost * call QFOpen()
+  " automatically open QF when asyncrunstart fires
+  autocmd User AsyncRunStart call QFOpen()
+  autocmd User AsyncRunStop call QFWaitClose()
+
+  autocmd FileType go call GoOptions()
+  autocmd FileType terraform noremap <C-k> :AsyncRun terraform plan<cr>
+  autocmd FileType ruby noremap <C-k> :AsyncRun rake test<cr>
+  " when in quickfix window (:copen/:cclose) map <esc> to quit the pane
+  autocmd FileType qf nnoremap <buffer><silent> <esc> :quit<cr>
+augroup END
+
+function GoOptions()
+  noremap <C-k> :AsyncRun make<cr>
+endfunction
+
+function QFOpen()
+  call asyncrun#quickfix_toggle(8, 1)
+endfunction
+
+function QFWaitClose()
+  " let the window hang out for 6 seconds before autoclosing
+  call timer_start(6000, { tid -> execute('call asyncrun#quickfix_toggle(8, 0)')})
+endfunction
+
+" run make command when you ctrl-k
+"nnoremap <silent> <C-K> :AsyncRun! make<CR>
+":call asyncrun#quickfix_toggle(8)
 " these are default, but it doesnt hurt to call out improved search with
 " snapping to search term
 :set hlsearch
@@ -218,19 +225,6 @@ nmap <silent> gr <Plug>(coc-references)
 "nmap gx :!open "http://www.google.com/search?q=<c-r>=substitute(@z,' ','%20','g')<cr>"
 "nmap gx :!open <c-r><c-a>
 "nmap gx :!open "http://www.google.com/search?q=<c-r>=substitute(@z,' ','%20','g')<cr>"<return>gv
-
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
-  else
-    execute '!' . &keywordprg . " " . expand('<cword>')
-  endif
-endfunction
 
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
