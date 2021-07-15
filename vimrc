@@ -121,7 +121,7 @@ augroup vimrc
   autocmd QuickFixCmdPost * call QFOpen()
   " automatically open QF when asyncrunstart fires
   autocmd User AsyncRunStart call QFOpen()
-  autocmd User AsyncRunStop call QFWaitClose()
+  "autocmd User AsyncRunStop call QFWaitClose()
 
   autocmd FileType go call GoOptions()
   autocmd FileType terraform noremap <C-k> :AsyncRun terraform plan<cr>
