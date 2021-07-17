@@ -121,7 +121,7 @@ augroup vimrc
   autocmd QuickFixCmdPost * call QFOpen()
   " automatically open QF when asyncrunstart fires
   autocmd User AsyncRunStart call QFOpen()
-  "autocmd User AsyncRunStop call QFWaitClose()
+  autocmd User AsyncRunStop call QFCloseIfHappy()
 
   autocmd FileType go call GoOptions()
   autocmd FileType terraform noremap <C-k> :AsyncRun terraform plan<cr>
@@ -138,9 +138,9 @@ function QFOpen()
   call asyncrun#quickfix_toggle(8, 1)
 endfunction
 
-function QFWaitClose()
+function QFCloseIfHappy()
   " let the window hang out for 6 seconds before autoclosing
-  call timer_start(6000, { tid -> execute('call asyncrun#quickfix_toggle(8, 0)')})
+  " call timer_start(6000, { tid -> execute('call asyncrun#quickfix_toggle(8, 0)')})
 endfunction
 
 " run make command when you ctrl-k
