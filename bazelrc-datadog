@@ -1,0 +1,10 @@
+# make bazel less likely to lock up computer during long-running operations
+startup --macos_qos_class=utility
+# Linux profiles
+build:linux --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64
+run:linux --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64
+test:linux --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64
+startup --host_jvm_args=-XX:-UseParallelGC
+build --repository_cache=/Users/gabe.conradi/.bazel/repo_cache
+build --disk_cache=/Users/gabe.conradi/.bazel/disk_cache
+test --disk_cache=/Users/gabe.conradi/.bazel/disk_cache
