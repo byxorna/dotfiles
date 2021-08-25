@@ -80,7 +80,7 @@ Plugin 'hashivim/vim-terraform'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim', { 'do': { -> fzf#install() } }
 Plugin 'skywind3000/asyncrun.vim'
-Plugin 'codota/tabnine-vim'
+"Plugin 'codota/tabnine-vim'
 call vundle#end()            " required
 filetype plugin indent on    " requiredPlug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
