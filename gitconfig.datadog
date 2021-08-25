@@ -1,0 +1,6 @@
+[user]
+	name = Gabe Conradi
+	email = gabe.conradi@datadoghq.com
+
+[url "git@github.com:DataDog"]
+	insteadOf = https://github.com/DataDog
