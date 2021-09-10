@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Exec=rslsync --config /home/gabe/.config/rslsync.conf
-X-GNOME-Autostart-enabled=true
 Name=Resilio Sync
-Comment=Resilio Sync daemon (gabe)
+Exec=/usr/bin/rslsync --config /home/gabe/.config/rslsync/rslsync.conf
+X-GNOME-Autostart-enabled=true
+Comment=Resilio Sync rslsync (gabe)
