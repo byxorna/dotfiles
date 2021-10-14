@@ -1,0 +1,25 @@
+board_manager:
+  additional_urls:
+    - https://adafruit.github.io/arduino-board-index/package_adafruit_index.json
+    - https://raw.githubusercontent.com/ambiot/ambd_arduino/master/Arduino_package/package_realtek.com_amebad_index.json
+daemon:
+  port: "50051"
+directories:
+  data: /home/gabe/.arduino15
+  downloads: /home/gabe/.arduino15/staging
+  user: /home/gabe/code/led-projects/arduino/
+library:
+  enable_unsafe_install: false
+logging:
+  file: ""
+  format: text
+  level: info
+metrics:
+  addr: :9090
+  enabled: true
+output:
+  no_color: false
+sketch:
+  always_export_binaries: false
+updater:
+  enable_notification: true
