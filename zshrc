@@ -16,7 +16,7 @@ set -o vi
 # NOTE: plugins need to load before OMZ
 plugins=(
   git
-  osx
+  macos
   ruby
   golang
   colored-man-pages
