@@ -10,6 +10,8 @@ MOTD_ROOT=`df -h / | awk '/\// {print $(NF-1)}'`
 MOTD_HOME=`df -h /home | awk '/\/home/ {print $(NF-1)}'`
 MOTD_VAR=`df -h /var | awk '/\/var/ {print $(NF-1)}'`
 
+UPDATES=`type -p checkupdates &>/dev/null && checkupdates|wc -l`
+
 SYSTEMCTL_STATUS=`SYSTEMD_COLORS=true systemctl status|head -n 4`
 # clear # to clear the screen when showing up
 
@@ -17,3 +19,6 @@ printf "$MOTD_DATE\n\n"
 printf "%s\n\n" "$MOTD_MEMORY"
 printf "%s\n\n" "$SYSTEMCTL_STATUS"
 
+if [[ $UPDATES -gt 0 ]] ; then
+  printf "%s packages have updates\n" "$UPDATES"
+fi
