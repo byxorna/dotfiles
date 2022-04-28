@@ -80,7 +80,10 @@ Plugin 'hashivim/vim-terraform'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim', { 'do': { -> fzf#install() } }
 Plugin 'skywind3000/asyncrun.vim'
+"Plugin 'ShoofLLC/vim-openai' " needs: pip3 install click openai
 "Plugin 'codota/tabnine-vim'
+" wondering why tabnine suggestion isnt working? run this in vim:
+" :CocInstall coc-tabnine
 call vundle#end()            " required
 filetype plugin indent on    " requiredPlug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
