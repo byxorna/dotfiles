@@ -7,3 +7,9 @@
 [submodule "zsh/plugins/zsh-autocomplete"]
 	path = zsh/plugins/zsh-autocomplete
 	url = https://github.com/marlonrichert/zsh-autocomplete.git
+[submodule "zsh_codex"]
+	path = zsh_codex
+	url = https://github.com/tom-doerr/zsh_codex.git
+[submodule "zsh/plugins/zsh_codex"]
+	path = zsh/plugins/zsh_codex
+	url = https://github.com/tom-doerr/zsh_codex.git

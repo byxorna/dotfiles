@@ -13,6 +13,13 @@ fi
 bindkey -v
 set -o vi
 
+# automatically link any plugins named in to OMZ
+for plugin in zsh_codex zsh-autocomplete ; do
+  if [[ ! -h ~/.oh-my-zsh/custom/plugins/$plugin ]] ; then
+    ln -sfn ~/code/dotfiles/zsh/plugins/$plugin ~/.oh-my-zsh/custom/plugins/$plugin
+  fi
+done
+
 # NOTE: plugins need to load before OMZ
 plugins=(
   git
@@ -22,12 +29,13 @@ plugins=(
   colored-man-pages
   kubectl
   fzf               # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/fzf
+  zsh-autocomplete
+  zsh_codex
 )
 
 if [[ -r ~/.oh-my-zsh ]] ; then
   export ZSH="$HOME/.oh-my-zsh"
   source $ZSH/oh-my-zsh.sh
-  source $HOME/code/dotfiles/zsh/themes/byxorna.zsh-theme
 else
   # setup oh-my-zsh if missing
   echo -n "oh-my-zsh is not setup yet. do you want to install it? y/n " >&2
@@ -41,6 +49,11 @@ else
   fi
 fi
 
+for f in zsh/themes/byxorna.zsh-theme ; do
+  if [[ -r ~/code/dotfiles/$f ]] ; then
+    source $HOME/code/dotfiles/$f
+  fi
+done
 ## vi bindings
 #bindkey -v
 #set -o vi
@@ -70,6 +83,9 @@ setopt inc_append_history
 # https://unix.stackexchange.com/questions/324623/how-to-make-oh-my-zsh-history-behavior-similar-to-bashs
 bindkey "$terminfo[kcuu1]" up-history
 bindkey "$terminfo[kcud1]" down-history
+
+# ctrl-x triggers codex ai completion on cursor, prefixes with zsh shebang
+bindkey '^X' create_completion
 
 [[ -f ~/.aliases ]] && source ~/.aliases
 
