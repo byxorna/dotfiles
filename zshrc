@@ -29,7 +29,7 @@ plugins=(
   colored-man-pages
   kubectl
   fzf               # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/fzf
-  zsh-autocomplete
+  #zsh-autocomplete
   zsh_codex
 )
 
