@@ -1,0 +1,6 @@
+# google devices
+# May 22 14:01:19 cyberdeck kernel: usb 3-2.1: New USB device found, idVendor=18d1, idProduct=4ee1, bcdDevice= 4.40
+SUBSYSTEM=="usb", ATTR{idVendor}=="18d1", MODE="0664", GROUP="plugdev", SYMLINK+="android%n"
+# to make android device not disconnect from wifi when captive portal detected:
+# adb shell settings list global | grep captive
+# adb shell settings put global captive_portal_detection_enabled 0
