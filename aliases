@@ -106,7 +106,7 @@ fi
 
 alias c="collins"
 
-export PATH=$PATH:~/bin:~/local/bin:~/lang/bin:~/lang/usr/local/scala/bin:~/code/scripts:~/code/scripts/collins:/usr/sbin:/sbin:/usr/local/sbin:/usr/local/bin:~/.rvm/bin:/opt/local/bin:/opt/local/sbin:$GOPATH/bin:~/.cargo/bin:~/code/go/bin
+export PATH="$PATH":~/bin:~/local/bin:~/lang/bin:~/lang/usr/local/scala/bin:~/code/scripts:~/code/scripts/collins:/usr/sbin:/sbin:/usr/local/sbin:/usr/local/bin:~/.rvm/bin:/opt/local/bin:/opt/local/sbin:"$GOPATH/bin":~/.cargo/bin:~/code/go/bin:~/.local/bin
 export PAGER='less'
 
 is_git_repo(){
