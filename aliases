@@ -22,7 +22,7 @@ alias scp='scp -q'
 alias chmox='chmod +x'
 alias tf="terraform"
 alias steam="prime-run flatpak run com.valvesoftware.Steam"
-
+alias less="less -FIXR"
 # git helpers
 alias gitc="git checkout"
 alias gits="git status"
