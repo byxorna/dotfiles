@@ -294,3 +294,10 @@ ipcalc() {
 random_pokemon() {
   curl -sSL https://randompokemon.com/dex/all.json | jq -r --arg i $(($RANDOM % 898)) '.[$i|tonumber].name'
 }
+
+# example:
+# scan_cidr 192.168.86.0/24
+scan_cidr() {
+  # TODO: input validation
+  nmap -sP "$1"
+}
