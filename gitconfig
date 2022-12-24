@@ -17,3 +17,10 @@
 # https://utf9k.net/blog/conditional-gitconfig/
 [includeIf "gitdir:~/dd/"]
   path = ~/code/dotfiles/gitconfig.datadog
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+[init]
+	defaultBranch = main
