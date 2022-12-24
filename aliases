@@ -7,6 +7,7 @@ if type -p nvim >/dev/null ; then
   export EDITOR=nvim
   export VISUAL=nvim
 fi
+alias manuscript="vim ~/Documents/manuscript.md"
 alias ll='ls -la'
 alias la='ls -la'
 alias lr='ls -laR'
@@ -228,8 +229,10 @@ collinsdc() {
 }
 
 wav2flac() {
-  echo "Converting ${1} to flac" >&2
-  ffmpeg -i "$1" -qscale:a 0 "${1/%wav/flac}"
+  for f in "$@" ; do
+    echo "Converting ${f} to flac" >&2
+    ffmpeg -i "$f" -qscale:a 0 "${f/%wav/flac}"
+  done
 }
 
 flac2mp3() {
