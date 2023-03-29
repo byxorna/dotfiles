@@ -337,9 +337,10 @@ function manuscript {
 # backup packages for a host
 function backup_package_list {
   if [[ $OSTYPE =~ darwin.* ]] ; then
-    leaves="code/dotfiles/brew/$(hostname).leaves"
-    brew leaves > ~/$leaves
-    echo "$(echo ~)/$leaves"
+    brewfile="code/dotfiles/brew/Brewfile.$(hostname)"
+    brew bundle dump
+    mv Brewfile ~/$brewfile
+    echo "$(echo ~)/$brewfile"
   else
     echo "implement me"
     return 2
@@ -349,9 +350,9 @@ function backup_package_list {
 # restore packages for a host
 function restore_package_list {
   if [[ $OSTYPE =~ darwin.* ]] ; then
-    leaves="code/dotfiles/brew/$(hostname).leaves"
-    echo "Restoring from ~/$leaves..." >&2
-    xargs brew install < ~/$leaves
+    brewfile="code/dotfiles/brew/Brewfile.$(hostname)"
+    echo "Restoring from ~/$brewfile..." >&2
+    brew bundle --file ~/$brewfile install -v
   else
     echo implement me
     return 2
