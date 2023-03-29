@@ -1,5 +1,7 @@
+export CHARM_HOST="charm.pipefail.com"
 export EDITOR=vim
 export VISUAL=vim
+
 if type -p nvim >/dev/null ; then
   alias vi="nvim -p"
   alias vim="nvim -p"
@@ -7,7 +9,7 @@ if type -p nvim >/dev/null ; then
   export EDITOR=nvim
   export VISUAL=nvim
 fi
-alias manuscript="vim ~/Documents/manuscript.md"
+
 alias ll='ls -la'
 alias la='ls -la'
 alias lr='ls -laR'
@@ -304,3 +306,31 @@ scan_cidr() {
   # TODO: input validation
   nmap -sP "$1"
 }
+
+# handle differences in stat formats for common task of finding file mtime
+# use: stat_mtime myfile.txt
+function stat_mtime {
+  if [[ $OSTYPE =~ darwin.* ]] ; then
+    stat -f %Sm -t %s $@
+  else
+    stat -c %Y $@
+  fi
+}
+
+function manuscript {
+  data_dir=Documents
+  remote_host_path="cyberdeck:$data_dir/"
+  h="$(hostname)"
+  local_path="$data_dir/manuscript.$h.md"
+  te=$(date +%s)
+  $EDITOR ~/$local_path
+
+  echo -n "Copy ~/$local_path to $remote_host_path archive? (y/N) " >&2
+  read ans
+  if [[ $ans == y ]] ; then
+    scp ~/$local_path $remote_host_path
+  fi
+
+  tx=$(date +%s)
+}
+
