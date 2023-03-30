@@ -332,6 +332,7 @@ function manuscript {
   fi
 
   tx=$(date +%s)
+  echo "<- $(( tx - te ))s"
 }
 
 # backup packages for a host
