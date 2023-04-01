@@ -319,16 +319,21 @@ function stat_mtime {
 
 function manuscript {
   data_dir=Documents
-  remote_host_path="cyberdeck:$data_dir/"
+  remote_host="cyberdeck"
+  remote_host_path="${remote_host}:$data_dir/"
   h="$(hostname)"
   local_path="$data_dir/manuscript.$h.md"
   te=$(date +%s)
   $EDITOR ~/$local_path
 
-  echo -n "Copy ~/$local_path to $remote_host_path archive? (y/N) " >&2
-  read ans
-  if [[ $ans == y ]] ; then
-    scp ~/$local_path $remote_host_path
+  if [[ $(hostname) = $remote_host ]] ; then
+    echo "Skipping copy to $remote_host_path (hostname=$(hostname))" >&2
+  else
+    echo -n "Copy ~/$local_path to $remote_host_path archive? (y/N) " >&2
+    read ans
+    if [[ $ans == y ]] ; then
+      scp ~/$local_path $remote_host_path
+    fi
   fi
 
   tx=$(date +%s)
