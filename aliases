@@ -102,6 +102,10 @@ function k8s-debug-pod-volume {
   fi
 }
 
+if [[ -d ~/code/src/gitlab.service.seatgeek.mgmt ]] ; then
+  alias sg='cd ~/code/src/gitlab.service.seatgeek.mgmt'
+fi
+
 if [[ -d ~/dd/cia/kubectl-helpers ]] ; then
   source ~/dd/cia/kubectl-helpers/kgn-helpers.sh
   source ~/dd/cia/kubectl-helpers/kgng-helpers.sh
@@ -131,10 +135,21 @@ cdc() {
   fi
 }
 
-# show the active kubernetes context
+# show the active kubernetes context, or use the provided context in $1
 kctx () {
   if type -p kubectl >/dev/null && test -r ~/.kube/config ; then
-    kubectl config current-context
+    if [[ -n $1 ]] ; then
+      kubectl config use-context "$1"
+    else
+      kubectl config current-context
+    fi
+  fi
+}
+
+# list k8s contexts
+kctxs () {
+  if type -p kubectl >/dev/null && test -r ~/.kube/config ; then
+    kubectl config get-contexts
   fi
 }
 
@@ -336,7 +351,7 @@ function stat_mtime {
 function manuscript {
   data_dir=Documents
   remote_host_path="cyberdeck:$data_dir/"
-  h="$(hostname)"
+  h="$(hostname)" # TODO: use machine ID on macos?
   local_path="$data_dir/manuscript.$h.md"
   te=$(date +%s)
   $EDITOR ~/$local_path
@@ -383,3 +398,7 @@ function dirhash_recursive {
   echo -n "$hash_func:"
   find "$@" -type f -exec "$hash_func" {} \; | awk '{print $1}' | sort | "${hash_func}"
 }
+
+if [[ -f ~/.aliases-extra ]] ; then
+  source ~/.aliases-extra
+fi
