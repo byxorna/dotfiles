@@ -30,7 +30,6 @@ plugins=(
   kubectl
   fzf               # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/fzf
   #zsh-autocomplete
-  zsh_codex
 )
 
 if [[ -r ~/.oh-my-zsh ]] ; then
@@ -189,4 +188,20 @@ function help(){
 }
 
 if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then . ~/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+
+################################################################################
+# This block was injected automatically by letsgo (DO NOT REMOVE!)
+################################################################################
+
+if [[ -x /Users/gabeconradi/.letsgo/bin/letsgo ]]
+then
+    source /Users/gabeconradi/.letsgo/config/shell/zsh/setup.completion.zsh
+fi
+
+################################################################################
+# -- This block was injected automatically by letsgo (DO NOT REMOVE!)
+################################################################################
 

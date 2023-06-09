@@ -102,10 +102,6 @@ function k8s-debug-pod-volume {
   fi
 }
 
-if [[ -d ~/code/src/gitlab.service.seatgeek.mgmt ]] ; then
-  alias sg='cd ~/code/src/gitlab.service.seatgeek.mgmt'
-fi
-
 if [[ -d ~/dd/cia/kubectl-helpers ]] ; then
   source ~/dd/cia/kubectl-helpers/kgn-helpers.sh
   source ~/dd/cia/kubectl-helpers/kgng-helpers.sh
