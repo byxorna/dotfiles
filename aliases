@@ -258,6 +258,22 @@ aiff2flacbatch() {
   for f in *.aiff ; do ffmpeg -i "$f" "${f%.aiff}.flac" ; done
 }
 
+mp42m4a() {
+  # extract m4a from mp4 stream
+  for f in "${@}" ; do
+    echo "Ripping m4a from ${f}" >&2
+    ffmpeg -i "$f" -vn -acodec copy "${f%mp4}.m4a"
+  done
+}
+
+m4a2mp3() {
+  # https://superuser.com/questions/704493/ffmpeg-convert-m4a-to-mp3-without-significant-loss
+  for f in "${@}" ; do 
+    echo "Converting ${f} to mp3" >&2
+    ffmpeg -i "$f" -codec:v copy -codec:a libmp3lame -q:a 2 "${f%.m4a}.mp3"
+  done
+}
+
 cidr2range(){
   [[ -z $1 ]] && echo "Specify a CIDR as the first argument" >&2 && return 1
   ruby -ripaddr -e "puts IPAddr.new(ARGV.first).to_range.to_a.map(&:to_s).join(' ')" $1
@@ -343,6 +359,7 @@ function manuscript {
   fi
 
   tx=$(date +%s)
+  echo "<- $(( tx - te ))s"
 }
 
 # backup packages for a host
@@ -368,6 +385,14 @@ function restore_package_list {
     echo implement me
     return 2
   fi
+}
+
+# checksum all files in the given directories, crunch down to a single checksum
+function dirhash_recursive {
+  du -hca "$@" >&2
+  hash_func="sha256sum"
+  echo -n "$hash_func:"
+  find "$@" -type f -exec "$hash_func" {} \; | awk '{print $1}' | sort | "${hash_func}"
 }
 
 if [[ -f ~/.aliases-extra ]] ; then
