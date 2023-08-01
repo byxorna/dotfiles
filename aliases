@@ -34,6 +34,7 @@ alias gitf="git fetch"
 alias gitp="git pull"
 alias gg="git grep"
 alias wya="git show"
+alias code='cd $(find ~/code -type d -name .git -maxdepth 3|xargs dirname |fzf)'
 
 # git helpers with fzf
 # https://seb.jambor.dev/posts/improving-shell-workflows-with-fzf/#deleting-branches
@@ -79,7 +80,7 @@ alias kctl="kubectl"
 alias ktl="kubectl"
 alias k="kubectl"
 alias kcs="kubectl config get-contexts"
-alias kui="k9s -c ns"
+alias kui="XDG_CONFIG_HOME=~/.config k9s -c ns"
 alias ktr="kubectl template render"
 alias kc="kubectl config use-context"
 function k8s-debug-pod-volume {
