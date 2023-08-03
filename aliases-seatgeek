@@ -3,7 +3,7 @@ export GOPRIVATE="gitlab.seatgeekadmin.com,github.com/seatgeek"
 export GONOPROXY="none"
 
 if [[ -d ~/code/src/gitlab.service.seatgeek.mgmt ]] ; then
-  alias sg='cd $(find ~/code/src/gitlab.service.seatgeek.mgmt -type d -name .git -maxdepth 3|xargs dirname |fzf)'
+  alias sg='cd $(find ~/code/src/gitlab.service.seatgeek.mgmt -type d -name .git -maxdepth 3|xargs dirname |fzf --preview="git -C {} log HEAD -1")'
 
   export VOLTA_HOME="$HOME/.volta"
   export PATH="$VOLTA_HOME/bin:$PATH"
