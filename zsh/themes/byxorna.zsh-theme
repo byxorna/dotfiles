@@ -222,11 +222,11 @@ TRAPALRM() {
 }
 
 display_k8s_context() {
-  kc="$(kctx 2>/dev/null)"
-  if [[ -z $kc ]] ; then
+  if type -p kubectl >/dev/null && test -r ~/.kube/config ; then
+    echo "%{$BLUE%}$(kubectl config current-context) "
+  else
     return
   fi
-  echo "%{$BLUE%}$kc "
 }
 
 # prompt
