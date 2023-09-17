@@ -1,26 +1,27 @@
 [user]
-	name = Gabe Conradi
-	email = gabe.conradi@gmail.com
+  name = Gabe Conradi
+  email = gabe.conradi@gmail.com
 
 [color]
-	ui = true
+  ui = true
 
 [alias]
-	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  root = rev-parse --show-toplevel
 
 [push]
-	default = simple
+  default = simple
 
 [pull]
-	rebase = false
+  rebase = false
 
 # https://utf9k.net/blog/conditional-gitconfig/
 [includeIf "gitdir:~/dd/"]
   path = ~/code/dotfiles/gitconfig.datadog
 [filter "lfs"]
-	process = git-lfs filter-process
-	required = true
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
 [init]
-	defaultBranch = main
+  defaultBranch = main

@@ -34,6 +34,7 @@ alias gitf="git fetch"
 alias gitp="git pull"
 alias gg="git grep"
 alias wya="git show"
+alias code='cd $(find ~/code -type d -name .git -maxdepth 3|xargs dirname |fzf --preview="git -C {} log HEAD -1")'
 
 # git helpers with fzf
 # https://seb.jambor.dev/posts/improving-shell-workflows-with-fzf/#deleting-branches
@@ -79,7 +80,7 @@ alias kctl="kubectl"
 alias ktl="kubectl"
 alias k="kubectl"
 alias kcs="kubectl config get-contexts"
-alias kui="k9s -c ns"
+alias kui="XDG_CONFIG_HOME=~/.config k9s -c ns"
 alias ktr="kubectl template render"
 alias kc="kubectl config use-context"
 function k8s-debug-pod-volume {
@@ -131,10 +132,13 @@ cdc() {
   fi
 }
 
-# show the active kubernetes context
-kctx () {
+# show the active kubernetes context, or use the provided context in $1
+alias kctx='c="$(kubectl config get-contexts --output=name|tail -n +2|fzf)" ; [[ -n $c ]] && kubectl config use-context $c'
+
+# list k8s contexts
+kctxs () {
   if type -p kubectl >/dev/null && test -r ~/.kube/config ; then
-    kubectl config current-context
+    kubectl config get-contexts --output=name
   fi
 }
 
@@ -247,6 +251,22 @@ aiff2flacbatch() {
   for f in *.aiff ; do ffmpeg -i "$f" "${f%.aiff}.flac" ; done
 }
 
+mp42m4a() {
+  # extract m4a from mp4 stream
+  for f in "${@}" ; do
+    echo "Ripping m4a from ${f}" >&2
+    ffmpeg -i "$f" -vn -acodec copy "${f%mp4}.m4a"
+  done
+}
+
+m4a2mp3() {
+  # https://superuser.com/questions/704493/ffmpeg-convert-m4a-to-mp3-without-significant-loss
+  for f in "${@}" ; do 
+    echo "Converting ${f} to mp3" >&2
+    ffmpeg -i "$f" -codec:v copy -codec:a libmp3lame -q:a 2 "${f%.m4a}.mp3"
+  done
+}
+
 cidr2range(){
   [[ -z $1 ]] && echo "Specify a CIDR as the first argument" >&2 && return 1
   ruby -ripaddr -e "puts IPAddr.new(ARGV.first).to_range.to_a.map(&:to_s).join(' ')" $1
@@ -321,7 +341,7 @@ function manuscript {
   data_dir=Documents
   remote_host="cyberdeck"
   remote_host_path="${remote_host}:$data_dir/"
-  h="$(hostname)"
+  h="$(hostname)" # TODO: use machine ID on macos?
   local_path="$data_dir/manuscript.$h.md"
   te=$(date +%s)
   $EDITOR ~/$local_path
@@ -337,6 +357,7 @@ function manuscript {
   fi
 
   tx=$(date +%s)
+  echo "<- $(( tx - te ))s"
 }
 
 # backup packages for a host
@@ -363,3 +384,15 @@ function restore_package_list {
     return 2
   fi
 }
+
+# checksum all files in the given directories, crunch down to a single checksum
+function dirhash_recursive {
+  du -hca "$@" >&2
+  hash_func="sha256sum"
+  echo -n "$hash_func:"
+  find "$@" -type f -exec "$hash_func" {} \; | awk '{print $1}' | sort | "${hash_func}"
+}
+
+if [[ -f ~/.aliases-extra ]] ; then
+  source ~/.aliases-extra
+fi
