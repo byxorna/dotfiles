@@ -135,7 +135,7 @@ augroup vimrc
 augroup END
 
 function GoOptions()
-  noremap <C-k> :AsyncRun make<cr>
+  noremap <C-k> :AsyncRun make test<cr>
 endfunction
 
 function QFOpen()
