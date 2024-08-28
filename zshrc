@@ -1,7 +1,7 @@
 # NOTE: make sure this is set before oh-my-zsh is loaded
 # If omitted, or empty, HISTSIZE is assumed to be 1 which makes for an unergonomic history experience
-HISTSIZE=10000
-SAVEHIST=10000
+export HISTSIZE=1000000
+export SAVEHIST=1000000
 
 export FZF_DEFAULT_OPTS="--reverse --height=20% --multi"
 export FZF_CTRL_T_OPTS="--preview 'cat {}'"
