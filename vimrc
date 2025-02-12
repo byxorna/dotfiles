@@ -80,6 +80,7 @@ Plugin 'hashivim/vim-terraform'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim', { 'do': { -> fzf#install() } }
 Plugin 'skywind3000/asyncrun.vim'
+Plugin 'preservim/nerdtree'
 "Plugin 'ShoofLLC/vim-openai' " needs: pip3 install click openai
 "Plugin 'codota/tabnine-vim'
 " wondering why tabnine suggestion isnt working? run this in vim:
@@ -97,7 +98,8 @@ endif
 :set background=dark
 :color synthwave84
 
-nnoremap <silent> <C-t> :GFiles<CR>
+nnoremap <silent> <C-T> :NERDTreeToggle<CR>
+"nnoremap <silent> <C-t> :GFiles<CR>
 nnoremap <silent> <C-p> :Ag<CR>
 nnoremap <silent> <C-l> :Lines<CR>
 " ctrl-h to lookup help for the current focused word as input
