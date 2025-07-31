@@ -90,7 +90,7 @@ filetype off                  " required
 "Plugin 'preservim/nerdtree'
 "Plugin 'fatih/vim-go'
 "call vundle#end()            " required
-filetype plugin indent on    " requiredPlug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+filetype plugin indent on
 
 if has('termguicolors')
   set termguicolors " 24-bit terminal
@@ -202,49 +202,24 @@ augroup NumberToggle
   autocmd BufLeave,FocusLost,InsertEnter   * call s:UnsetRelativeNumber()
 augroup END
 
-" --- coc trigger ---
-
-" Use tab for trigger completion with characters ahead and navigate
-" NOTE: There's always complete item selected by default, you may want to enable
-" no select by `"suggest.noselect": true` in your configuration file
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config
-"inoremap <silent><expr> <TAB>
-"      \ coc#pum#visible() ? coc#pum#next(1) :
-"      \ CheckBackspace() ? "\<Tab>" :
-"      \ coc#refresh()
-"inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
-
-" Make <CR> to accept selected completion item or notify coc.nvim to format
-" <C-g>u breaks current undo, please make your own choice
-"inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-"                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-"
-" --- end coc trigger ---
-
-
 function! CheckBackspace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-" Use <c-space> to trigger completion.
-"if has('nvim')
-"  inoremap <silent><expr> <c-space> coc#refresh()
-"else
-"  inoremap <silent><expr> <c-@> coc#refresh()
-"endif
-
+" TODO: modernize for blink-cmp
 " Make <CR> auto-select the first completion item and notify coc.nvim to
 " format on enter, <cr> could be remapped by other vim plugin
 "inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 "                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
+" TODO: modernize for blink-cmp
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
 "nmap <silent> [g <Plug>(coc-diagnostic-prev)
 "nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
+" TODO: modernize for blink-cmp
 " GoTo code navigation.
 "nmap <silent> gd <Plug>(coc-definition)
 "nmap <silent> gy <Plug>(coc-type-definition)
@@ -258,11 +233,6 @@ endfunction
 "nmap gx :!open <c-r><c-a>
 "nmap gx :!open "http://www.google.com/search?q=<c-r>=substitute(@z,' ','%20','g')<cr>"<return>gv
 
-" Highlight the symbol and its references when holding the cursor.
-"autocmd CursorHold * silent call CocActionAsync('highlight')
-
-"set statusline^=%{coc#status()}
-
 " set overlength highlights for 80char lines
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 "match OverLength /\%120v.\+/  " highlight all characters over 100char
@@ -272,15 +242,3 @@ match OverLength '\%101v.'  " highlight only the 101st character in a column
 " https://github.com/hashivim/vim-terraform
 let g:terraform_align=1
 let g:terraform_fmt_on_save=1
-
-"let g:coc_global_extensions = [
-"  \'coc-json',
-"  \'coc-git',
-"  \'coc-html',
-"  \'coc-css',
-"  \'coc-yaml',
-"  \'coc-sh',
-"  \'coc-tsserver',
-"  \'coc-pyright',
-"  \'coc-solargraph']
-
