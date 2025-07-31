@@ -63,29 +63,33 @@ endif
 set nocompatible              " be iMproved, required
 filetype off                  " required
 " set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+"set rtp+=~/.vim/bundle/Vundle.vim
+"call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
 " let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+"Plugin 'VundleVim/Vundle.vim'
 
 " Keep Plugin commands between vundle#begin/end.
-Plugin 'tpope/vim-fugitive'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'vim-airline/vim-airline'
-Plugin 'artanikin/vim-synthwave84'
-Plugin 'neoclide/coc.nvim', {'branch': 'release'}
-Plugin 'hashivim/vim-terraform'
-Plugin 'junegunn/fzf'
-Plugin 'junegunn/fzf.vim', { 'do': { -> fzf#install() } }
-Plugin 'skywind3000/asyncrun.vim'
-Plugin 'preservim/nerdtree'
-"Plugin 'ShoofLLC/vim-openai' " needs: pip3 install click openai
-"Plugin 'codota/tabnine-vim'
-" wondering why tabnine suggestion isnt working? run this in vim:
-" :CocInstall coc-tabnine
-call vundle#end()            " required
+"Plugin 'tpope/vim-fugitive'
+"Plugin 'airblade/vim-gitgutter'
+"Plugin 'vim-airline/vim-airline'
+"Plugin 'artanikin/vim-synthwave84'
+"Plugin 'neoclide/coc.nvim', {'branch': 'release'}
+"Plugin 'neovim/nvim-spconfig'
+"Plugin 'hrsh7th/cmp-nvim-lsp'
+"Plugin 'hrsh7th/cmp-buffer'
+"Plugin 'hrsh7th/cmp-path'
+"Plugin 'hrsh7th/cmp-cmdline'
+"Plugin 'hrsh7th/nvim-cmp'
+
+"Plugin 'hashivim/vim-terraform'
+"Plugin 'junegunn/fzf'
+"Plugin 'junegunn/fzf.vim', { 'do': { -> fzf#install() } }
+"Plugin 'skywind3000/asyncrun.vim'
+"Plugin 'preservim/nerdtree'
+"Plugin 'fatih/vim-go'
+"call vundle#end()            " required
 filetype plugin indent on    " requiredPlug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
 if has('termguicolors')
@@ -103,51 +107,62 @@ nnoremap <silent> <C-T> :NERDTreeToggle<CR>
 nnoremap <silent> <C-p> :Ag<CR>
 nnoremap <silent> <C-l> :Lines<CR>
 " ctrl-h to lookup help for the current focused word as input
-nnoremap <silent> <C-h> :call <SID>show_documentation()<CR>
+"nnoremap <silent> <C-h> :call <SID>show_documentation()<CR>
 
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
-  else
-    execute '!' . &keywordprg . " " . expand('<cword>')
-  endif
-endfunction
+" Disabled 2025-07-30 in nvim-cmp migration
+" function! s:show_documentation()
+"   if (index(['vim','help'], &filetype) >= 0)
+"     execute 'h '.expand('<cword>')
+"   elseif (coc#rpc#ready())
+"     call CocActionAsync('doHover')
+"   else
+"     execute '!' . &keywordprg . " " . expand('<cword>')
+"   endif
+" endfunction
 
 
+"function! s:show_documentation()
+"  if (index(['vim','help'], &filetype) >= 0)
+"    execute 'h '.expand('<cword>')
+"  if :lua cmp.visible_docs() then
+"    :lua cmp.close_docs()
+"  else
+"    :lua cmp.open_docs()
+"  endif
+"endfunction
 
 let g:fzf_layout = { 'down': '20%' }
 
+" disabled for blink.cmp setup, reenable later TODO
 " https://github.com/skywind3000/asyncrun.vim#quickfix-window
 " https://github-wiki-see.page/m/skywind3000/asyncrun.vim/wiki/Quickfix-Best-Practice
 " quickfix window will open when something adds to it
-augroup vimrc
-  " when QF is modified, reopen QF window
-  autocmd QuickFixCmdPost * call QFOpen()
-  " automatically open QF when asyncrunstart fires
-  autocmd User AsyncRunStart call QFOpen()
-  autocmd User AsyncRunStop call QFCloseIfHappy()
-
-  autocmd FileType go call GoOptions()
-  autocmd FileType terraform noremap <C-k> :AsyncRun terraform plan<cr>
-  autocmd FileType ruby noremap <C-k> :AsyncRun rake test<cr>
-  " when in quickfix window (:copen/:cclose) map <esc> to quit the pane
-  autocmd FileType qf nnoremap <buffer><silent> <esc> :quit<cr>
-augroup END
-
-function GoOptions()
-  noremap <C-k> :AsyncRun make test<cr>
-endfunction
-
-function QFOpen()
-  call asyncrun#quickfix_toggle(8, 1)
-endfunction
-
-function QFCloseIfHappy()
-  " let the window hang out for 6 seconds before autoclosing
-  " call timer_start(6000, { tid -> execute('call asyncrun#quickfix_toggle(8, 0)')})
-endfunction
+"augroup vimrc
+"  " when QF is modified, reopen QF window
+"  autocmd QuickFixCmdPost * call QFOpen()
+"  " automatically open QF when asyncrunstart fires
+"  autocmd User AsyncRunStart call QFOpen()
+"  autocmd User AsyncRunStop call QFCloseIfHappy()
+"
+"  autocmd FileType go call GoOptions()
+"  autocmd FileType terraform noremap <C-k> :AsyncRun terraform plan<cr>
+"  autocmd FileType ruby noremap <C-k> :AsyncRun rake test<cr>
+"  " when in quickfix window (:copen/:cclose) map <esc> to quit the pane
+"  autocmd FileType qf nnoremap <buffer><silent> <esc> :quit<cr>
+"augroup END
+"
+"function GoOptions()
+"  noremap <C-k> :AsyncRun make test<cr>
+"endfunction
+"
+"function QFOpen()
+"  call asyncrun#quickfix_toggle(8, 1)
+"endfunction
+"
+"function QFCloseIfHappy()
+"  " let the window hang out for 6 seconds before autoclosing
+"  " call timer_start(6000, { tid -> execute('call asyncrun#quickfix_toggle(8, 0)')})
+"endfunction
 
 " run make command when you ctrl-k
 "nnoremap <silent> <C-K> :AsyncRun! make<CR>
@@ -194,17 +209,17 @@ augroup END
 " no select by `"suggest.noselect": true` in your configuration file
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config
-inoremap <silent><expr> <TAB>
-      \ coc#pum#visible() ? coc#pum#next(1) :
-      \ CheckBackspace() ? "\<Tab>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+"inoremap <silent><expr> <TAB>
+"      \ coc#pum#visible() ? coc#pum#next(1) :
+"      \ CheckBackspace() ? "\<Tab>" :
+"      \ coc#refresh()
+"inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
 " Make <CR> to accept selected completion item or notify coc.nvim to format
 " <C-g>u breaks current undo, please make your own choice
-inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
+"inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+"                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+"
 " --- end coc trigger ---
 
 
@@ -214,27 +229,27 @@ function! CheckBackspace() abort
 endfunction
 
 " Use <c-space> to trigger completion.
-if has('nvim')
-  inoremap <silent><expr> <c-space> coc#refresh()
-else
-  inoremap <silent><expr> <c-@> coc#refresh()
-endif
+"if has('nvim')
+"  inoremap <silent><expr> <c-space> coc#refresh()
+"else
+"  inoremap <silent><expr> <c-@> coc#refresh()
+"endif
 
 " Make <CR> auto-select the first completion item and notify coc.nvim to
 " format on enter, <cr> could be remapped by other vim plugin
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+"inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+"                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+"nmap <silent> [g <Plug>(coc-diagnostic-prev)
+"nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+"nmap <silent> gd <Plug>(coc-definition)
+"nmap <silent> gy <Plug>(coc-type-definition)
+"nmap <silent> gi <Plug>(coc-implementation)
+"nmap <silent> gr <Plug>(coc-references)
 
 " reminder to self - use gx to go to a URL under cursor
 " none of these work well yet
@@ -244,9 +259,9 @@ nmap <silent> gr <Plug>(coc-references)
 "nmap gx :!open "http://www.google.com/search?q=<c-r>=substitute(@z,' ','%20','g')<cr>"<return>gv
 
 " Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('highlight')
+"autocmd CursorHold * silent call CocActionAsync('highlight')
 
-set statusline^=%{coc#status()}
+"set statusline^=%{coc#status()}
 
 " set overlength highlights for 80char lines
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
@@ -258,14 +273,14 @@ match OverLength '\%101v.'  " highlight only the 101st character in a column
 let g:terraform_align=1
 let g:terraform_fmt_on_save=1
 
-let g:coc_global_extensions = [
-  \'coc-json',
-  \'coc-git',
-  \'coc-html',
-  \'coc-css',
-  \'coc-yaml',
-  \'coc-sh',
-  \'coc-tsserver',
-  \'coc-pyright',
-  \'coc-solargraph']
+"let g:coc_global_extensions = [
+"  \'coc-json',
+"  \'coc-git',
+"  \'coc-html',
+"  \'coc-css',
+"  \'coc-yaml',
+"  \'coc-sh',
+"  \'coc-tsserver',
+"  \'coc-pyright',
+"  \'coc-solargraph']
 
