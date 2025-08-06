@@ -11,3 +11,16 @@ vim.keymap.set( 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
 vim.keymap.set( 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
 vim.keymap.set( 'n', ']g', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
 vim.keymap.set( 'n', '[g', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+
+-- https://www.mitchellhanberg.com/modern-format-on-save-in-neovim/
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("lsp", { clear = true }),
+  callback = function(args)
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      buffer = args.buf,
+      callback = function()
+        vim.lsp.buf.format {async = false, id = args.data.client_id }
+      end,
+    })
+  end
+})
