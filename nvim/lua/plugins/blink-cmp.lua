@@ -27,12 +27,14 @@ return {
         --
         -- See :h blink-cmp-config-keymap for defining your own keymap
         keymap = {
-          --preset = 'none' 
+          preset = 'none',
           --
-           ['<C-enter>'] = { 'show', 'show_documentation', 'hide_documentation' },
+          -- ctrl-k toggles show when in insert mode
+           ['<C-k>'] = { 'show', 'hide', 'fallback' },
+           ['<C-enter>'] = { 'show', 'show_documentation', 'hide_documentation', 'fallback' },
            ['<C-e>'] = { 'hide' },
-           --['<CR>'] = { 'select_and_accept' },
-           ['<C-y>'] = { 'select_and_accept' },
+           ['<CR>'] = { 'select_and_accept', 'fallback' },
+           --['<C-y>'] = { 'select_and_accept' },
            ['<Up>'] = { 'select_prev', 'fallback' },
            ['<Down>'] = { 'select_next', 'fallback' },
            ['<C-p>'] = { 'select_prev', 'fallback_to_mappings' },

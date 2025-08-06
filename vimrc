@@ -213,19 +213,6 @@ endfunction
 "inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 "                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-" TODO: modernize for blink-cmp
-" Use `[g` and `]g` to navigate diagnostics
-" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-"nmap <silent> [g <Plug>(coc-diagnostic-prev)
-"nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-" TODO: modernize for blink-cmp
-" GoTo code navigation.
-"nmap <silent> gd <Plug>(coc-definition)
-"nmap <silent> gy <Plug>(coc-type-definition)
-"nmap <silent> gi <Plug>(coc-implementation)
-"nmap <silent> gr <Plug>(coc-references)
-
 " reminder to self - use gx to go to a URL under cursor
 " none of these work well yet
 "nmap gx "zy:!open "http://www.google.com/search?q=<c-r>\""
