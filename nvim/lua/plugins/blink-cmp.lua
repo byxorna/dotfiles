@@ -33,6 +33,7 @@ return {
            ['<C-k>'] = { 'show', 'hide', 'fallback' },
            ['<C-enter>'] = { 'show', 'show_documentation', 'hide_documentation', 'fallback' },
            ['<C-e>'] = { 'hide' },
+           ['<Tab>'] = { 'select_and_accept', 'fallback' },
            ['<CR>'] = { 'select_and_accept', 'fallback' },
            --['<C-y>'] = { 'select_and_accept' },
            ['<Up>'] = { 'select_prev', 'fallback' },
@@ -41,8 +42,8 @@ return {
            ['<C-n>'] = { 'select_next', 'fallback_to_mappings' },
            ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
            ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
-           ['<Tab>'] = { 'snippet_forward', 'fallback' },
-           ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
+           --['<Tab>'] = { 'snippet_forward', 'fallback' },
+           --['<S-Tab>'] = { 'snippet_backward', 'fallback' },
            ['<C-h>'] = { 'show_signature', 'hide_signature', 'fallback' },
 
           -- https://github.com/chrisgrieser/.config/blob/8a9b98f450e71b92ac10aec6084769d710d6dbb0/nvim/lua/plugins/completion-and-snippets.lua
