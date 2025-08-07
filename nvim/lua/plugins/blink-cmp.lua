@@ -64,6 +64,12 @@ return {
         },
 
         completion = {
+          ghost_text = { enabled = true },
+          accept = {
+            auto_brackets = {
+              enabled = true,
+            },
+          },
           documentation = {
             -- (Default) Only show the documentation popup when manually triggered
             auto_show = true,
@@ -88,7 +94,9 @@ return {
         -- when the Rust fuzzy matcher is not available, by using `implementation = "prefer_rust"`
         --
         -- See the fuzzy documentation for more information
-        fuzzy = { implementation = "prefer_rust_with_warning" }
+        fuzzy = { implementation = "prefer_rust_with_warning" },
+        -- show signature help automatically when typing args to function
+        signature = { enabled = true },
       },
       opts_extend = { "sources.default" }
     }
