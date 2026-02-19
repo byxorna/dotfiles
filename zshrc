@@ -190,18 +190,17 @@ function help(){
 if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then . ~/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 
 export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
+export PATH="$PATH:$VOLTA_HOME/bin"
 
 ################################################################################
 # This block was injected automatically by letsgo (DO NOT REMOVE!)
 ################################################################################
 
-if [[ -x /Users/gabeconradi/.letsgo/bin/letsgo ]]
+if [[ -x /Users/gconradi/.letsgo/bin/letsgo ]]
 then
-    source /Users/gabeconradi/.letsgo/config/shell/zsh/setup.completion.zsh
+    source /Users/gconradi/.letsgo/config/shell/zsh/setup.completion.zsh
 fi
 
 ################################################################################
 # -- This block was injected automatically by letsgo (DO NOT REMOVE!)
 ################################################################################
-
