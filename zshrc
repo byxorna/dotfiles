@@ -14,7 +14,7 @@ bindkey -v
 set -o vi
 
 # automatically link any plugins named in to OMZ
-for plugin in zsh_codex zsh-autocomplete ; do
+for plugin in zsh-autocomplete zsh-autosuggestions; do
   if [[ ! -h ~/.oh-my-zsh/custom/plugins/$plugin ]] ; then
     ln -sfn ~/code/dotfiles/zsh/plugins/$plugin ~/.oh-my-zsh/custom/plugins/$plugin
   fi
@@ -29,7 +29,8 @@ plugins=(
   colored-man-pages
   kubectl
   fzf               # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/fzf
-  #zsh-autocomplete
+  #zsh-autocomplete  # https://github.com/marlonrichert/zsh-autocomplete - this is crashy
+  zsh-autosuggestions # https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md#oh-my-zsh
 )
 
 if [[ -r ~/.oh-my-zsh ]] ; then
