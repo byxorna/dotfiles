@@ -33,6 +33,9 @@ plugins=(
   zsh-autosuggestions # https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md#oh-my-zsh
 )
 
+# fix git prompt status: https://github.com/ohmyzsh/ohmyzsh/issues/12328#issuecomment-2042968705
+zstyle ':omz:alpha:lib:git' async-prompt no
+
 if [[ -r ~/.oh-my-zsh ]] ; then
   export ZSH="$HOME/.oh-my-zsh"
   source $ZSH/oh-my-zsh.sh
