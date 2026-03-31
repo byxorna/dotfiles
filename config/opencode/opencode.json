@@ -1,0 +1,22 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "share": "disabled",
+  "provider": {
+    "ollama": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Ollama",
+      "options": {
+        "baseURL": "http://purple:11434/v1"
+      },
+      "models": {
+        "phi4-mini": {
+          "tools": true
+        },
+        "deepseek-coder-v2:16b": {
+          "name": "deepseek-coder",
+          "tools": true
+        }
+      }
+    }
+  }
+}
