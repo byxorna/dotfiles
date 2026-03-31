@@ -34,7 +34,12 @@ alias gitf="git fetch"
 alias gitp="git pull"
 alias gg="git grep"
 alias wya="git show"
-alias code='cd $(find ~/code -type d -name .git -maxdepth 3|xargs dirname |fzf --preview="git -C {} log HEAD -1")'
+function code() {
+  d="$(find ~/code -type d -name .git -maxdepth 3|xargs dirname |fzf --query="$1" --preview="git -C {} log HEAD -1")"
+  if [[ -d $d ]] ; then
+    pushd "$d"
+  fi
+}
 
 # git helpers with fzf
 # https://seb.jambor.dev/posts/improving-shell-workflows-with-fzf/#deleting-branches

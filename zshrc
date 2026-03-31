@@ -14,7 +14,7 @@ bindkey -v
 set -o vi
 
 # automatically link any plugins named in to OMZ
-for plugin in zsh_codex zsh-autocomplete ; do
+for plugin in zsh-autocomplete zsh-autosuggestions; do
   if [[ ! -h ~/.oh-my-zsh/custom/plugins/$plugin ]] ; then
     ln -sfn ~/code/dotfiles/zsh/plugins/$plugin ~/.oh-my-zsh/custom/plugins/$plugin
   fi
@@ -29,8 +29,12 @@ plugins=(
   colored-man-pages
   kubectl
   fzf               # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/fzf
-  #zsh-autocomplete
+  #zsh-autocomplete  # https://github.com/marlonrichert/zsh-autocomplete - this is crashy
+  zsh-autosuggestions # https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md#oh-my-zsh
 )
+
+# fix git prompt status: https://github.com/ohmyzsh/ohmyzsh/issues/12328#issuecomment-2042968705
+zstyle ':omz:alpha:lib:git' async-prompt no
 
 if [[ -r ~/.oh-my-zsh ]] ; then
   export ZSH="$HOME/.oh-my-zsh"
@@ -190,18 +194,17 @@ function help(){
 if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then . ~/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 
 export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
+export PATH="$PATH:$VOLTA_HOME/bin"
 
 ################################################################################
 # This block was injected automatically by letsgo (DO NOT REMOVE!)
 ################################################################################
 
-if [[ -x /Users/gabeconradi/.letsgo/bin/letsgo ]]
+if [[ -x /Users/gconradi/.letsgo/bin/letsgo ]]
 then
-    source /Users/gabeconradi/.letsgo/config/shell/zsh/setup.completion.zsh
+    source /Users/gconradi/.letsgo/config/shell/zsh/setup.completion.zsh
 fi
 
 ################################################################################
 # -- This block was injected automatically by letsgo (DO NOT REMOVE!)
 ################################################################################
-

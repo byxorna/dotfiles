@@ -1,11 +1,51 @@
-export GOPROXY="https://goproxy.ingress.seatgeek.mgmt:8443"
+export GOPROXY="https://goproxy.ingress.seatgeek.mgmt"
 export GOPRIVATE="gitlab.seatgeekadmin.com,github.com/seatgeek"
 export GONOPROXY="none"
 
 if [[ -d ~/code/src/gitlab.seatgeekadmin.com ]] ; then
-  alias sg='cd $(find ~/code/src/gitlab.seatgeekadmin.com -type d -name .git -maxdepth 3|xargs dirname |fzf --preview="git -C {} log HEAD -1")'
+  function sg() {
+    d="$(find ~/code/src/gitlab.seatgeekadmin.com -type d -name .git -maxdepth 3|xargs dirname |fzf --query="$1" --preview="git -C {} log HEAD -1")"
+    if [[ -d $d ]] ; then
+      pushd "$d"
+    fi
+  }
 
   export VOLTA_HOME="$HOME/.volta"
-  export PATH="$VOLTA_HOME/bin:$PATH"
+  export PATH="$PATH:$VOLTA_HOME/bin"
   export PATH="$PATH:~/.letsgo/bin"
 fi
+
+gitlab-mr-ci-logs(){
+  project="${1}"
+  mr="${2}"
+  # todo: find only those matching a specific MR (or pipeline or stage)
+  echo "fetching logs for $project MR$mr CI runners" >&2
+  # TODO look up latest pipeline for an MR
+  # ci.seatgeek.io/pipeline-id=111111
+  # ci.seatgeek.io/stage=deploy
+  set -x
+  kubectl --context=seatgeek:us-136-mgmt-default:okta logs -n gitlab-ci -l "ci.seatgeek.io/project-slug=${project//\//-}" -f
+}
+
+nucleus-atlantis-terraform-logs() {
+  mr="${1}"
+  f="~/tmp/$(date -I)-nucleus-atlantis-mr-762-terraform.log"
+  s_f="/atlantis/repos/platform/nucleus/$mr/default/terraform.log"
+  t="platform-nucleus-atlantis/nucleus-atlantis-0"
+  echo "Pulling $s_f from $t..." >&2
+  kubectl cp "$t:$s_f" "$f" -c app
+  echo "Fetched file: $f" >&2
+}
+
+# cleanup, reset, refresh sg work laptop
+sg-clean() {
+  echo "❱ sg-clean" >&2
+  cd ~
+  brew update && brew upgrade && brew upgrade --cask
+  for p in platform/platform-operator ; do
+    pushd "./code/src/gitlab.seatgeekadmin.com/${p}"
+    echo "$p: $(git branch --show-current)"
+    popd
+  done
+  letsgo login
+}
