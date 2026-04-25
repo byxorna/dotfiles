@@ -1,10 +1,11 @@
+export LG_REPOSITORY_ROOT_PATH="$HOME/code/src/gitlab.seatgeekadmin.com"
 export GOPROXY="https://goproxy.ingress.seatgeek.mgmt"
 export GOPRIVATE="gitlab.seatgeekadmin.com,github.com/seatgeek"
 export GONOPROXY="none"
 
-if [[ -d ~/code/src/gitlab.seatgeekadmin.com ]] ; then
+if [[ -d $LG_REPOSITORY_ROOT_PATH ]] ; then
   function sg() {
-    d="$(find ~/code/src/gitlab.seatgeekadmin.com -type d -name .git -maxdepth 3|xargs dirname |fzf --query="$1" --preview="git -C {} log HEAD -1")"
+    d="$(find $LG_REPOSITORY_ROOT_PATH -type d -name .git -maxdepth 3|xargs dirname |fzf --query="$1" --preview="git -C {} log HEAD -1")"
     if [[ -d $d ]] ; then
       pushd "$d"
     fi
