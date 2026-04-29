@@ -162,7 +162,7 @@ collect-browser-history(){
 
 # look thru browser history with fzf with ctrl-h
 browser-history(){
-  collect-browser-history | fzf --ansi --multi | sed 's#.*\(https*://\)#\1#' | xargs open
+  collect-browser-history | fzf --ansi --multi --prompt='Search browser history > ' | sed 's#.*\(https*://\)#\1#' | xargs open
 }
 zle -N browser-history
 bindkey "^h" browser-history
@@ -172,8 +172,8 @@ _bookmarks-fzf () {
   emulate -L zsh
   echo
   local url
-  url=$(bookmarks-fzf --collect \
-    | fzf --ansi --multi --no-hscroll --tiebreak=begin \
+  url=$(bookmarks-fzf \
+    | fzf --ansi --multi --no-hscroll --tiebreak=begin --prompt='Search bookmarks > ' \
     | awk 'BEGIN { FS = "\t" } { print $2 }')
   if [[ -n "$url" ]]; then
     echo "$url" > /dev/tty
