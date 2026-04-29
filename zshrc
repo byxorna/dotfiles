@@ -169,8 +169,15 @@ bindkey "^h" browser-history
 
 # ctrl-b will open bookmarks in fzf
 _bookmarks-fzf () {
+  emulate -L zsh
   echo
-  bookmarks-fzf
+  local url
+  url=$(bookmarks-fzf --collect \
+    | fzf --ansi --multi --no-hscroll --tiebreak=begin \
+    | awk 'BEGIN { FS = "\t" } { print $2 }')
+  if [[ -n "$url" ]]; then
+    echo "$url" | xargs open
+  fi
   zle redisplay
 }
 
@@ -212,6 +219,8 @@ fi
 ################################################################################
 # -- This block was injected automatically by letsgo (DO NOT REMOVE!)
 ################################################################################
+
+export PATH="$HOME/code/dotfiles/bin:$PATH"
 
 # opencode
 if [[ -d "$HOME/.opencode/bin" ]]; then

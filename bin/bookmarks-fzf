@@ -2,8 +2,18 @@
 # vim: set filetype=ruby:
 # b - browse Chrome bookmarks with fzf
 # sourced from: https://gist.github.com/junegunn/15859538658e449b886f
+#
+# Usage:
+#   bookmarks-fzf           # interactive fzf selection, opens URLs
+#   bookmarks-fzf --collect  # just dump bookmark list to stdout (for piping)
 
 [ $(uname) = Darwin ] || exit 1
+
+if [[ "$1" == "--collect" ]]; then
+  /usr/bin/ruby -x "$0"
+  exit $?
+fi
+
 which fzf > /dev/null 2>&1 || brew reinstall --HEAD fzf || exit 1
 
 /usr/bin/ruby -x "$0"                              |
@@ -54,6 +64,7 @@ width = `tput cols`.strip.to_i / 2
 
 # collect Chrome and Brave bookmarks
 CONFIG_SEARCH_PATHS.each do |p|
+  next unless File.directory?(p)
   Find.find(p) do |path|
     if File.file?(path) && File.basename(path) == "Bookmarks"
       json = JSON.load(File.read(File.expand_path(path)))
@@ -72,7 +83,11 @@ CONFIG_SEARCH_PATHS.each do |p|
   end
 end
 
+# deduplicate by URL, keeping the first occurrence
+seen = {}
 items.each do |item|
+  next if seen[item[:url]]
+  seen[item[:url]] = true
   name = trim item[:name], width
   puts [just(name, width),
         item[:url]].join("\t\x1b[36m") + "\x1b[m"
