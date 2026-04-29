@@ -176,6 +176,7 @@ _bookmarks-fzf () {
     | fzf --ansi --multi --no-hscroll --tiebreak=begin \
     | awk 'BEGIN { FS = "\t" } { print $2 }')
   if [[ -n "$url" ]]; then
+    echo "$url" > /dev/tty
     echo "$url" | xargs open
   fi
   zle redisplay
