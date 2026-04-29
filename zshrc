@@ -177,14 +177,14 @@ _bookmarks-fzf () {
 zle -N _bookmarks-fzf
 bindkey "^b" _bookmarks-fzf
 
-[[ -f ~/.rvm/scripts/rvm ]] && . ~/.rvm/scripts/rvm
 # clobber the default gopath setup by gvm
 export GOPATH=~/code/go
 
 # NOTE(gabe): ssh-agent and tmux attachment lives in .profile now
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
+[[ -f ~/.rvm/scripts/rvm ]] && . ~/.rvm/scripts/rvm
+command -v rvm &>/dev/null && export PATH="$PATH:$HOME/.rvm/bin"
 
 # emulate bash's help command
 function help(){
@@ -193,8 +193,12 @@ function help(){
 
 if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then . ~/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$PATH:$VOLTA_HOME/bin"
+command -v mise &>/dev/null && eval "$(mise activate zsh)"
+
+if [[ -d "$HOME/.volta" ]]; then
+  export VOLTA_HOME="$HOME/.volta"
+  export PATH="$PATH:$VOLTA_HOME/bin"
+fi
 
 ################################################################################
 # This block was injected automatically by letsgo (DO NOT REMOVE!)
@@ -208,3 +212,8 @@ fi
 ################################################################################
 # -- This block was injected automatically by letsgo (DO NOT REMOVE!)
 ################################################################################
+
+# opencode
+if [[ -d "$HOME/.opencode/bin" ]]; then
+  export PATH="$HOME/.opencode/bin:$PATH"
+fi
