@@ -4,6 +4,10 @@ Standards for AI agents working in SeatGeek repositories.
 
 ## Project Standards
 
+### Golden Paths
+
+- Documented locally in docs/golden-paths/, and platform-wide in platform/handbook repo (below $LG_REPOSITORY_ROOT)
+
 ### Plan & Review
 
 #### Before starting work
