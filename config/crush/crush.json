@@ -1,0 +1,35 @@
+{
+  "$schema": "https://charm.land/crush.json",
+  "models": {
+    "default": {
+      "model": "claude-opus-4-6",
+      "provider": "anthropic"
+    }
+  },
+  "providers": {
+    "anthropic": {
+      "type": "anthropic",
+      "base_url": "https://ai.seatgeek.ts.net/v1",
+      "api_key": "-"
+    },
+    "openai": {
+      "type": "openai",
+      "base_url": "https://ai.seatgeek.ts.net/v1",
+      "api_key": "-"
+    },
+    "google": {
+      "type": "gemini",
+      "base_url": "https://ai.seatgeek.ts.net/v1beta",
+      "api_key": "-"
+    }
+  },
+  "mcp": {
+    "something": {
+      "type": "http",
+      "url": "http://foo/mcp/something"
+    }
+  },
+  "options": {
+    "context_paths": ["standards-org.md"]
+  }
+}
