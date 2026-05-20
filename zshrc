@@ -3,6 +3,7 @@
 export HISTSIZE=1000000
 export SAVEHIST=1000000
 
+export DO_NOT_TRACK=1
 export FZF_DEFAULT_OPTS="--reverse --height=20% --multi"
 export FZF_CTRL_T_OPTS="--preview 'cat {}'"
 if type rg &> /dev/null; then
