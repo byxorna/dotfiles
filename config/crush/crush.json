@@ -9,27 +9,219 @@
   "providers": {
     "anthropic": {
       "type": "anthropic",
-      "base_url": "https://ai.seatgeek.ts.net/v1",
-      "api_key": "-"
+      "base_url": "https://ai-proxy.example.com/",
+      "api_key": "-",
+      "models": [
+        {
+          "id": "claude-opus-4-7",
+          "name": "Claude Opus 4.7",
+          "context_window": 200000,
+          "default_max_tokens": 32000,
+          "can_reason": true,
+          "supports_attachments": true,
+          "cost_per_1m_in": 5,
+          "cost_per_1m_out": 25
+        },
+        {
+          "id": "claude-opus-4-6",
+          "name": "Claude Opus 4.6",
+          "context_window": 200000,
+          "default_max_tokens": 32000,
+          "can_reason": true,
+          "supports_attachments": true,
+          "cost_per_1m_in": 5,
+          "cost_per_1m_out": 25
+        },
+        {
+          "id": "claude-opus-4-5",
+          "name": "Claude Opus 4.5",
+          "context_window": 200000,
+          "default_max_tokens": 32000,
+          "can_reason": true,
+          "supports_attachments": true,
+          "cost_per_1m_in": 5,
+          "cost_per_1m_out": 25
+        },
+        {
+          "id": "claude-sonnet-4-6",
+          "name": "Claude Sonnet 4.6",
+          "context_window": 200000,
+          "default_max_tokens": 32000,
+          "can_reason": true,
+          "supports_attachments": true,
+          "cost_per_1m_in": 3,
+          "cost_per_1m_out": 15
+        },
+        {
+          "id": "claude-sonnet-4-5",
+          "name": "Claude Sonnet 4.5",
+          "context_window": 200000,
+          "default_max_tokens": 32000,
+          "can_reason": true,
+          "supports_attachments": true,
+          "cost_per_1m_in": 3,
+          "cost_per_1m_out": 15
+        },
+        {
+          "id": "claude-haiku-4-5",
+          "name": "Claude Haiku 4.5",
+          "context_window": 200000,
+          "default_max_tokens": 16000,
+          "can_reason": false,
+          "supports_attachments": true,
+          "cost_per_1m_in": 1,
+          "cost_per_1m_out": 5
+        }
+      ]
     },
     "openai": {
       "type": "openai",
-      "base_url": "https://ai.seatgeek.ts.net/v1",
-      "api_key": "-"
+      "base_url": "https://ai-proxy.example.com/",
+      "api_key": "-",
+      "models": [
+        {
+          "id": "gpt-5.5",
+          "name": "GPT-5.5",
+          "context_window": 200000,
+          "default_max_tokens": 32000,
+          "cost_per_1m_in": 5,
+          "cost_per_1m_out": 30
+        },
+        {
+          "id": "gpt-5.4",
+          "name": "GPT-5.4",
+          "context_window": 200000,
+          "default_max_tokens": 32000,
+          "cost_per_1m_in": 2.5,
+          "cost_per_1m_out": 15
+        },
+        {
+          "id": "gpt-5.4-mini",
+          "name": "GPT-5.4 Mini",
+          "context_window": 200000,
+          "default_max_tokens": 32000,
+          "cost_per_1m_in": 0.75,
+          "cost_per_1m_out": 4.5
+        },
+        {
+          "id": "gpt-5.3-codex",
+          "name": "GPT-5.3 Codex",
+          "context_window": 200000,
+          "default_max_tokens": 32000,
+          "cost_per_1m_in": 1.75,
+          "cost_per_1m_out": 14
+        },
+        {
+          "id": "gpt-4.1",
+          "name": "GPT-4.1",
+          "context_window": 1047576,
+          "default_max_tokens": 32000,
+          "cost_per_1m_in": 2,
+          "cost_per_1m_out": 8
+        },
+        {
+          "id": "gpt-4.1-mini",
+          "name": "GPT-4.1 Mini",
+          "context_window": 1047576,
+          "default_max_tokens": 32000,
+          "cost_per_1m_in": 0.4,
+          "cost_per_1m_out": 1.6
+        },
+        {
+          "id": "gpt-4o-mini",
+          "name": "GPT-4o Mini",
+          "context_window": 128000,
+          "default_max_tokens": 16000,
+          "cost_per_1m_in": 0.15,
+          "cost_per_1m_out": 0.6
+        }
+      ]
     },
     "google": {
       "type": "gemini",
-      "base_url": "https://ai.seatgeek.ts.net/v1beta",
-      "api_key": "-"
+      "base_url": "https://ai-proxy.example.com/v1beta",
+      "api_key": "-",
+      "models": [
+        {
+          "id": "gemini-2.5-pro",
+          "name": "Gemini 2.5 Pro",
+          "context_window": 1000000,
+          "default_max_tokens": 65536,
+          "can_reason": true,
+          "cost_per_1m_in": 1.25,
+          "cost_per_1m_out": 10
+        },
+        {
+          "id": "gemini-2.5-flash",
+          "name": "Gemini 2.5 Flash",
+          "context_window": 1000000,
+          "default_max_tokens": 65536,
+          "can_reason": true,
+          "cost_per_1m_in": 0.3,
+          "cost_per_1m_out": 2.5
+        },
+        {
+          "id": "gemini-2.5-flash-lite",
+          "name": "Gemini 2.5 Flash Lite",
+          "context_window": 1000000,
+          "default_max_tokens": 65536,
+          "cost_per_1m_in": 0.1,
+          "cost_per_1m_out": 0.4
+        }
+      ]
+    },
+    "ollama": {
+      "name": "Ollama",
+      "type": "openai-compat",
+      "base_url": "http://localhost:11434/v1/",
+      "api_key": "-",
+      "flat_rate": true,
+      "models": [
+        {
+          "id": "gemma4:e4b",
+          "name": "Gemma 4 E4B",
+          "cost_per_1m_in": 0,
+          "cost_per_1m_out": 0,
+          "cost_per_1m_in_cached": 0,
+          "cost_per_1m_out_cached": 0,
+          "context_window": 128000,
+          "default_max_tokens": 20000,
+          "can_reason": true,
+          "supports_attachments": false
+        }
+      ]
     }
   },
   "mcp": {
-    "something": {
+    "argocd": {
       "type": "http",
-      "url": "http://foo/mcp/something"
+      "url": "http://agentgateway.internal.example.com/mcp/argocd"
+    },
+    "atlassian": {
+      "type": "sse",
+      "url": "https://mcp.atlassian.com/v1/sse"
+    },
+    "backstage": {
+      "type": "http",
+      "url": "http://agentgateway.internal.example.com/mcp/backstage"
+    },
+    "codesearch": {
+      "type": "http",
+      "url": "http://agentgateway.internal.example.com/mcp/codesearch"
+    },
+    "datadog": {
+      "type": "http",
+      "url": "http://agentgateway.internal.example.com/mcp/datadog"
+    },
+    "mr-freeze": {
+      "type": "http",
+      "url": "http://agentgateway.internal.example.com/mcp/mr-freeze"
     }
   },
+  "disable_provider_auto_update": true,
+  "disable_metrics": true,
   "options": {
-    "context_paths": ["standards-org.md"]
+    "context_paths": ["standards.md"],
+    "disable_default_providers": true
   }
 }
