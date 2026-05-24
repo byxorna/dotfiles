@@ -38,9 +38,64 @@ Code/commits/PRs: normal. Off: "stop caveman" / "normal mode".
 - Be clear, direct, and do not hedge or overexplain.
 - Direct references to a source is preferred to duplicating a comment in code into documentation.
 
+#### Self-check before writing or saving any doc/plan
+
+Run this checklist on the text before considering it done:
+
+1. `grep -nE '—|–|→|⇒|↦|↔'` the file. If anything matches, fix it before continuing.
+2. Read every parenthetical. If it justifies, explains rationale, or cites supporting evidence, delete it or move it to a dedicated reasoning section.
+3. Read every "because" / "so that" / "this lets us" clause. If it defends the design rather than describes it, cut it.
+4. Count em-dash-equivalents (commas standing in for dashes, ": because", " - because"). If the doc reads like a defense brief, rewrite as statements.
+
+### Epistemic Integrity
+
+- Never speculate. Every assertion must be grounded in verifiable knowledge.
+- Provide sources: specific file paths with line numbers, commit SHAs, URLs, or tool output. No unsourced claims.
+- Do not guess. If a definitive answer requires knowledge you don't have, say so explicitly.
+- When uncertain, use available tools and MCPs to research further before responding. Ask for guidance only after exhausting tool-based investigation.
+- Distinguish clearly between what you confirmed vs. what you inferred.
+
 ### Implementation Hygiene
 
 - Keep `docs/` in sync with implementation changes.
 - Keep tests in sync with implementation changes.
 - Don't rewrite files you weren't asked to touch. Scope creep in docs is still scope creep.
+
+### Reference Projects and Tooling Preferences
+
+Prefer adopting patterns from proven projects over inventing your own. Each reference below is tagged with what to learn from it.
+
+#### Go
+
+| Project | Learn from it for |
+|---|---|
+| kubernetes/kubernetes | Architecture: large-scale controller patterns, API machinery, code generation, interface-driven design. The canonical example of how to structure a complex Go system. |
+| charmbracelet/* (bubbletea, lipgloss, etc.) | Design north star: TUI aesthetics, composable UI components, tasteful defaults, developer ergonomics. The bar for what CLI/TUI tools should feel like. |
+| hashicorp/terraform | Architecture: plugin systems, provider model, DAG-based execution, state management. |
+| caddyserver/caddy | Code hygiene: clean module system, good use of interfaces, readable idiomatic Go. |
+
+Tooling preferences:
+- **Kubernetes controllers/CRDs**: use kubebuilder directly. Don't reach for higher-level frameworks (Operator SDK, etc.) unless kubebuilder genuinely can't express what you need.
+- **CLI tools**: use cobra + bubbletea. No homegrown flag parsing or TUI frameworks.
+- **Structured logging**: use slog (stdlib). No third-party logging libraries unless the project already uses one.
+
+#### Rust
+
+| Project | Learn from it for |
+|---|---|
+| BurntSushi/ripgrep | Design north star: CLI UX, performance engineering, thoughtful defaults. The gold standard for command-line tools. |
+| tokio-rs/tokio | Architecture: async runtime design, trait-based composition, ecosystem cohesion. |
+
+#### Kubernetes / Infrastructure
+
+| Project | Learn from it for |
+|---|---|
+| argoproj/argo-cd | Architecture: GitOps controller patterns, reconciliation loops, multi-tenancy model. |
+| crossplane/crossplane | Architecture: composition model, provider pattern for infrastructure as CRDs. |
+| cilium/cilium | Design north star: eBPF-native networking done right. Deep systems work with a clean user-facing API. |
+
+Tooling preferences:
+- **IaC**: use Terraform with the Datadog, AWS, and Kubernetes providers. Pulumi only if the team already uses it.
+- **Helm charts**: prefer simple charts. No umbrella charts or deep nesting. If the chart is getting complex, consider raw manifests + kustomize.
+- **Service mesh**: prefer Linkerd over Istio for simplicity unless Istio features are specifically needed.
 
