@@ -221,7 +221,10 @@
   "disable_provider_auto_update": true,
   "disable_metrics": true,
   "options": {
-    "context_paths": ["standards.md"],
+    "context_paths": [
+      "~/code/byxorna/dotfiles/standards.md",
+      "~/code/byxorna/dotfiles/standards-org.md"
+    ],
     "disable_default_providers": true
   }
 }
