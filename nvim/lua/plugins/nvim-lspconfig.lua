@@ -5,5 +5,6 @@ return {
     vim.lsp.enable("gopls")        -- requires `gopls` installed
     vim.lsp.enable("terraformls") -- requires https://github.com/hashicorp/terraform-ls/blob/main/docs/installation.md
     vim.lsp.enable("pylsp") --
+    vim.lsp.enable("lua_ls")       -- requires `brew install lua-language-server`
   end
 }

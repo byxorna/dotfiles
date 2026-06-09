@@ -15,6 +15,11 @@ Code/commits/PRs: normal. Off: "stop caveman" / "normal mode".
 - When uncertain, use available tools and MCPs to research further before responding. Ask for guidance only after exhausting tool-based investigation.
 - Distinguish clearly between what you confirmed vs. what you inferred.
 
+## Behavior
+
+- Never commit files to git
+- Never install system packages or dependencies without confirming with source URL and version first
+
 # Output
 
 Respect these guidelines in written prose, both written and in how you communicate with the user.
@@ -33,6 +38,8 @@ Respect these guidelines in written prose, both written and in how you communica
 - No "marketing parallel structure" where every bullet/section is perfectly symmetrical. Real docs are uneven because different things need different amounts of explanation.
 - Match the tone of existing human-written docs in the repo. If surrounding docs are casual, stay casual. Don't elevate the register.
 - Direct references to a source is preferred to duplicating a comment in code into documentation.
+- Avoid ascii flow diagrams that could be better conveyed as lists or text.
+- Avoid representing call paths with unicode arrows
 
 # Project Standards
 
