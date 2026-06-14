@@ -40,6 +40,7 @@ Respect these guidelines in written prose, both written and in how you communica
 - Direct references to a source is preferred to duplicating a comment in code into documentation.
 - Avoid ascii flow diagrams that could be better conveyed as lists or text.
 - Avoid representing call paths with unicode arrows
+- Compress chains of thought and diversions or dead ends in discovery unless relevant to the matter at hand. "wait", "actually", "a simpler approach", "let me step back", etc are noise.
 
 # Project Standards
 
