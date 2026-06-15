@@ -1,0 +1,175 @@
+#!/usr/bin/env zsh
+#
+# Profile zsh hook/prompt execution times and produce a flame graph (SVG).
+#
+# Usage:
+#   zsh-profile-hooks [--iterations N] [--output FILE]
+#
+# Spawns a zsh that loads your real config, instruments the hooks,
+# simulates N Enter presses, and writes an SVG flame graph.
+
+set -euo pipefail
+
+iterations=10
+output="$HOME/zsh-hook-profile.svg"
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --iterations|-n) iterations="$2"; shift 2 ;;
+    --output|-o) output="$2"; shift 2 ;;
+    *) echo "unknown arg: $1" >&2; exit 1 ;;
+  esac
+done
+
+tmpdir=$(mktemp -d)
+trap 'rm -rf "$tmpdir"' EXIT
+
+timings="$tmpdir/timings.log"
+folded="$tmpdir/folded.txt"
+fgpl="$tmpdir/flamegraph.pl"
+
+# Grab flamegraph.pl
+curl -fsSL "https://raw.githubusercontent.com/brendangregg/FlameGraph/master/flamegraph.pl" > "$fgpl"
+chmod +x "$fgpl"
+
+# Write the entire profiling session as one zsh script.
+# This avoids heredoc quoting issues by writing it with cat from a
+# temporary file that zsh sources directly.
+cat > "$tmpdir/run.zsh" << 'EOF'
+zmodload zsh/datetime
+
+_PF_LOG="$1"
+_PF_ITER_COUNT="$2"
+export TERM="${TERM:-xterm-256color}"
+
+# ---- load real config ----
+TMOUT=0
+source ~/.zshrc
+unfunction TRAPALRM 2>/dev/null || true
+TMOUT=0
+
+# ---- wrap functions for timing ----
+_pf_wrap() {
+  local fn="$1" phase="$2"
+  if typeset -f "$fn" &>/dev/null; then
+    eval "functions[_pf_orig_${fn}]=\"\${functions[${fn}]}\""
+    eval "
+      ${fn}() {
+        local _t0=\$EPOCHREALTIME
+        _pf_orig_${fn} \"\$@\"
+        local _t1=\$EPOCHREALTIME
+        local _dur=\$(( (_t1 - _t0) * 1000000 ))
+        echo \"\${_PF_I};${phase};${fn};\${_dur}\" >> \"\$_PF_LOG\"
+      }
+    "
+  fi
+}
+
+# Wrap known hooks and prompt functions
+for fn in precmd preexec chpwd; do
+  _pf_wrap "$fn" "hook"
+done
+
+for fn in git_prompt_info update_git_status display_k8s_context real_time directory git_status command_status update_command_status output_command_execute_after; do
+  _pf_wrap "$fn" "prompt"
+done
+
+# Wrap precmd_functions array entries
+_pf_i=0
+for fn in $precmd_functions; do
+  _pf_wrap "$fn" "precmd_fn"
+  _pf_i=$(( _pf_i + 1 ))
+done
+
+# ---- simulate Enter presses ----
+echo "Profiling $_PF_ITER_COUNT prompt cycles..." >&2
+
+for _PF_I in $(seq 1 "$_PF_ITER_COUNT"); do
+  local _cyc_t0=$EPOCHREALTIME
+
+  # Run precmd (this is what fires after you press Enter)
+  if typeset -f precmd &>/dev/null; then
+    precmd
+  fi
+  for fn in $precmd_functions; do
+    $fn 2>/dev/null
+  done
+
+  # Evaluate the prompt string (forces all $(subshell) calls)
+  local _prompt_t0=$EPOCHREALTIME
+  print -P "$PROMPT" >/dev/null 2>&1
+  local _prompt_t1=$EPOCHREALTIME
+  local _prompt_dur=$(( (_prompt_t1 - _prompt_t0) * 1000000 ))
+  echo "${_PF_I};prompt;PROMPT_eval;${_prompt_dur}" >> "$_PF_LOG"
+
+  local _cyc_t1=$EPOCHREALTIME
+  local _cyc_dur=$(( (_cyc_t1 - _cyc_t0) * 1000000 ))
+  echo "${_PF_I};total;full_cycle;${_cyc_dur}" >> "$_PF_LOG"
+done
+
+echo "Done. $(wc -l < "$_PF_LOG" | tr -d ' ') timing samples." >&2
+EOF
+
+echo "Running profiler ($iterations iterations)..." >&2
+
+# Run inside script(1) to fake a tty
+script -q /dev/null zsh "$tmpdir/run.zsh" "$timings" "$iterations" </dev/null 2>&1 | grep -v '^\[' | tail -5
+
+if [[ ! -s "$timings" ]]; then
+  echo "error: no timing data collected" >&2
+  echo "Debug: checking tmpdir contents..." >&2
+  ls -la "$tmpdir/" >&2
+  exit 1
+fi
+
+# ---- Build summary table and folded stacks ----
+awk -F';' '
+{
+  iter = $1; phase = $2; fn = $3; dur = $4 + 0
+  if (phase == "total") { total_sum += dur; total_n++; next }
+  key = phase ";" fn
+  sum[key] += dur; cnt[key]++
+}
+END {
+  printf "\n%-12s %-35s %6s %10s %10s\n", "PHASE", "FUNCTION", "CALLS", "AVG(ms)", "TOTAL(ms)" > "/dev/stderr"
+  printf "%-12s %-35s %6s %10s %10s\n", "-----", "--------", "-----", "-------", "--------" > "/dev/stderr"
+
+  # sort by total desc
+  n = 0
+  for (k in sum) { n++; ks[n] = k; ts[n] = sum[k] }
+  for (i = 2; i <= n; i++) {
+    j = i
+    while (j > 1 && ts[j] > ts[j-1]) {
+      t=ks[j]; ks[j]=ks[j-1]; ks[j-1]=t
+      t=ts[j]; ts[j]=ts[j-1]; ts[j-1]=t
+      j--
+    }
+  }
+  for (i = 1; i <= n; i++) {
+    k = ks[i]
+    split(k, p, ";")
+    printf "%-12s %-35s %6d %10.1f %10.1f\n", p[1], p[2], cnt[k], (sum[k]/cnt[k])/1000, sum[k]/1000 > "/dev/stderr"
+    printf "%s;%s %d\n", p[1], p[2], int(sum[k])
+  }
+  if (total_n > 0)
+    printf "\n%-12s %-35s %6d %10.1f %10.1f\n", "TOTAL", "full_cycle", total_n, (total_sum/total_n)/1000, total_sum/1000 > "/dev/stderr"
+}' "$timings" > "$folded"
+
+echo "" >&2
+
+if [[ ! -s "$folded" ]]; then
+  echo "error: no folded data" >&2
+  exit 1
+fi
+
+perl "$fgpl" \
+  --title "zsh hook time per Enter ($iterations cycles)" \
+  --subtitle "width = cumulative microseconds" \
+  --countname "us" \
+  --nametype "Hook" \
+  --colors hot \
+  --width 1200 \
+  "$folded" > "$output"
+
+echo "Flame graph: $output" >&2
+open "$output" 2>/dev/null || echo "Open $output in a browser." >&2
