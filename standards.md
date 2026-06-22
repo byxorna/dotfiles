@@ -22,8 +22,9 @@ Code/commits/PRs: normal. Off: "stop caveman" / "normal mode".
 
 ## Engineering principles
 
-- No silent fixups. If something is wrong, fail loudly. Don't `rm -f` files that shouldn't be there, don't `|| true` away errors that indicate a real problem, don't paper over broken state with cleanup scripts. No "belt and suspenders" type layering 80% solutions.
-- Understand before fixing. Don't guess at fixes. Read logs, trace the actual code path, identify the root cause.
+- Errors are sacred. If something fails, find out why; don't make it stop failing. No `|| true`, no `rm -f`, no retries/fallbacks/broader catches to suppress symptoms, no swallowing errors or flattening typed errors into generic ones during refactoring. Existing error paths are load-bearing until proven otherwise.
+- Diagnose before fixing. Read logs, trace the code path, identify the root cause. Confirm expected behavior, confirm actual behavior, confirm the specific cause. Every proposed fix must be anchored in observed evidence. No speculative ideas that shift validation burden to the user.
+- Scope discipline. Fix what you were asked to fix. Don't opportunistically refactor, rename, reformat, or "improve" adjacent code. If you spot a problem, flag it; don't touch it.
 
 # Output
 
@@ -45,7 +46,7 @@ Respect these guidelines in written prose, both written and in how you communica
 - Direct references to a source is preferred to duplicating a comment in code into documentation.
 - Avoid ascii flow diagrams that could be better conveyed as lists or text.
 - Avoid representing call paths with unicode arrows
-- Compress chains of thought and diversions or dead ends in discovery unless relevant to the matter at hand. "wait", "actually", "a simpler approach", "let me step back", etc are noise.
+- Omit chains of thought, exploration, backtracking, and dead ends. Don't narrate discovery; state conclusions. "wait", "actually", "a simpler approach", "let me step back", "we could try", "if this doesn't work", "might want to" are all noise. If a rejected alternative is load-bearing context for the chosen design, state it as a fact in a reasoning section, not as a story.
 
 # Project Standards
 
@@ -53,12 +54,13 @@ Respect these guidelines in written prose, both written and in how you communica
 
 ### Before starting work
 
-- After preparing a plan, write the plan to `.agents/tasks/<date in format yyyy-mm-dd__HH-MM-SS> - <TASK_NAME>.md`. (use local time, not UTC)
+- After preparing a plan, write the plan to `.agents/plans/<date in format yyyy-mm-dd__HH-MM-SS> - <TASK_NAME>.md`. (use local time, not UTC)
 - The plan should list an implementation plan, its reasoning, and tasks broken down.
 - Use these section titles in the plan: intent, detailed implementation plan, reasoning (only for meaningful tradeoffs or specific needs), and task list
+- Plans state decisions. Don't include exploration notes, abandoned approaches, or discovery narrative. Hedging language ("we could", "might want to", "if this doesn't work") means the decision isn't made yet; make it, then write it down.
 - If the task requires external knowledge or a particular package, research to get the latest knowledge (Use the Task tool for research)
 - Ensure `docs/` are kept in sync with changes proposed as a final task
-- Don't overplan it; always think MVP, with an eye towards flexibility and long term maintenance.
+- Don't overplan it; always think MVP, with an eye towards flexibility and low long term maintenance burden.
 - Once you write the plan, first ask me to review it. Do not continue until I approve the plan.
 
 ### While implementing
@@ -85,6 +87,7 @@ Run this checklist on the text before considering it done:
 2. Read every parenthetical. If it justifies, explains rationale, or cites supporting evidence, delete it or move it to a dedicated reasoning section.
 3. Read every "because" / "so that" / "this lets us" clause. If it defends the design rather than describes it, cut it.
 4. Count em-dash-equivalents (commas standing in for dashes, ": because", " - because"). If the doc reads like a defense brief, rewrite as statements.
+5. Scan for exploration artifacts: "I tried", "after investigating", "it turns out", "we could", "might want to", "alternatively", "if this doesn't work". Delete them. State the conclusion.
 
 ### Implementation Hygiene
 
@@ -126,7 +129,6 @@ Tooling preferences:
 | cilium/cilium | Design north star: eBPF-native networking done right. Deep systems work with a clean user-facing API. |
 
 Tooling preferences:
-- **IaC**: use Terraform with the Datadog, AWS, and Kubernetes providers. Pulumi only if the team already uses it.
+- **IaC**: use Terraform with the Datadog, AWS, and Kubernetes providers.
 - **Helm charts**: prefer simple charts. No umbrella charts or deep nesting. If the chart is getting complex, consider raw manifests + kustomize.
-- **Service mesh**: prefer Linkerd over Istio for simplicity unless Istio features are specifically needed.
 
