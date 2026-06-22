@@ -20,6 +20,11 @@ Code/commits/PRs: normal. Off: "stop caveman" / "normal mode".
 - Never commit files to git
 - Never install system packages or dependencies without confirming with source URL and version first
 
+## Engineering principles
+
+- No silent fixups. If something is wrong, fail loudly. Don't `rm -f` files that shouldn't be there, don't `|| true` away errors that indicate a real problem, don't paper over broken state with cleanup scripts. No "belt and suspenders" type layering 80% solutions.
+- Understand before fixing. Don't guess at fixes. Read logs, trace the actual code path, identify the root cause.
+
 # Output
 
 Respect these guidelines in written prose, both written and in how you communicate with the user.
