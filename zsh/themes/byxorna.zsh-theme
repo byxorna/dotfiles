@@ -210,7 +210,7 @@ setopt PROMPT_SUBST;
 
 # timer
 #REF: https://stackoverflow.com/questions/26526175/zsh-menu-completion-causes-problems-after-zle-reset-prompt
-TMOUT=1;
+TMOUT=5; # seconds between prompt auto-refresh via TRAPALRM
 TRAPALRM() {
     # $(git_prompt_info) cost too much time which will raise stutters when inputting. so we need to disable it in this occurence.
     # if [ "$WIDGET" != "expand-or-complete" ] && [ "$WIDGET" != "self-insert" ] && [ "$WIDGET" != "backward-delete-char" ]; then
