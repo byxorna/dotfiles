@@ -202,8 +202,6 @@ function help(){
 
 if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then . ~/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 
-command -v mise &>/dev/null && eval "$(mise activate zsh)"
-
 if [[ -d "$HOME/.volta" ]]; then
   export VOLTA_HOME="$HOME/.volta"
   export PATH="$PATH:$VOLTA_HOME/bin"
@@ -216,6 +214,11 @@ fi
 if [[ -x /Users/gconradi/.letsgo/bin/letsgo ]]
 then
     source /Users/gconradi/.letsgo/config/shell/zsh/setup.completion.zsh
+fi
+
+if command -v mise &>/dev/null
+then
+    eval "$(mise activate zsh)"
 fi
 
 ################################################################################
