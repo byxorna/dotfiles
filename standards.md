@@ -55,6 +55,7 @@ Respect these guidelines in written prose, both written and in how you communica
 ### Before starting work
 
 - After preparing a plan, write the plan to `.agents/plans/<date in format yyyy-mm-dd__HH-MM-SS> - <TASK_NAME>.md`. (use local time, not UTC)
+- Consult `.agents/tasks/` for plans written by other sessions.
 - The plan should list an implementation plan, its reasoning, and tasks broken down.
 - Use these section titles in the plan: intent, detailed implementation plan, reasoning (only for meaningful tradeoffs or specific needs), and task list
 - Plans state decisions. Don't include exploration notes, abandoned approaches, or discovery narrative. Hedging language ("we could", "might want to", "if this doesn't work") means the decision isn't made yet; make it, then write it down.
@@ -94,6 +95,16 @@ Run this checklist on the text before considering it done:
 - Keep `docs/` in sync with implementation changes.
 - Keep tests in sync with implementation changes.
 - Don't rewrite files you weren't asked to touch. Scope creep in docs is still scope creep.
+
+### Post-implementation review
+
+After all changes compile and tests pass, review every unstaged diff as an adversarial reader before presenting work as done. This is a discrete phase, not something folded into implementation. The plan's task list should include it.
+
+The core question: does each edit account for its full blast radius, or does it only make sense within the narrow context where it was written?
+
+Read every changed function, struct, and call site. For each, ask: what else in the codebase depends on the old behavior, naming, or type? Grep for callers. Check whether the old symbol is now dead. Check whether a renamed concept still has stale names elsewhere. Check whether a new data flow (slice append, type conversion, combined collection) introduces a mutation hazard or lossy conversion that the original code didn't have. Check whether tests actually isolate what their names claim, or just happen to pass because of incidental setup. Check whether two tests are structurally identical and should be one table-driven test.
+
+If you changed what a function does, its doc comment, parameter names, and struct field names must all describe the current behavior. Stale names are bugs in waiting.
 
 ### Reference Projects and Tooling Preferences
 
