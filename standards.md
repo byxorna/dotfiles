@@ -70,6 +70,13 @@ Respect these guidelines in written prose, both written and in how you communica
 - After completing tasks in the plan, update and append descriptions of the changes you made, to facilitate handing over tasks across engineers.
 - Upon completion, summarize the changes in a release description and append it to the plan
 
+### After Implementation
+
+- Summarize the changes made in the format of a MR description, in unrendered markdown
+  - Do not exhaustively document each file changed, or describe test functions one by one
+  - Keep things simple; describe the issue[s] being addressed, any confounding context that shaped this solution, and expected behavioral changes after the change merges
+  - If applicable, include a section about how the changes will be validated
+
 ## Documentation Style
 
 - No emdashes or unicode arrows. Use commas, periods, parentheses, or `>` instead. Two short sentences beat one joined by an emdash.
