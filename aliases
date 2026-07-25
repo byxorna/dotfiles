@@ -10,6 +10,7 @@ if type -p nvim >/dev/null ; then
   export VISUAL=nvim
 fi
 
+alias ag='rg' # change is hard
 alias ll='ls -la'
 alias la='ls -la'
 alias lr='ls -laR'
@@ -113,9 +114,7 @@ if [[ -d ~/dd/cia/kubectl-helpers ]] ; then
   source ~/dd/cia/kubectl-helpers/kgng-helpers.sh
 fi
 
-alias c="collins"
-
-export PATH="$PATH":~/bin:~/local/bin:~/lang/bin:~/lang/usr/local/scala/bin:~/code/scripts:~/code/scripts/collins:/usr/sbin:/sbin:/usr/local/sbin:/usr/local/bin:~/.rvm/bin:/opt/local/bin:/opt/local/sbin:"$GOPATH/bin":~/.cargo/bin:~/code/go/bin:~/.local/bin
+export PATH="$PATH":~/bin:/usr/sbin:/sbin:/usr/local/sbin:/usr/local/bin:"$GOPATH/bin":~/.cargo/bin:~/code/go/bin:~/.local/bin
 export PAGER='less'
 
 is_git_repo(){
@@ -227,19 +226,6 @@ sshtunnel(){
   ssh -N -L "$localport:$remote:$remoteport" "$jump"
 }
 
-collinsdc() {
-  if [[ -z $1 ]] ; then
-    l=$(basename $(readlink ~/.collins.yml))
-    echo "${l##.collins.yml.}"
-  else
-    if [[ ! -f ~/.collins.yml.$1 ]] ; then
-      echo "No collins config found for $1" >&2
-      return 2
-    fi
-    ln -sfn ~/.collins.yml.$1 ~/.collins.yml && echo "Using collins config for $1"
-  fi
-}
-
 wav2flac() {
   for f in "$@" ; do
     echo "Converting ${f} to flac" >&2
@@ -281,21 +267,6 @@ cidr2range(){
 epoch2date(){
   [[ -z $1 ]] && echo "Specify an epoch timestamp as first argument" >&2 && return 1
   ruby -e 'puts "#{ARGV.first} => #{Time.at(ARGV.first.to_i).to_s}"' -- $1
-}
-
-httpdme() {
-  port="${1:-8000}"
-  echo "Launching http server on $port for root $(pwd)"
-  ruby -run -e httpd . -p $port
-}
-
-# git checkout PR
-gitcpr() {
-  [[ -z $1 ]] && echo "Need to specify a PR number" >&2 && return 1
-  branch_name="${2:-pr-$1}"
-  git fetch origin pull/$1/head:$branch_name
-  git checkout $branch_name
-  echo "Checked out PR#$1 in $branch_name"
 }
 
 gitup() {
@@ -340,54 +311,6 @@ function stat_mtime {
     stat -f %Sm -t %s $@
   else
     stat -c %Y $@
-  fi
-}
-
-function manuscript {
-  data_dir=Documents
-  remote_host="cyberdeck"
-  remote_host_path="${remote_host}:$data_dir/"
-  h="$(hostname)" # TODO: use machine ID on macos?
-  local_path="$data_dir/manuscript.$h.md"
-  te=$(date +%s)
-  $EDITOR ~/$local_path
-
-  if [[ $(hostname) = $remote_host ]] ; then
-    echo "Skipping copy to $remote_host_path (hostname=$(hostname))" >&2
-  else
-    echo -n "Copy ~/$local_path to $remote_host_path archive? (y/N) " >&2
-    read ans
-    if [[ $ans == y ]] ; then
-      scp ~/$local_path $remote_host_path
-    fi
-  fi
-
-  tx=$(date +%s)
-  echo "<- $(( tx - te ))s"
-}
-
-# backup packages for a host
-function backup_package_list {
-  if [[ $OSTYPE =~ darwin.* ]] ; then
-    brewfile="code/dotfiles/brew/Brewfile.$(hostname)"
-    brew bundle dump
-    mv Brewfile ~/$brewfile
-    echo "$(echo ~)/$brewfile"
-  else
-    echo "implement me"
-    return 2
-  fi
-}
-
-# restore packages for a host
-function restore_package_list {
-  if [[ $OSTYPE =~ darwin.* ]] ; then
-    brewfile="code/dotfiles/brew/Brewfile.$(hostname)"
-    echo "Restoring from ~/$brewfile..." >&2
-    brew bundle --file ~/$brewfile install -v
-  else
-    echo implement me
-    return 2
   fi
 }
 
