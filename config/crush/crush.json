@@ -178,14 +178,19 @@
       "flat_rate": true,
       "models": [
         {
-          "id": "k:chat",
-          "name": "K (chat)",
-          "context_window": 4096
+          "id": "agent-fast",
+          "name": "K (agent, fast)",
+          "context_window": 32768
         },
         {
-          "id": "k:agent",
-          "name": "K (agent)",
-          "context_window": 8192
+          "id": "agent-slow",
+          "name": "K (agent, slow)",
+          "context_window": 32768
+        },
+        {
+          "id": "chat",
+          "name": "K (chat)",
+          "context_window": 4096
         }
       ]
     },
