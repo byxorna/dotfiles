@@ -178,9 +178,14 @@
       "flat_rate": true,
       "models": [
         {
-          "id": "k:latest",
-          "name": "K",
+          "id": "k:chat",
+          "name": "K (chat)",
           "context_window": 4096
+        },
+        {
+          "id": "k:agent",
+          "name": "K (agent)",
+          "context_window": 8192
         }
       ]
     },
