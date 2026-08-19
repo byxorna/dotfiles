@@ -170,6 +170,30 @@
         }
       ]
     },
+    "purple": {
+      "name": "Purple",
+      "type": "openai-compat",
+      "base_url": "http://purple:11434/v1/",
+      "api_key": "-",
+      "flat_rate": true,
+      "models": [
+        {
+          "id": "agent-fast",
+          "name": "K (agent, fast)",
+          "context_window": 32768
+        },
+        {
+          "id": "agent-slow",
+          "name": "K (agent, slow)",
+          "context_window": 32768
+        },
+        {
+          "id": "chat",
+          "name": "K (chat)",
+          "context_window": 4096
+        }
+      ]
+    },
     "ollama": {
       "name": "Ollama",
       "type": "openai-compat",
@@ -190,6 +214,18 @@
           "supports_attachments": false
         },
         {
+          "id": "qwen3:32b",
+          "name": "Qwen3 32B",
+          "cost_per_1m_in": 0,
+          "cost_per_1m_out": 0,
+          "cost_per_1m_in_cached": 0,
+          "cost_per_1m_out_cached": 0,
+          "context_window": 131072,
+          "default_max_tokens": 20000,
+          "can_reason": true,
+          "supports_attachments": true
+        },
+        {
           "id": "qwen3:30b-a3b",
           "name": "Qwen3 30B-A3B",
           "cost_per_1m_in": 0,
@@ -204,39 +240,15 @@
       ]
     }
   },
-  "mcp": {
-    "argocd": {
-      "type": "http",
-      "url": "http://agentgateway.internal.example.com/mcp/argocd"
-    },
-    "atlassian": {
-      "type": "sse",
-      "url": "https://mcp.atlassian.com/v1/sse"
-    },
-    "backstage": {
-      "type": "http",
-      "url": "http://agentgateway.internal.example.com/mcp/backstage"
-    },
-    "codesearch": {
-      "type": "http",
-      "url": "http://agentgateway.internal.example.com/mcp/codesearch"
-    },
-    "datadog": {
-      "type": "http",
-      "url": "http://agentgateway.internal.example.com/mcp/datadog"
-    },
-    "mr-freeze": {
-      "type": "http",
-      "url": "http://agentgateway.internal.example.com/mcp/mr-freeze"
-    }
-  },
+  "mcp": { },
   "disable_provider_auto_update": true,
   "disable_metrics": true,
   "options": {
     "context_paths": [
-      "~/code/byxorna/dotfiles/standards.md",
-      "~/code/byxorna/dotfiles/standards-org.md"
+      "~/code/github.com/byxorna/dotfiles/standards.md",
+      "~/code/github.com/byxorna/dotfiles/standards-org.md"
     ],
-    "disable_default_providers": true
+    "disable_default_providers": true,
+    "disable_auto_summarize": true
   }
 }
