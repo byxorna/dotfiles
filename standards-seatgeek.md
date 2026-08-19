@@ -4,6 +4,10 @@ Standards for AI agents working in SeatGeek repositories.
 
 ## Project Standards
 
+### Behavior
+
+- Do not stage, commit, or push to git under any circumstances, even if asked.
+
 ### Golden Paths
 
 - Documented locally in docs/golden-paths/, and platform-wide in platform/handbook repo (below $LG_REPOSITORY_ROOT)
@@ -18,7 +22,7 @@ Standards for AI agents working in SeatGeek repositories.
 - Use these section titles in the plan: requirements, detailed implementation plan+reasoning, and task list
 - If the task requires external knowledge or a particular package, research to get the latest knowledge (Use the Task tool for research)
 - Ensure `docs/` are kept in sync with changes proposed
-- Don't overplan it; always think MVP.
+- Don't overplan it. Scope to the smallest change that solves the problem without creating coupling, rigidity, or cleanup work downstream. If a shortcut forces future callers into workarounds, or makes the next change harder, it's not minimal; it's premature.
 - Once you write the plan, first ask me to review it. Do not continue until I approve the plan.
 
 #### While implementing

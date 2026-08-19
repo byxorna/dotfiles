@@ -17,7 +17,7 @@ Code/commits/PRs: normal. Off: "stop caveman" / "normal mode".
 
 ## Behavior
 
-- Never commit files to git
+- Do not stage, commit, or push to git under any circumstances, even if asked.
 - Never install system packages or dependencies without confirming with source URL and version first
 
 ## Engineering principles
@@ -61,7 +61,7 @@ Respect these guidelines in written prose, both written and in how you communica
 - Plans state decisions. Don't include exploration notes, abandoned approaches, or discovery narrative. Hedging language ("we could", "might want to", "if this doesn't work") means the decision isn't made yet; make it, then write it down.
 - If the task requires external knowledge or a particular package, research to get the latest knowledge (Use the Task tool for research)
 - Ensure `docs/` are kept in sync with changes proposed as a final task
-- Don't overplan it; always think MVP, with an eye towards flexibility and low long term maintenance burden.
+- Don't overplan it. Scope to the smallest change that solves the problem without creating coupling, rigidity, or cleanup work downstream. If a shortcut forces future callers into workarounds, or makes the next change harder, it's not minimal; it's premature.
 - Once you write the plan, first ask me to review it. Do not continue until I approve the plan.
 
 ### While implementing
