@@ -62,6 +62,12 @@ vim.api.nvim_create_autocmd("Syntax", {
 })
 vim.api.nvim_set_hl(0, "ExtraWhitespace", { bg = "red" })
 
+-- LSP servers: configs live in nvim/lsp/*.lua, enable them here
+vim.lsp.enable("gopls")
+vim.lsp.enable("terraformls")
+vim.lsp.enable("pylsp")
+vim.lsp.enable("lua_ls")
+
 -- highlight the 101st column to flag long lines
 vim.api.nvim_set_hl(0, "OverLength", { bg = "#592929" })
 vim.api.nvim_create_autocmd("BufEnter", {
