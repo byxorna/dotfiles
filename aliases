@@ -25,6 +25,10 @@ alias ssh='ssh -A'
 alias scp='scp -q'
 alias chmox='chmod +x'
 alias tf="terraform"
+# cache providers globally so terraform init reuses them across modules via symlinks
+export TF_PLUGIN_CACHE_DIR="$HOME/.terraform.d/plugin-cache"
+# skip hashicorp update/security phone-home on every terraform command
+export CHECKPOINT_DISABLE=1
 alias steam="prime-run flatpak run com.valvesoftware.Steam"
 alias less="less -FIXR"
 # git helpers
