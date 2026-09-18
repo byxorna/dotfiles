@@ -103,6 +103,18 @@ To validate a kustomize overlay without hitting the network, use this procedure:
 - **Tool versions:** managed via mise
 - **Tests:** use `testify/assert`, `t.Helper()` in all test helper functions
 
+#### `go.mod` version directive
+
+The `go` directive in `go.mod` sets the minimum Go version required to build the module. Don't bump it as part of a routine toolchain upgrade. Only bump it when:
+
+- The code uses a language feature introduced in a newer Go version.
+- The code uses a new stdlib package from a newer Go version.
+- The code uses a third-party package that requires a newer Go version.
+
+Updating the toolchain you build with (CI images, `mise.toml`, `.tool-versions`) is independent. Those can track the latest patch release freely.
+
+For libraries that other repos import (sgkit, etc.), an unnecessary `go` directive bump forces every downstream consumer to upgrade their toolchain. `go mod tidy` can also pull up the directive if a dependency's own `go.mod` declares a higher version, so be aware of this when updating dependencies in libraries.
+
 #### `platform/platform-operator`
 
 - Struct tag order: `default`, `koanf`, `wire`, `letsgo`, `json`, `yaml`, `mapstructure`, `validate`
